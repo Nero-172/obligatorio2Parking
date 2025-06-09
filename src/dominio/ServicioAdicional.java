@@ -12,56 +12,56 @@ public class ServicioAdicional implements Serializable{
     private Empleado empleado;
     private double costo;
     
-    public ServicioAdicional(String tipoServicio, String fecha, String hora, Vehiculo vehiculo, Empleado empleado, double costo){
-        this.tipoServicio = tipoServicio;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.vehiculo = vehiculo;
-        this.empleado = empleado;
-        this.costo = costo;
+    public ServicioAdicional(String unTipoDeServicio, String unaFecha, String unaHora, Vehiculo unVehiculo, Empleado unEmpleado, double unCosto){
+        this.tipoServicio = unTipoDeServicio;
+        this.fecha = unaFecha;
+        this.hora = unaHora;
+        this.vehiculo = unVehiculo;
+        this.empleado = unEmpleado;
+        this.costo = unCosto;
     }
     
     // Getters y Setters
     public String getTipoServicio(){ 
         return tipoServicio; 
     }
-    public void setTipoServicio(String tipoServicio){ 
-        this.tipoServicio = tipoServicio; 
+    public void setTipoServicio(String unServicio){ 
+        this.tipoServicio = unServicio; 
     }
     
     public String getFecha(){ 
         return fecha; 
     }
-    public void setFecha(String fecha){ 
-        this.fecha = fecha; 
+    public void setFecha(String unaFecha){ 
+        this.fecha = unaFecha; 
     }
     
     public String getHora(){ 
         return hora; 
     }
-    public void setHora(String hora){ 
-        this.hora = hora; 
+    public void setHora(String unaHora){ 
+        this.hora = unaHora; 
     }
     
     public Vehiculo getVehiculo(){ 
         return vehiculo; 
     }
-    public void setVehiculo(Vehiculo vehiculo){ 
-        this.vehiculo = vehiculo; 
+    public void setVehiculo(Vehiculo unVehiculo){ 
+        this.vehiculo = unVehiculo; 
     }
     
     public Empleado getEmpleado(){ 
         return empleado; 
     }
-    public void setEmpleado(Empleado empleado){ 
-        this.empleado = empleado; 
+    public void setEmpleado(Empleado unEmpleado){ 
+        this.empleado = unEmpleado; 
     }
     
     public double getCosto(){ 
         return costo; 
     }
-    public void setCosto(double costo){ 
-        this.costo = costo; 
+    public void setCosto(double unCosto){ 
+        this.costo = unCosto; 
     }
     
     @Override

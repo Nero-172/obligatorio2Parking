@@ -11,48 +11,48 @@ public class Contrato implements Serializable{
     private Empleado empleado;
     private double valorMensual;
     
-    public Contrato(int numeroContrato, Vehiculo vehiculo, Cliente cliente, Empleado empleado, double valorMensual){
-        this.numeroContrato = numeroContrato;
-        this.vehiculo = vehiculo;
-        this.cliente = cliente;
-        this.empleado = empleado;
-        this.valorMensual = valorMensual;
+    public Contrato(int unNumeroContrato, Vehiculo unVehiculo, Cliente unCliente, Empleado unEmpleado, double unValorMensual){
+        this.numeroContrato = unNumeroContrato;
+        this.vehiculo = unVehiculo;
+        this.cliente = unCliente;
+        this.empleado = unEmpleado;
+        this.valorMensual = unValorMensual;
     }
     
     // Getters y Setters
     public int getNumeroContrato(){ 
         return numeroContrato; 
     }
-    public void setNumeroContrato(int numeroContrato){ 
-        this.numeroContrato = numeroContrato; 
+    public void setNumeroContrato(int unNumeroContrato){ 
+        this.numeroContrato = unNumeroContrato; 
     }
     
     public Vehiculo getVehiculo(){ 
         return vehiculo; 
     }
-    public void setVehiculo(Vehiculo vehiculo){ 
-        this.vehiculo = vehiculo; 
+    public void setVehiculo(Vehiculo unVehiculo){ 
+        this.vehiculo = unVehiculo; 
     }
     
     public Cliente getCliente(){ 
         return cliente; 
     }
-    public void setCliente(Cliente cliente){ 
-        this.cliente = cliente; 
+    public void setCliente(Cliente unCliente){ 
+        this.cliente = unCliente; 
     }
     
     public Empleado getEmpleado(){ 
         return empleado; 
     }
-    public void setEmpleado(Empleado empleado){ 
-        this.empleado = empleado; 
+    public void setEmpleado(Empleado unEmpleado){ 
+        this.empleado = unEmpleado; 
     }
     
     public double getValorMensual(){ 
         return valorMensual; 
     }
-    public void setValorMensual(double valorMensual){ 
-        this.valorMensual = valorMensual; 
+    public void setValorMensual(double unValorMensual){ 
+        this.valorMensual = unValorMensual; 
     }
     
     @Override

@@ -29,10 +29,10 @@ public class Sistema implements Serializable{
     }
     
     // Métodos para Cliente
-    public boolean agregarCliente(String nombre, String cedula, String direccion, String celular, int anioCliente){
+    public boolean agregarCliente(String unNombre, String unaCedula, String unaDireccion, String unCelular, int unAnioCliente){
         boolean resultado = false;
-        if (buscarClientePorCedula(cedula) == null){
-            Cliente cliente = new Cliente(nombre, cedula, direccion, celular, anioCliente);
+        if (buscarClientePorCedula(unaCedula) == null){
+            Cliente cliente = new Cliente(unNombre, unaCedula, unaDireccion, unCelular, unAnioCliente);
             resultado = clientes.add(cliente);
         }
         return resultado;
@@ -42,8 +42,11 @@ public class Sistema implements Serializable{
         boolean resultado = false;
         Cliente cliente = buscarClientePorCedula(cedula);
         if (cliente != null){
-            // Eliminar contratos del cliente
-            contratos.removeIf(contrato -> contrato.getCliente().equals(cliente));
+            for (int i = contratos.size() - 1; i >= 0; i--) {
+                if (contratos.get(i).getCliente().equals(cliente)) {
+                    contratos.remove(i);
+                }
+            }
             resultado = clientes.remove(cliente);
         }
         return resultado;
@@ -60,19 +63,19 @@ public class Sistema implements Serializable{
     }
     
     // Métodos para Vehículo
-    public boolean agregarVehiculo(String matricula, String marca, String modelo, String estado){
+    public boolean agregarVehiculo(String unaMatricula, String unaMarca, String unModelo, String unEstado){
         boolean resultado = false;
-        if (buscarVehiculoPorMatricula(matricula) == null){
-            Vehiculo vehiculo = new Vehiculo(matricula, marca, modelo, estado);
+        if (buscarVehiculoPorMatricula(unaMatricula) == null){
+            Vehiculo vehiculo = new Vehiculo(unaMatricula, unaMarca, unModelo, unEstado);
             resultado = vehiculos.add(vehiculo);
         }
         return resultado;
     }
     
-    public Vehiculo buscarVehiculoPorMatricula(String matricula){
+    public Vehiculo buscarVehiculoPorMatricula(String unaMatricula){
         Vehiculo vehiculoEncontrado = null;
         for (Vehiculo vehiculo : vehiculos){
-            if (vehiculo.getMatricula().equals(matricula)){
+            if (vehiculo.getMatricula().equals(unaMatricula)){
                 vehiculoEncontrado = vehiculo;
             }
         }
@@ -80,19 +83,19 @@ public class Sistema implements Serializable{
     }
     
     // Métodos para Empleado
-    public boolean agregarEmpleado(String nombre, String cedula, String direccion, int numeroEmpleado){
+    public boolean agregarEmpleado(String unNombreE, String unaCedulaE, String unaDireccionE, int unNumeroDeEmpleado){
         boolean resultado = false;
-        if (buscarEmpleadoPorCedula(cedula) == null && buscarEmpleadoPorNumero(numeroEmpleado) == null){
-            Empleado empleado = new Empleado(nombre, cedula, direccion, numeroEmpleado);
+        if (buscarEmpleadoPorCedula(unaCedulaE) == null && buscarEmpleadoPorNumero(unNumeroDeEmpleado) == null){
+            Empleado empleado = new Empleado(unNombreE, unaCedulaE, unaDireccionE, unNumeroDeEmpleado);
             resultado = empleados.add(empleado);
         }
         return resultado;
     }
     
-    public Empleado buscarEmpleadoPorCedula(String cedula){
+    public Empleado buscarEmpleadoPorCedula(String cedulaE){
         Empleado empleadoEncontrado = null;
         for (Empleado empleado : empleados){
-            if (empleado.getCedula().equals(cedula)){
+            if (empleado.getCedula().equals(cedulaE)){
                 empleadoEncontrado = empleado;
             }
         }
@@ -110,16 +113,16 @@ public class Sistema implements Serializable{
     }
     
     // Métodos para Contrato
-    public boolean agregarContrato(Vehiculo vehiculo, Cliente cliente, Empleado empleado, double valorMensual){
-        Contrato contrato = new Contrato(proximoNumeroContrato, vehiculo, cliente, empleado, valorMensual);
+    public boolean agregarContrato(Vehiculo unVehiculo, Cliente unClienteC, Empleado unEmpleadoC, double unValorMensual){
+        Contrato contrato = new Contrato(proximoNumeroContrato, unVehiculo, unClienteC, unEmpleadoC, unValorMensual);
         proximoNumeroContrato++;
         return contratos.add(contrato);
     }
     
-    public Contrato buscarContratoPorVehiculo(Vehiculo vehiculo){
+    public Contrato buscarContratoPorVehiculo(Vehiculo vehiculoC){
         Contrato contratoEncontrado = null;
         for (Contrato contrato : contratos){
-            if (contrato.getVehiculo().equals(vehiculo)){
+            if (contrato.getVehiculo().equals(vehiculoC)){
                 contratoEncontrado = contrato;
             }
         }
@@ -127,19 +130,19 @@ public class Sistema implements Serializable{
     }
     
     // Métodos para Entrada
-    public boolean agregarEntrada(Vehiculo vehiculo, String fecha, String hora, String notas, Empleado empleado){
+    public boolean agregarEntrada(Vehiculo vehiculoEntrada, String fechaEntrada, String horaEntrada, String notaEntrada, Empleado empleadoDeEntrada){
         boolean resultado = false;
-        if (!vehiculoEstaEnParking(vehiculo)){
-            Entrada entrada = new Entrada(vehiculo, fecha, hora, notas, empleado);
+        if (!vehiculoEstaEnParking(vehiculoEntrada)){
+            Entrada entrada = new Entrada(vehiculoEntrada, fechaEntrada, horaEntrada, notaEntrada, empleadoDeEntrada);
             resultado = entradas.add(entrada);
         }
         return resultado;
     }
     
-    public boolean vehiculoEstaEnParking(Vehiculo vehiculo){
+    public boolean vehiculoEstaEnParking(Vehiculo vehiculoP){
         boolean estaEnParking = false;
         for (Entrada entrada : entradas){
-            if (entrada.getVehiculo().equals(vehiculo) && !tieneSalida(entrada)){
+            if (entrada.getVehiculo().equals(vehiculoP) && !tieneSalida(entrada)){
                 estaEnParking = true;
             }
         }
@@ -157,10 +160,10 @@ public class Sistema implements Serializable{
     }
     
     // Métodos para Salida
-    public boolean agregarSalida(Entrada entrada, Empleado empleado, String fecha, String hora, String comentario){
+    public boolean agregarSalida(Entrada entrada, Empleado empleadoSalida, String fechaSalida, String horaSalida, String comentario){
         boolean resultado = false;
         if (!tieneSalida(entrada)){
-            Salida salida = new Salida(entrada, empleado, fecha, hora, comentario);
+            Salida salida = new Salida(entrada, empleadoSalida, fechaSalida, horaSalida, comentario);
             resultado = salidas.add(salida);
         }
         return resultado;
@@ -177,8 +180,8 @@ public class Sistema implements Serializable{
     }
     
     // Métodos para Servicio Adicional
-    public boolean agregarServicioAdicional(String tipoServicio, String fecha, String hora, Vehiculo vehiculo, Empleado empleado, double costo){
-        ServicioAdicional servicio = new ServicioAdicional(tipoServicio, fecha, hora, vehiculo, empleado, costo);
+    public boolean agregarServicioAdicional(String tipoServicio, String fechaServicio, String horaServicio, Vehiculo vehiculoServicio, Empleado empleadoServicio, double costoDelServicio){
+        ServicioAdicional servicio = new ServicioAdicional(tipoServicio, fechaServicio, horaServicio, vehiculoServicio, empleadoServicio, costoDelServicio);
         return serviciosAdicionales.add(servicio);
     }
     
