@@ -1,7 +1,3 @@
-/*
- * Autores: [Tu nombre] - [Tu número de estudiante]
- *          [Nombre compañero] - [Número de estudiante compañero]
- */
 package dominio;
 
 import java.io.Serializable;
