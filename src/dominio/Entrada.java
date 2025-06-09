@@ -1,7 +1,3 @@
-/*
- * Autores: [Tu nombre] - [Tu número de estudiante]
- *          [Nombre compañero] - [Número de estudiante compañero]
- */
 package dominio;
 
 import java.io.Serializable;
@@ -15,48 +11,48 @@ public class Entrada implements Serializable{
     private String notas;
     private Empleado empleado;
     
-    public Entrada(Vehiculo vehiculo, String fecha, String hora, String notas, Empleado empleado){
-        this.vehiculo = vehiculo;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.notas = notas;
-        this.empleado = empleado;
+    public Entrada(Vehiculo unVehiculo, String unaFecha, String unaHora, String unasNotas, Empleado unEmpleado){
+        this.vehiculo = unVehiculo;
+        this.fecha = unaFecha;
+        this.hora = unaHora;
+        this.notas = unasNotas;
+        this.empleado = unEmpleado;
     }
     
     // Getters y Setters
     public Vehiculo getVehiculo(){ 
         return vehiculo; 
     }
-    public void setVehiculo(Vehiculo vehiculo){ 
-        this.vehiculo = vehiculo; 
+    public void setVehiculo(Vehiculo unVehiculo){ 
+        this.vehiculo = unVehiculo; 
     }
     
     public String getFecha(){ 
         return fecha; 
     }
-    public void setFecha(String fecha){ 
-        this.fecha = fecha; 
+    public void setFecha(String unaFecha){ 
+        this.fecha = unaFecha; 
     }
     
     public String getHora(){ 
         return hora; 
     }
-    public void setHora(String hora){ 
-        this.hora = hora; 
+    public void setHora(String unaHora){ 
+        this.hora = unaHora; 
     }
     
     public String getNotas(){ 
         return notas; 
     }
-    public void setNotas(String notas){ 
-        this.notas = notas; 
+    public void setNotas(String unasNotas){ 
+        this.notas = unasNotas; 
     }
     
     public Empleado getEmpleado(){ 
         return empleado; 
     }
-    public void setEmpleado(Empleado empleado){ 
-        this.empleado = empleado; 
+    public void setEmpleado(Empleado unEmpleado){ 
+        this.empleado = unEmpleado; 
     }
     
     @Override

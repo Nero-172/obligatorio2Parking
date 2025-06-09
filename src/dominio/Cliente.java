@@ -1,7 +1,3 @@
-/*
- * Autores: [Tu nombre] - [Tu número de estudiante]
- *          [Nombre compañero] - [Número de estudiante compañero]
- */
 package dominio;
 
 import java.io.Serializable;
@@ -15,48 +11,48 @@ public class Cliente implements Serializable{
     private String celular;
     private int anioCliente;
     
-    public Cliente(String nombre, String cedula, String direccion, String celular, int anioCliente){
-        this.nombre = nombre;
-        this.cedula = cedula;
-        this.direccion = direccion;
-        this.celular = celular;
-        this.anioCliente = anioCliente;
+    public Cliente(String unNombre, String unaCedula, String unaDireccion, String unCelular, int unAnioCliente){
+        this.nombre = unNombre;
+        this.cedula = unaCedula;
+        this.direccion = unaDireccion;
+        this.celular = unCelular;
+        this.anioCliente = unAnioCliente;
     }
     
     // Getters y Setters
     public String getNombre(){ 
         return nombre; 
     }
-    public void setNombre(String nombre){ 
-        this.nombre = nombre; 
+    public void setNombre(String unNombre){ 
+        this.nombre = unNombre; 
     }
     
     public String getCedula(){ 
         return cedula; 
     }
-    public void setCedula(String cedula){ 
-        this.cedula = cedula; 
+    public void setCedula(String unaCedula){ 
+        this.cedula = unaCedula; 
     }
     
     public String getDireccion(){ 
         return direccion; 
     }
-    public void setDireccion(String direccion){ 
-        this.direccion = direccion; 
+    public void setDireccion(String unaDireccion){ 
+        this.direccion = unaDireccion; 
     }
     
     public String getCelular(){ 
         return celular; 
     }
-    public void setCelular(String celular){ 
-        this.celular = celular; 
+    public void setCelular(String unCelular){ 
+        this.celular = unCelular; 
     }
     
     public int getAnioCliente(){ 
         return anioCliente; 
     }
-    public void setAnioCliente(int anioCliente){ 
-        this.anioCliente = anioCliente; 
+    public void setAnioCliente(int unAnioCliente){ 
+        this.anioCliente = unAnioCliente; 
     }
     
     @Override
@@ -66,9 +62,14 @@ public class Cliente implements Serializable{
     
     @Override
     public boolean equals(Object obj){
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Cliente cliente = (Cliente) obj;
-        return cedula.equals(cliente.cedula);
+        boolean resultado = false;
+        if (this == obj) {
+            resultado = true;
+        } else if (obj != null && getClass() == obj.getClass()) {
+            Cliente cliente = (Cliente) obj;
+            resultado = cedula.equals(cliente.cedula);
+        }
+
+            return resultado;
+        }
     }
-}
