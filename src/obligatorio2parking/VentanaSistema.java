@@ -24,9 +24,9 @@ public class VentanaSistema extends javax.swing.JFrame {
         jMenuPrincipal = new javax.swing.JMenuBar();
         menuGestion = new javax.swing.JMenu();
         itemGestionClientes = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        itemVehiculos = new javax.swing.JMenuItem();
+        itemEmpleados = new javax.swing.JMenuItem();
+        itemContratos = new javax.swing.JMenuItem();
         menuMovimientos = new javax.swing.JMenu();
         itemEntradas = new javax.swing.JMenuItem();
         itemSalidas = new javax.swing.JMenuItem();
@@ -55,25 +55,30 @@ public class VentanaSistema extends javax.swing.JFrame {
         });
         menuGestion.add(itemGestionClientes);
 
-        jMenuItem1.setText("Gestion de Vehículos");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        itemVehiculos.setText("Gestion de Vehículos");
+        itemVehiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                itemVehiculosActionPerformed(evt);
             }
         });
-        menuGestion.add(jMenuItem1);
+        menuGestion.add(itemVehiculos);
 
-        jMenuItem2.setText("Gestion de Empleados");
-        menuGestion.add(jMenuItem2);
+        itemEmpleados.setText("Gestion de Empleados");
+        menuGestion.add(itemEmpleados);
 
-        jMenuItem3.setText("Gestion de Contratos");
-        menuGestion.add(jMenuItem3);
+        itemContratos.setText("Gestion de Contratos");
+        menuGestion.add(itemContratos);
 
         jMenuPrincipal.add(menuGestion);
 
         menuMovimientos.setText("Movimientos");
 
         itemEntradas.setText("Entradas");
+        itemEntradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEntradasActionPerformed(evt);
+            }
+        });
         menuMovimientos.add(itemEntradas);
 
         itemSalidas.setText("Salidas");
@@ -157,9 +162,10 @@ public class VentanaSistema extends javax.swing.JFrame {
         vc.setVisible(true);
     }//GEN-LAST:event_itemGestionClientesActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void itemVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVehiculosActionPerformed
+        VentanaVehiculos vv = new VentanaVehiculos();
+        vv.setVisible(true);
+    }//GEN-LAST:event_itemVehiculosActionPerformed
 
     private void itemSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalidasActionPerformed
         // TODO add your handling code here:
@@ -186,6 +192,10 @@ public class VentanaSistema extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_itemSalirActionPerformed
+
+    private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEntradasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemEntradasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,6 +235,8 @@ public class VentanaSistema extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClaroOscuro;
+    private javax.swing.JMenuItem itemContratos;
+    private javax.swing.JMenuItem itemEmpleados;
     private javax.swing.JMenuItem itemEntradas;
     private javax.swing.JMenuItem itemGestionClientes;
     private javax.swing.JMenuItem itemGrabDatos;
@@ -235,9 +247,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemSalidas;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JMenuItem itemServicios;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem itemVehiculos;
     private javax.swing.JMenuBar jMenuPrincipal;
     private javax.swing.JMenu menuGestion;
     private javax.swing.JMenu menuMovimientos;

@@ -1,3 +1,8 @@
+/*
+AUTORES - ESTUDIANTES
+ JHONATAN ADALID (320368)
+ LORENZO ALDAO ()
+*/
 package dominio;
 
 import java.io.Serializable;
