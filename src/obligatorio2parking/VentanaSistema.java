@@ -64,6 +64,11 @@ public class VentanaSistema extends javax.swing.JFrame {
         menuGestion.add(itemVehiculos);
 
         itemEmpleados.setText("Gestion de Empleados");
+        itemEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEmpleadosActionPerformed(evt);
+            }
+        });
         menuGestion.add(itemEmpleados);
 
         itemContratos.setText("Gestion de Contratos");
@@ -196,6 +201,11 @@ public class VentanaSistema extends javax.swing.JFrame {
     private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEntradasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_itemEntradasActionPerformed
+
+    private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosActionPerformed
+        VentanaEmpleados ve = new VentanaEmpleados();
+        ve.setVisible(true);
+    }//GEN-LAST:event_itemEmpleadosActionPerformed
 
     /**
      * @param args the command line arguments

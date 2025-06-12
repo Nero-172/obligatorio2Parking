@@ -26,17 +26,111 @@ public class VentanaVehiculos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        lblMatricula = new javax.swing.JLabel();
+        lblMarca = new javax.swing.JLabel();
+        lblModelo = new javax.swing.JLabel();
+        txtMatricula = new javax.swing.JTextField();
+        txtMarca = new javax.swing.JTextField();
+        txtModelo = new javax.swing.JTextField();
+        lblEstado = new javax.swing.JLabel();
+        txtEstado = new javax.swing.JTextField();
+        panelScrollVehiculos = new javax.swing.JScrollPane();
+        listaVehiculos = new javax.swing.JList<>();
+        lblVehiculos = new javax.swing.JLabel();
+        btnVaciarV = new javax.swing.JButton();
+        btnAgregarV = new javax.swing.JButton();
+        btnElminarV = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        lblMatricula.setText("Matrícula:");
+
+        lblMarca.setText("Marca:");
+
+        lblModelo.setText("Modelo:");
+
+        txtMatricula.setColumns(4);
+
+        txtMarca.setColumns(4);
+
+        txtModelo.setColumns(4);
+
+        lblEstado.setText("Estado:");
+
+        txtEstado.setColumns(4);
+
+        panelScrollVehiculos.setViewportView(listaVehiculos);
+
+        lblVehiculos.setText("Vehiculos:");
+
+        btnVaciarV.setText("Vaciar");
+
+        btnAgregarV.setText("Agregar");
+
+        btnElminarV.setText("Eliminar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(468, 468, 468)
+                .addComponent(lblVehiculos))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(panelScrollVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(btnVaciarV, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(btnAgregarV, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(btnElminarV, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(lblVehiculos)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelScrollVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblMatricula)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblMarca)
+                                .addGap(24, 24, 24)
+                                .addComponent(lblModelo))
+                            .addComponent(lblEstado))))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVaciarV)
+                    .addComponent(btnAgregarV)
+                    .addComponent(btnElminarV)))
         );
 
         setBounds(0, 0, 576, 324);
@@ -78,5 +172,19 @@ public class VentanaVehiculos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarV;
+    private javax.swing.JButton btnElminarV;
+    private javax.swing.JButton btnVaciarV;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblMarca;
+    private javax.swing.JLabel lblMatricula;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JLabel lblVehiculos;
+    private javax.swing.JList<String> listaVehiculos;
+    private javax.swing.JScrollPane panelScrollVehiculos;
+    private javax.swing.JTextField txtEstado;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtMatricula;
+    private javax.swing.JTextField txtModelo;
     // End of variables declaration//GEN-END:variables
 }
