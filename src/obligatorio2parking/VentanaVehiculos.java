@@ -42,6 +42,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
         btnElminarV = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Vehículos");
 
         lblMatricula.setText("Matrícula:");
 
@@ -133,7 +134,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
                     .addComponent(btnElminarV)))
         );
 
-        setBounds(0, 0, 576, 324);
+        setBounds(0, 0, 576, 342);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
