@@ -137,19 +137,19 @@ public class VentanaSistema extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(btnClaroOscuro, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGap(125, 125, 125)
+                .addComponent(btnClaroOscuro, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(174, Short.MAX_VALUE)
+                .addContainerGap(203, Short.MAX_VALUE)
                 .addComponent(btnClaroOscuro)
-                .addGap(80, 80, 80))
+                .addGap(67, 67, 67))
         );
 
-        pack();
+        setBounds(0, 0, 576, 324);
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGestionClientesActionPerformed

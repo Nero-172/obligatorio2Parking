@@ -32,7 +32,7 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="lblClientes" min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="lblClientes" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
@@ -40,30 +40,30 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblNombre" min="-2" pref="58" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtNombre" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lblCelular" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="txtCelular" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lblDireccion" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblNombre" linkSize="4" min="-2" pref="58" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txtDireccion" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtNombre" linkSize="2" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblCelular" linkSize="4" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="txtCelular" linkSize="2" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblDireccion" linkSize="4" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="txtDireccion" linkSize="2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblCedula" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblAnio" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCedula" linkSize="8" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblAnio" linkSize="8" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtAnio" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtCedula" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtAnio" linkSize="6" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCedula" linkSize="6" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jScrollPane1" min="-2" pref="100" max="-2" attributes="0"/>
@@ -87,36 +87,36 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Component id="lblClientes" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="lblClientes" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="175" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="175" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCedula" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCedula" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNombre" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNombre" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCedula" linkSize="9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCedula" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtAnio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblAnio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDireccion" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDireccion" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtAnio" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAnio" linkSize="9" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblCelular" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCelular" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCelular" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCelular" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnAgregar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnVaciar" alignment="3" min="-2" max="-2" attributes="0"/>
