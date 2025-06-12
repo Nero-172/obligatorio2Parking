@@ -286,28 +286,56 @@ public class Sistema implements Serializable{
     }
     
     // Métodos de serialización
-    public void grabarDatos(){
+    public boolean grabarDatos(){
+        boolean exitoso = false;
         try{
-            FileOutputStream fileOut = new FileOutputStream("DATOS.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this);
-            out.close();
-            fileOut.close();
-        } catch (IOException e){
-            e.printStackTrace();
+            FileOutputStream archivoSalida = new FileOutputStream("DATOS.ser");
+            ObjectOutputStream archGrabacion = new ObjectOutputStream(archivoSalida);
+            archGrabacion.writeObject(this);
+            archGrabacion.close();
+            archivoSalida.close();
+            exitoso = true;
+            System.out.println("Datos grabados exitosamente en DATOS.ser");
+        } catch (FileNotFoundException excepcion){
+            System.err.println("Error: No se pudo crear el archivo DATOS.ser");
+            System.err.println("Verifique los permisos de escritura en la carpeta del proyecto");
+        } catch (IOException excepcion){
+            System.err.println("Error de entrada/salida al grabar los datos: " + excepcion.getMessage());
+        } catch (Exception excepcion){
+            System.err.println("Error inesperado al grabar los datos: " + excepcion.getMessage());
         }
+        return exitoso;
     }
-    
+
+    // Método mejorado para recuperar datos con mejor manejo de excepciones
     public static Sistema recuperarDatos(){
-        Sistema sistema = new Sistema();
+        Sistema sistema = null;
         try {
-            FileInputStream fileIn = new FileInputStream("DATOS.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            sistema = (Sistema) in.readObject();
-            in.close();
-            fileIn.close();
-        } catch (IOException | ClassNotFoundException e){
-            sistema = new Sistema(); // Retorna sistema nuevo si no hay datos
+            FileInputStream archivoEntrada = new FileInputStream("DATOS.ser");
+            ObjectInputStream lectura = new ObjectInputStream(archivoEntrada);
+            sistema = (Sistema) lectura.readObject();
+            lectura.close();
+            archivoEntrada.close();
+            System.out.println("Datos recuperados exitosamente desde DATOS.ser");
+        } catch (FileNotFoundException excepcion){
+            System.out.println("Archivo DATOS.ser no encontrado. Creando sistema nuevo...");
+            sistema = new Sistema();
+        } catch (IOException excepcion){
+            System.err.println("Error de entrada/salida al leer DATOS.ser: " + excepcion.getMessage());
+            System.out.println("Creando sistema nuevo debido al error...");
+            sistema = new Sistema();
+        } catch (ClassNotFoundException excepcion){
+            System.err.println("Error: Clase no encontrada al deserializar: " + excepcion.getMessage());
+            System.out.println("El archivo puede estar corrupto. Creando sistema nuevo...");
+            sistema = new Sistema();
+        } catch (ClassCastException excepcion){
+            System.err.println("Error: El archivo DATOS.ser no contiene un objeto Sistema válido");
+            System.out.println("Creando sistema nuevo...");
+            sistema = new Sistema();
+        } catch (Exception excepcion){
+            System.err.println("Error inesperado al recuperar datos: " + excepcion.getMessage());
+            System.out.println("Creando sistema nuevo debido al error...");
+            sistema = new Sistema();
         }
         return sistema;
     }
