@@ -57,7 +57,7 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entradas");
         getContentPane().setLayout(null);
 
@@ -202,7 +202,7 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 0, 510, 300);
 
-        setBounds(0, 0, 524, 308);
+        setBounds(0, 0, 524, 368);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
