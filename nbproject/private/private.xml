@@ -4,6 +4,21 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/obligatorio2parking/Obligatorio2Parking.java</file>
+<<<<<<< Updated upstream
+=======
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/dominio/Sistema.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/dominio/Vehiculo.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/dominio/ServicioAdicional.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/dominio/Salida.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/dominio/Entrada.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/dominio/Empleado.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/dominio/Contrato.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/dominio/Cliente.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/obligatorio2parking/VentanaSistema.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/obligatorio2parking/VentanaVehiculos.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/obligatorio2parking/VentanaEmpleados.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/obligatorio2Parking/src/obligatorio2parking/VentanaClientes.java</file>
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>
