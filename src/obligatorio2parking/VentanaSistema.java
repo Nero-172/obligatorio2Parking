@@ -72,6 +72,11 @@ public class VentanaSistema extends javax.swing.JFrame {
         menuGestion.add(itemEmpleados);
 
         itemContratos.setText("Gestion de Contratos");
+        itemContratos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemContratosActionPerformed(evt);
+            }
+        });
         menuGestion.add(itemContratos);
 
         jMenuPrincipal.add(menuGestion);
@@ -95,6 +100,11 @@ public class VentanaSistema extends javax.swing.JFrame {
         menuMovimientos.add(itemSalidas);
 
         itemServicios.setText("Servicios Adicionales");
+        itemServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemServiciosActionPerformed(evt);
+            }
+        });
         menuMovimientos.add(itemServicios);
 
         jMenuPrincipal.add(menuMovimientos);
@@ -173,11 +183,13 @@ public class VentanaSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_itemVehiculosActionPerformed
 
     private void itemSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalidasActionPerformed
-        // TODO add your handling code here:
+        VentanaSalidas vs = new VentanaSalidas();
+        vs.setVisible(true);
     }//GEN-LAST:event_itemSalidasActionPerformed
 
     private void itemMiniJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMiniJuegoActionPerformed
-        // TODO add your handling code here:
+        VentanaMiniJuego vm = new VentanaMiniJuego();
+        vm.setVisible(true);
     }//GEN-LAST:event_itemMiniJuegoActionPerformed
 
     private void menuTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTerminarActionPerformed
@@ -199,13 +211,24 @@ public class VentanaSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_itemSalirActionPerformed
 
     private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEntradasActionPerformed
-        // TODO add your handling code here:
+        VentanaEntradas ve = new VentanaEntradas();
+        ve.setVisible(true);
     }//GEN-LAST:event_itemEntradasActionPerformed
 
     private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosActionPerformed
         VentanaEmpleados ve = new VentanaEmpleados();
         ve.setVisible(true);
     }//GEN-LAST:event_itemEmpleadosActionPerformed
+
+    private void itemContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemContratosActionPerformed
+        VentanaContratos vc = new VentanaContratos();
+        vc.setVisible(true);
+    }//GEN-LAST:event_itemContratosActionPerformed
+
+    private void itemServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemServiciosActionPerformed
+        VentanaServiciosAdicionales vsa = new VentanaServiciosAdicionales();
+        vsa.setVisible(true);
+    }//GEN-LAST:event_itemServiciosActionPerformed
 
     /**
      * @param args the command line arguments
