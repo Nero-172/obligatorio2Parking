@@ -4,6 +4,14 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.SwingUtilities;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.MenuElement;
 
 public class VentanaSistema extends javax.swing.JFrame {
 
@@ -40,12 +48,13 @@ public class VentanaSistema extends javax.swing.JFrame {
                 UIManager.put("Panel.background", new Color(45, 45, 45));
                 UIManager.put("Button.background", new Color(60, 60, 60));
                 UIManager.put("Button.foreground", Color.WHITE);
+                UIManager.put("Label.foreground", Color.WHITE);
                 UIManager.put("MenuBar.background", new Color(35, 35, 35));
                 UIManager.put("Menu.background", new Color(35, 35, 35));
                 UIManager.put("Menu.foreground", Color.WHITE);
                 UIManager.put("MenuItem.background", new Color(45, 45, 45));
                 UIManager.put("MenuItem.foreground", Color.WHITE);
-                UIManager.put("MenuItem.selectionBackground", new Color(70, 70, 70));
+                UIManager.put("MenuItem.selectionBackground", new Color(45, 45, 45));
                 UIManager.put("Frame.background", new Color(45, 45, 45));
                 
                 // Cambiar color de fondo de la ventana
@@ -59,19 +68,19 @@ public class VentanaSistema extends javax.swing.JFrame {
                         break;
                     }
                 }
-                
+               
                 // Restaurar colores por defecto
-                
-                UIManager.put("Panel.background", null);
-                UIManager.put("Button.background", null);
-                UIManager.put("Button.foreground", null);
-                UIManager.put("MenuBar.background", null);
-                UIManager.put("Menu.background", null);
-                UIManager.put("Menu.foreground", null);
-                UIManager.put("MenuItem.background", null);
-                UIManager.put("MenuItem.foreground", null);
-                UIManager.put("MenuItem.selectionBackground", null);
-                UIManager.put("Frame.background", null);
+                UIManager.put("Panel.background", Color.WHITE);
+                UIManager.put("Button.background", Color.WHITE);
+                UIManager.put("Button.foreground", Color.BLACK);
+                UIManager.put("Label.foreground", Color.BLACK);
+                UIManager.put("MenuBar.background", Color.WHITE);
+                UIManager.put("Menu.background", Color.WHITE);
+                UIManager.put("Menu.foreground", Color.BLACK);
+                UIManager.put("MenuItem.background", Color.WHITE);
+                UIManager.put("MenuItem.foreground", Color.WHITE);
+                UIManager.put("MenuItem.selectionBackground", Color.WHITE);
+                UIManager.put("Frame.background", Color.WHITE);
                 
                 getContentPane().setBackground(null);
             }
@@ -79,7 +88,25 @@ public class VentanaSistema extends javax.swing.JFrame {
             // Actualizar la interfaz
             SwingUtilities.updateComponentTreeUI(this);
             this.repaint();
-            
+            for (Window window : Window.getWindows()) {
+                SwingUtilities.updateComponentTreeUI(window);
+                window.repaint();
+
+                // Ajustar color de fondo de contenido
+                if (window instanceof JFrame) {
+                    Container contentPane = ((JFrame) window).getContentPane();
+                    if (temaOscuro) {
+                        contentPane.setBackground(new Color(45, 45, 45));
+                    } else {
+                        contentPane.setBackground(null);
+                    }
+                } 
+
+                // Corregir manualmente el color de texto de JMenuItem en modo claro
+                if (!temaOscuro) {
+                    actualizarMenuItems(window);
+                }
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, 
                 "Error al cambiar el tema: " + ex.getMessage(), 
@@ -87,7 +114,29 @@ public class VentanaSistema extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
         }
     }
+    private void actualizarMenuItems(Window window) {
+        if (window instanceof JFrame) {
+            JMenuBar menuBar = ((JFrame) window).getJMenuBar();
+            if (menuBar != null) {
+                for (MenuElement menuElement : menuBar.getSubElements()) {
+                    if (menuElement instanceof JMenu) {
+                        actualizarMenuItemsRecursivo((JMenu) menuElement);
+                    }
+                }
+            }
+        }
+    }
 
+    private void actualizarMenuItemsRecursivo(JMenu menu) {
+        menu.setForeground(Color.BLACK);
+        for (Component comp : menu.getMenuComponents()) {
+            if (comp instanceof JMenuItem) {
+                comp.setForeground(Color.BLACK);
+            } else if (comp instanceof JMenu) {
+                actualizarMenuItemsRecursivo((JMenu) comp);
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
