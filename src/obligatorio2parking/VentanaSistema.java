@@ -266,7 +266,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_itemGrabDatosActionPerformed
 
     private void itemInfoAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemInfoAutoresActionPerformed
-        VentanaInfoAutores via = new VentanaInfoAutores();
+        VentanaAutores via = new VentanaAutores();
         via.setVisible(true);
     }//GEN-LAST:event_itemInfoAutoresActionPerformed
 
