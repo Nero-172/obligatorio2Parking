@@ -112,12 +112,27 @@ public class VentanaSistema extends javax.swing.JFrame {
         menuVarios.setText("Varios");
 
         itemReportes.setText("Reportes");
+        itemReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReportesActionPerformed(evt);
+            }
+        });
         menuVarios.add(itemReportes);
 
         itemRecupDatos.setText("Recuperación de datos");
+        itemRecupDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemRecupDatosActionPerformed(evt);
+            }
+        });
         menuVarios.add(itemRecupDatos);
 
         itemGrabDatos.setText("Grabación de datos");
+        itemGrabDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemGrabDatosActionPerformed(evt);
+            }
+        });
         menuVarios.add(itemGrabDatos);
 
         itemMiniJuego.setText("MiniJuego");
@@ -129,6 +144,11 @@ public class VentanaSistema extends javax.swing.JFrame {
         menuVarios.add(itemMiniJuego);
 
         itemInfoAutores.setText("Información de Autores");
+        itemInfoAutores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemInfoAutoresActionPerformed(evt);
+            }
+        });
         menuVarios.add(itemInfoAutores);
 
         jMenuPrincipal.add(menuVarios);
@@ -229,6 +249,26 @@ public class VentanaSistema extends javax.swing.JFrame {
         VentanaServiciosAdicionales vsa = new VentanaServiciosAdicionales();
         vsa.setVisible(true);
     }//GEN-LAST:event_itemServiciosActionPerformed
+
+    private void itemReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReportesActionPerformed
+        VentanaReportes vr = new VentanaReportes();
+        vr.setVisible(true);
+    }//GEN-LAST:event_itemReportesActionPerformed
+
+    private void itemRecupDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRecupDatosActionPerformed
+        VentanaRecuperarDatos vrd = new VentanaRecuperarDatos();
+        vrd.setVisible(true);
+    }//GEN-LAST:event_itemRecupDatosActionPerformed
+
+    private void itemGrabDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGrabDatosActionPerformed
+        VentanaGrabarDatos vgd = new VentanaGrabarDatos();
+        vgd.setVisible(true);
+    }//GEN-LAST:event_itemGrabDatosActionPerformed
+
+    private void itemInfoAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemInfoAutoresActionPerformed
+        VentanaInfoAutores via = new VentanaInfoAutores();
+        via.setVisible(true);
+    }//GEN-LAST:event_itemInfoAutoresActionPerformed
 
     /**
      * @param args the command line arguments
