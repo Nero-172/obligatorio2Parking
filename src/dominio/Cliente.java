@@ -65,7 +65,7 @@ public class Cliente implements Serializable{
         return nombre + " - " + cedula;
     }
     
-   @Override
+    @Override
     public boolean equals(Object obj){
         boolean resultado = false;
         if (this == obj) {
@@ -74,7 +74,15 @@ public class Cliente implements Serializable{
             Cliente cliente = (Cliente) obj;
             resultado = cedula.equals(cliente.cedula);
         }
-
-            return resultado;
-        }
+        return resultado;
     }
+    
+    // Método para obtener detalles completos del cliente
+    public String getDetallesCompletos() {
+        return "Nombre: " + nombre + "\n" +
+               "Cédula: " + cedula + "\n" +
+               "Dirección: " + direccion + "\n" +
+               "Celular: " + celular + "\n" +
+               "Año Cliente: " + anioCliente;
+    }
+}
