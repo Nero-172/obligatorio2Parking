@@ -1,190 +1,29 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package obligatorio2parking;
 
-import dominio.Cliente;
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ *
+ * @author USUARIO
+ */
 public class VentanaClientes extends javax.swing.JFrame {
-    
-    // Lista para almacenar los clientes
-    private List<Cliente> clientes;
-    private DefaultListModel<String> modeloLista;
 
+    /**
+     * Creates new form VentanaClientes
+     */
     public VentanaClientes() {
         initComponents();
-        inicializarComponentes();
-    }
-    
-    private void inicializarComponentes() {
-        // Inicializar la lista de clientes y el modelo de la lista
-        clientes = new ArrayList<>();
-        modeloLista = new DefaultListModel<>();
-        listaClientes.setModel(modeloLista);
-        
-        // Agregar listeners a los botones
-        btnAgregar.addActionListener(e -> agregarCliente());
-        btnEliminar.addActionListener(e -> eliminarCliente());
-        btnVaciar.addActionListener(e -> vaciarLista());
-        btnDetallesClientes.addActionListener(e -> mostrarDetalles());
-        
-        // Agregar listener para selección en la lista
-        listaClientes.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                mostrarDetalles();
-            }
-        });
-        
-        // Hacer que el área de texto no sea editable
-        txtAreaClientes.setEditable(false);
-    }
-    
-    private void agregarCliente() {
-        try {
-            // Validar que todos los campos estén llenos
-            if (txtNombre.getText().trim().isEmpty() || 
-                txtCedula.getText().trim().isEmpty() || 
-                txtDireccion.getText().trim().isEmpty() || 
-                txtCelular.getText().trim().isEmpty() || 
-                txtAnio.getText().trim().isEmpty()) {
-                
-                JOptionPane.showMessageDialog(this, 
-                    "Por favor, complete todos los campos.", 
-                    "Campos Vacíos", 
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Obtener datos de los campos
-            String nombre = txtNombre.getText().trim();
-            String cedula = txtCedula.getText().trim();
-            String direccion = txtDireccion.getText().trim();
-            String celular = txtCelular.getText().trim();
-            int anio = Integer.parseInt(txtAnio.getText().trim());
-            
-            // Crear nuevo cliente
-            Cliente nuevoCliente = new Cliente(nombre, cedula, direccion, celular, anio);
-            
-            // Verificar si el cliente ya existe (por cédula)
-            if (clientes.contains(nuevoCliente)) {
-                JOptionPane.showMessageDialog(this, 
-                    "Ya existe un cliente con esa cédula.", 
-                    "Cliente Duplicado", 
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Agregar cliente a la lista
-            clientes.add(nuevoCliente);
-            modeloLista.addElement(nuevoCliente.toString());
-            
-            // Limpiar campos
-            limpiarCampos();
-            
-            JOptionPane.showMessageDialog(this, 
-                "Cliente agregado exitosamente.", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-                
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, 
-                "El año debe ser un número válido.", 
-                "Error de Formato", 
-                JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Error al agregar cliente: " + e.getMessage(), 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    private void eliminarCliente() {
-        int indiceSeleccionado = listaClientes.getSelectedIndex();
-        
-        if (indiceSeleccionado == -1) {
-            JOptionPane.showMessageDialog(this, 
-                "Por favor, seleccione un cliente para eliminar.", 
-                "Sin Selección", 
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Confirmar eliminación
-        int respuesta = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar este cliente?", 
-            "Confirmar Eliminación", 
-            JOptionPane.YES_NO_OPTION);
-            
-        if (respuesta == JOptionPane.YES_OPTION) {
-            // Eliminar cliente de ambas listas
-            clientes.remove(indiceSeleccionado);
-            modeloLista.removeElementAt(indiceSeleccionado);
-            
-            // Limpiar área de detalles
-            txtAreaClientes.setText("");
-            
-            JOptionPane.showMessageDialog(this, 
-                "Cliente eliminado exitosamente.", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-    
-    private void vaciarLista() {
-        if (clientes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "La lista ya está vacía.", 
-                "Lista Vacía", 
-                JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        // Confirmar vaciado
-        int respuesta = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar todos los clientes?", 
-            "Confirmar Vaciado", 
-            JOptionPane.YES_NO_OPTION);
-            
-        if (respuesta == JOptionPane.YES_OPTION) {
-            // Vaciar ambas listas
-            clientes.clear();
-            modeloLista.clear();
-            
-            // Limpiar área de detalles
-            txtAreaClientes.setText("");
-            
-            JOptionPane.showMessageDialog(this, 
-                "Lista vaciada exitosamente.", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-    
-    private void mostrarDetalles() {
-        int indiceSeleccionado = listaClientes.getSelectedIndex();
-        
-        if (indiceSeleccionado == -1) {
-            txtAreaClientes.setText("");
-            return;
-        }
-        
-        // Mostrar detalles del cliente seleccionado
-        Cliente clienteSeleccionado = clientes.get(indiceSeleccionado);
-        txtAreaClientes.setText(clienteSeleccionado.getDetallesCompletos());
-    }
-    
-    private void limpiarCampos() {
-        txtNombre.setText("");
-        txtCedula.setText("");
-        txtDireccion.setText("");
-        txtCelular.setText("");
-        txtAnio.setText("");
-        txtNombre.requestFocus(); // Poner el foco en el primer campo
     }
 
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lblNombre = new javax.swing.JLabel();
@@ -209,27 +48,59 @@ public class VentanaClientes extends javax.swing.JFrame {
         btnDetallesClientes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestión de Clientes");
+        setTitle("Clientes");
 
         lblNombre.setText("Nombre:");
+
         lblDireccion.setText("Dirección:");
+
         lblCelular.setText("Celular:");
+
         txtNombre.setColumns(4);
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
         txtDireccion.setColumns(4);
+        txtDireccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDireccionActionPerformed(evt);
+            }
+        });
+
         txtCelular.setColumns(4);
+
         lblCedula.setText("Cédula:");
+
         txtCedula.setColumns(4);
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaActionPerformed(evt);
+            }
+        });
+
         txtAnio.setColumns(4);
+
         lblAnio.setText("Año:");
+
         lblClientes.setText("Clientes:");
+
         jScrollPane1.setViewportView(listaClientes);
+
         btnAgregar.setText("Agregar");
+
         btnEliminar.setText("Eliminar");
+
         btnVaciar.setText("Vaciar");
+
         txtAreaClientes.setColumns(20);
         txtAreaClientes.setRows(5);
         jScrollPane2.setViewportView(txtAreaClientes);
+
         lblDetalles.setText("Detalles:");
+
         btnDetallesClientes.setText("Mostrar Detalles");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,8 +156,11 @@ public class VentanaClientes extends javax.swing.JFrame {
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtCelular, txtDireccion, txtNombre});
+
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblCelular, lblDireccion, lblNombre});
+
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtAnio, txtCedula});
+
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblAnio, lblCedula});
 
         layout.setVerticalGroup(
@@ -311,7 +185,7 @@ public class VentanaClientes extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDireccion)
                             .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblAnio))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -327,15 +201,37 @@ public class VentanaClientes extends javax.swing.JFrame {
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtCelular, txtDireccion, txtNombre});
+
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblCelular, lblDireccion, lblNombre});
+
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtAnio, txtCedula});
+
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblAnio, lblCedula});
 
         setBounds(0, 0, 890, 321);
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDireccionActionPerformed
+
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCedulaActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -352,6 +248,7 @@ public class VentanaClientes extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -361,7 +258,7 @@ public class VentanaClientes extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnDetallesClientes;
     private javax.swing.JButton btnEliminar;
@@ -382,5 +279,5 @@ public class VentanaClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }

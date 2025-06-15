@@ -1,284 +1,20 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package obligatorio2parking;
 
-import dominio.Vehiculo;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Ventana para gestión de vehículos
+ *
  * @author USUARIO
  */
 public class VentanaVehiculos extends javax.swing.JFrame {
-    
-    // Lista para almacenar los vehículos
-    private List<Vehiculo> vehiculos;
-    private DefaultListModel<String> modeloLista;
 
     /**
      * Creates new form VentanaVehiculos
      */
     public VentanaVehiculos() {
-        // Inicializar estructuras de datos
-        vehiculos = new ArrayList<>();
-        modeloLista = new DefaultListModel<>();
-        
         initComponents();
-        configurarEventos();
-        
-        // Configurar la lista
-        listaVehiculos.setModel(modeloLista);
-        
-        // Hacer que el área de texto no sea editable
-        txtAreaVehiculo.setEditable(false);
-    }
-    
-    /**
-     * Configura los eventos de los botones
-     */
-    private void configurarEventos() {
-        // Evento para agregar vehículo
-        btnAgregarV.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                agregarVehiculo();
-            }
-        });
-        
-        // Evento para eliminar vehículo
-        btnElminarV.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarVehiculo();
-            }
-        });
-        
-        // Evento para vaciar lista
-        btnVaciarV.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vaciarLista();
-            }
-        });
-        
-        // Evento para mostrar detalles
-        btnMostrarDetallesVehiculos.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mostrarDetalles();
-            }
-        });
-        
-        // Evento para selección en la lista
-        listaVehiculos.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                mostrarDetallesSeleccionado();
-            }
-        });
-    }
-    
-    /**
-     * Agrega un nuevo vehículo a la lista
-     */
-    private void agregarVehiculo() {
-        try {
-            // Obtener datos de los campos de texto
-            String matricula = txtMatricula.getText().trim();
-            String marca = txtMarca.getText().trim();
-            String modelo = txtModelo.getText().trim();
-            String estado = txtEstado.getText().trim();
-            
-            // Validar que los campos no estén vacíos
-            if (matricula.isEmpty() || marca.isEmpty() || modelo.isEmpty() || estado.isEmpty()) {
-                JOptionPane.showMessageDialog(this, 
-                    "Todos los campos son obligatorios", 
-                    "Error de validación", 
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Verificar que la matrícula no exista
-            for (Vehiculo v : vehiculos) {
-                if (v.getMatricula().equalsIgnoreCase(matricula)) {
-                    JOptionPane.showMessageDialog(this, 
-                        "Ya existe un vehículo con esa matrícula", 
-                        "Error de duplicado", 
-                        JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-            
-            // Crear nuevo vehículo
-            Vehiculo nuevoVehiculo = new Vehiculo(matricula, marca, modelo, estado);
-            
-            // Agregar a la lista
-            vehiculos.add(nuevoVehiculo);
-            modeloLista.addElement(nuevoVehiculo.toString());
-            
-            // Limpiar campos
-            limpiarCampos();
-            
-            JOptionPane.showMessageDialog(this, 
-                "Vehículo agregado exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-                
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, 
-                "Error al agregar vehículo: " + ex.getMessage(), 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    /**
-     * Elimina el vehículo seleccionado
-     */
-    private void eliminarVehiculo() {
-        int indiceSeleccionado = listaVehiculos.getSelectedIndex();
-        
-        if (indiceSeleccionado == -1) {
-            JOptionPane.showMessageDialog(this, 
-                "Seleccione un vehículo para eliminar", 
-                "Advertencia", 
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Confirmar eliminación
-        int confirmacion = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar este vehículo?", 
-            "Confirmar eliminación", 
-            JOptionPane.YES_NO_OPTION);
-            
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            // Eliminar de ambas listas
-            vehiculos.remove(indiceSeleccionado);
-            modeloLista.removeElementAt(indiceSeleccionado);
-            
-            // Limpiar área de detalles
-            txtAreaVehiculo.setText("");
-            
-            JOptionPane.showMessageDialog(this, 
-                "Vehículo eliminado exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-    
-    /**
-     * Vacía toda la lista de vehículos
-     */
-    private void vaciarLista() {
-        if (vehiculos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "La lista ya está vacía", 
-                "Información", 
-                JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        // Confirmar vaciado
-        int confirmacion = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar todos los vehículos?", 
-            "Confirmar vaciado", 
-            JOptionPane.YES_NO_OPTION);
-            
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            vehiculos.clear();
-            modeloLista.clear();
-            txtAreaVehiculo.setText("");
-            limpiarCampos();
-            
-            JOptionPane.showMessageDialog(this, 
-                "Lista vaciada exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-    
-    /**
-     * Muestra los detalles de todos los vehículos
-     */
-    private void mostrarDetalles() {
-        if (vehiculos.isEmpty()) {
-            txtAreaVehiculo.setText("No hay vehículos registrados.");
-            return;
-        }
-        
-        StringBuilder detalles = new StringBuilder();
-        detalles.append("=== LISTA COMPLETA DE VEHÍCULOS ===\n\n");
-        
-        for (int i = 0; i < vehiculos.size(); i++) {
-            Vehiculo v = vehiculos.get(i);
-            detalles.append("Vehículo ").append(i + 1).append(":\n");
-            detalles.append("  Matrícula: ").append(v.getMatricula()).append("\n");
-            detalles.append("  Marca: ").append(v.getMarca()).append("\n");
-            detalles.append("  Modelo: ").append(v.getModelo()).append("\n");
-            detalles.append("  Estado: ").append(v.getEstado()).append("\n");
-            detalles.append("------------------------\n");
-        }
-        
-        detalles.append("\nTotal de vehículos: ").append(vehiculos.size());
-        txtAreaVehiculo.setText(detalles.toString());
-        txtAreaVehiculo.setCaretPosition(0); // Ir al inicio del texto
-    }
-    
-    /**
-     * Muestra los detalles del vehículo seleccionado
-     */
-    private void mostrarDetallesSeleccionado() {
-        int indiceSeleccionado = listaVehiculos.getSelectedIndex();
-        
-        if (indiceSeleccionado == -1) {
-            return;
-        }
-        
-        Vehiculo vehiculoSeleccionado = vehiculos.get(indiceSeleccionado);
-        
-        StringBuilder detalles = new StringBuilder();
-        detalles.append("=== DETALLES DEL VEHÍCULO SELECCIONADO ===\n\n");
-        detalles.append("Matrícula: ").append(vehiculoSeleccionado.getMatricula()).append("\n");
-        detalles.append("Marca: ").append(vehiculoSeleccionado.getMarca()).append("\n");
-        detalles.append("Modelo: ").append(vehiculoSeleccionado.getModelo()).append("\n");
-        detalles.append("Estado: ").append(vehiculoSeleccionado.getEstado()).append("\n");
-        
-        txtAreaVehiculo.setText(detalles.toString());
-    }
-    
-    /**
-     * Limpia todos los campos de entrada
-     */
-    private void limpiarCampos() {
-        txtMatricula.setText("");
-        txtMarca.setText("");
-        txtModelo.setText("");
-        txtEstado.setText("");
-        txtMatricula.requestFocus(); // Poner el foco en el primer campo
-    }
-    
-    /**
-     * Obtiene la lista de vehículos (útil para integración con otras clases)
-     */
-    public List<Vehiculo> getVehiculos() {
-        return new ArrayList<>(vehiculos); // Retorna una copia para evitar modificaciones externas
-    }
-    
-    /**
-     * Establece una lista de vehículos (útil para cargar datos externos)
-     */
-    public void setVehiculos(List<Vehiculo> vehiculos) {
-        this.vehiculos.clear();
-        this.modeloLista.clear();
-        
-        if (vehiculos != null) {
-            for (Vehiculo v : vehiculos) {
-                this.vehiculos.add(v);
-                this.modeloLista.addElement(v.toString());
-            }
-        }
     }
 
     /**
@@ -287,7 +23,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lblMatricula = new javax.swing.JLabel();
@@ -310,7 +46,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
         btnMostrarDetallesVehiculos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestión de Vehículos");
+        setTitle("Vehículos");
 
         lblMatricula.setText("Matrícula:");
 
@@ -330,7 +66,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
 
         panelScrollVehiculos.setViewportView(listaVehiculos);
 
-        lblVehiculos.setText("Vehículos:");
+        lblVehiculos.setText("Vehiculos:");
 
         btnVaciarV.setText("Vaciar");
 
@@ -424,7 +160,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
         );
 
         setBounds(0, 0, 772, 342);
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
     /**
      * @param args the command line arguments
@@ -461,7 +197,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarV;
     private javax.swing.JButton btnElminarV;
     private javax.swing.JButton btnMostrarDetallesVehiculos;
@@ -480,5 +216,5 @@ public class VentanaVehiculos extends javax.swing.JFrame {
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtModelo;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }
