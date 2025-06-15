@@ -4,6 +4,13 @@
  */
 package obligatorio2parking;
 
+import java.awt.Color;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USUARIO
@@ -16,7 +23,14 @@ public class VentanaReportes extends javax.swing.JFrame {
     public VentanaReportes() {
         initComponents();
     }
-
+    
+    private class MovListener implements ActionListener {
+            public void actionPerformed(ActionEvent e) {
+                JButton cual = ((JButton) e.getSource());
+                // Mostrar JOptionPane con información de movimientos para esa celda
+                JOptionPane.showMessageDialog(null, "Info del botón: " + cual.getText());
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,59 +40,205 @@ public class VentanaReportes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
-        jInternalFrame2 = new javax.swing.JInternalFrame();
-        jInternalFrame3 = new javax.swing.JInternalFrame();
+        pannelReportes = new javax.swing.JTabbedPane();
+        frameHistorial = new javax.swing.JInternalFrame();
+        comboVehiculoReportes = new javax.swing.JComboBox<>();
+        lblVehiculo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaVehiculosMovimientos = new javax.swing.JTable();
+        btnOrdenar = new javax.swing.JButton();
+        btnFiltrar = new javax.swing.JButton();
+        btnExportar = new javax.swing.JButton();
+        frameMovimientos = new javax.swing.JInternalFrame();
+        panelMovimientos = new javax.swing.JPanel();
+        btnGrilla = new javax.swing.JButton();
+        frameEstadisticas = new javax.swing.JInternalFrame();
+        lblServiciosMasUsados = new javax.swing.JLabel();
+        lblEmpleadosMovimientos = new javax.swing.JLabel();
+        lblClientesContratos = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaClientesContratos = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAreaEmpleadosMovimientos = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtAreaServicios = new javax.swing.JTextArea();
+        lblEstadiaLarga = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtAreaEstadia = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reportes");
         setAlwaysOnTop(true);
 
-        jInternalFrame1.setVisible(true);
+        frameHistorial.setVisible(true);
 
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        comboVehiculoReportes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblVehiculo.setText("Vehículo:");
+
+        tablaVehiculosMovimientos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaVehiculosMovimientos);
+
+        btnOrdenar.setText("Ordenar fecha ascendente/descendente");
+
+        btnFiltrar.setText("Filtro por tipo de movimiento  ");
+
+        btnExportar.setText("Exportar ");
+
+        javax.swing.GroupLayout frameHistorialLayout = new javax.swing.GroupLayout(frameHistorial.getContentPane());
+        frameHistorial.getContentPane().setLayout(frameHistorialLayout);
+        frameHistorialLayout.setHorizontalGroup(
+            frameHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameHistorialLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(frameHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblVehiculo)
+                    .addComponent(comboVehiculoReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOrdenar)
+                    .addComponent(btnFiltrar)
+                    .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        frameHistorialLayout.setVerticalGroup(
+            frameHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameHistorialLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(lblVehiculo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboVehiculoReportes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnOrdenar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnFiltrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExportar)
+                .addContainerGap(141, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
-        jTabbedPane2.addTab("Historial", jInternalFrame1);
+        pannelReportes.addTab("Historial", frameHistorial);
 
-        jInternalFrame2.setVisible(true);
+        frameMovimientos.setVisible(true);
 
-        javax.swing.GroupLayout jInternalFrame2Layout = new javax.swing.GroupLayout(jInternalFrame2.getContentPane());
-        jInternalFrame2.getContentPane().setLayout(jInternalFrame2Layout);
-        jInternalFrame2Layout.setHorizontalGroup(
-            jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        panelMovimientos.setLayout(new java.awt.GridLayout(4, 3));
+
+        btnGrilla.setText("Generar grilla");
+        btnGrilla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrillaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout frameMovimientosLayout = new javax.swing.GroupLayout(frameMovimientos.getContentPane());
+        frameMovimientos.getContentPane().setLayout(frameMovimientosLayout);
+        frameMovimientosLayout.setHorizontalGroup(
+            frameMovimientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameMovimientosLayout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addComponent(panelMovimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(btnGrilla)
+                .addContainerGap(188, Short.MAX_VALUE))
         );
-        jInternalFrame2Layout.setVerticalGroup(
-            jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        frameMovimientosLayout.setVerticalGroup(
+            frameMovimientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameMovimientosLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(frameMovimientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelMovimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(frameMovimientosLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(btnGrilla)))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Movimientos", jInternalFrame2);
+        pannelReportes.addTab("Movimientos", frameMovimientos);
 
-        jInternalFrame3.setVisible(true);
+        frameEstadisticas.setVisible(true);
 
-        javax.swing.GroupLayout jInternalFrame3Layout = new javax.swing.GroupLayout(jInternalFrame3.getContentPane());
-        jInternalFrame3.getContentPane().setLayout(jInternalFrame3Layout);
-        jInternalFrame3Layout.setHorizontalGroup(
-            jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        lblServiciosMasUsados.setText("Servicios más utilizados:");
+
+        lblEmpleadosMovimientos.setText("Empleados con más movimientos:");
+
+        lblClientesContratos.setText("Clientes más contratos:");
+
+        txtAreaClientesContratos.setColumns(20);
+        txtAreaClientesContratos.setRows(5);
+        jScrollPane2.setViewportView(txtAreaClientesContratos);
+
+        txtAreaEmpleadosMovimientos.setColumns(20);
+        txtAreaEmpleadosMovimientos.setRows(5);
+        jScrollPane3.setViewportView(txtAreaEmpleadosMovimientos);
+
+        txtAreaServicios.setColumns(20);
+        txtAreaServicios.setRows(5);
+        jScrollPane4.setViewportView(txtAreaServicios);
+
+        lblEstadiaLarga.setText("Estadía más larga:");
+
+        txtAreaEstadia.setColumns(20);
+        txtAreaEstadia.setRows(5);
+        jScrollPane5.setViewportView(txtAreaEstadia);
+
+        javax.swing.GroupLayout frameEstadisticasLayout = new javax.swing.GroupLayout(frameEstadisticas.getContentPane());
+        frameEstadisticas.getContentPane().setLayout(frameEstadisticasLayout);
+        frameEstadisticasLayout.setHorizontalGroup(
+            frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameEstadisticasLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(frameEstadisticasLayout.createSequentialGroup()
+                        .addComponent(lblEstadiaLarga)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(frameEstadisticasLayout.createSequentialGroup()
+                        .addGroup(frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblServiciosMasUsados)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addGroup(frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEmpleadosMovimientos)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addGroup(frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblClientesContratos))
+                        .addGap(50, 50, 50))))
         );
-        jInternalFrame3Layout.setVerticalGroup(
-            jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        frameEstadisticasLayout.setVerticalGroup(
+            frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameEstadisticasLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblServiciosMasUsados)
+                    .addComponent(lblEmpleadosMovimientos)
+                    .addComponent(lblClientesContratos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane4))
+                .addGap(47, 47, 47)
+                .addGroup(frameEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEstadiaLarga)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Estadísticas Generales", jInternalFrame3);
+        pannelReportes.addTab("Estadísticas Generales", frameEstadisticas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,19 +246,33 @@ public class VentanaReportes extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addComponent(pannelReportes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(113, 113, 113)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(pannelReportes)
+                .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGrillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrillaActionPerformed
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                JButton nuevo = new JButton(" ");
+                nuevo.setMargin(new Insets(-5, -5, -5, -5));
+                nuevo.setBackground(Color.BLACK);
+                nuevo.setForeground(Color.WHITE);
+                nuevo.setText("Día " + j + ", Hora " + i);
+                nuevo.addActionListener(new MovListener());
+                panelMovimientos.add(nuevo);
+            }
+        }
+    }//GEN-LAST:event_btnGrillaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,12 +307,34 @@ public class VentanaReportes extends javax.swing.JFrame {
                 new VentanaReportes().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JInternalFrame jInternalFrame1;
-    private javax.swing.JInternalFrame jInternalFrame2;
-    private javax.swing.JInternalFrame jInternalFrame3;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JButton btnExportar;
+    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton btnGrilla;
+    private javax.swing.JButton btnOrdenar;
+    private javax.swing.JComboBox<String> comboVehiculoReportes;
+    private javax.swing.JInternalFrame frameEstadisticas;
+    private javax.swing.JInternalFrame frameHistorial;
+    private javax.swing.JInternalFrame frameMovimientos;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JLabel lblClientesContratos;
+    private javax.swing.JLabel lblEmpleadosMovimientos;
+    private javax.swing.JLabel lblEstadiaLarga;
+    private javax.swing.JLabel lblServiciosMasUsados;
+    private javax.swing.JLabel lblVehiculo;
+    private javax.swing.JPanel panelMovimientos;
+    private javax.swing.JTabbedPane pannelReportes;
+    private javax.swing.JTable tablaVehiculosMovimientos;
+    private javax.swing.JTextArea txtAreaClientesContratos;
+    private javax.swing.JTextArea txtAreaEmpleadosMovimientos;
+    private javax.swing.JTextArea txtAreaEstadia;
+    private javax.swing.JTextArea txtAreaServicios;
     // End of variables declaration//GEN-END:variables
 }
