@@ -1,14 +1,91 @@
 package obligatorio2parking;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.SwingUtilities;
+import java.awt.Color;
 
 public class VentanaSistema extends javax.swing.JFrame {
+
+    // Variable para rastrear el estado del tema
+    private boolean temaOscuro = false;
 
     /**
      * Creates new form Interfaz
      */
     public VentanaSistema() {
         initComponents();
+        // Agregar ActionListener al botón
+        btnClaroOscuro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClaroOscuroActionPerformed(evt);
+            }
+        });
+    }
+
+    // Método para manejar el cambio de tema
+    private void btnClaroOscuroActionPerformed(java.awt.event.ActionEvent evt) {
+        temaOscuro = !temaOscuro;
+        cambiarTema();
+    }
+
+    // Método para aplicar el tema
+    private void cambiarTema() {
+        try {
+            if (temaOscuro) {
+                // Aplicar tema oscuro
+                UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+                
+                // Personalizar colores para tema oscuro
+                UIManager.put("Panel.background", new Color(45, 45, 45));
+                UIManager.put("Button.background", new Color(60, 60, 60));
+                UIManager.put("Button.foreground", Color.WHITE);
+                UIManager.put("MenuBar.background", new Color(35, 35, 35));
+                UIManager.put("Menu.background", new Color(35, 35, 35));
+                UIManager.put("Menu.foreground", Color.WHITE);
+                UIManager.put("MenuItem.background", new Color(45, 45, 45));
+                UIManager.put("MenuItem.foreground", Color.WHITE);
+                UIManager.put("MenuItem.selectionBackground", new Color(70, 70, 70));
+                UIManager.put("Frame.background", new Color(45, 45, 45));
+                
+                // Cambiar color de fondo de la ventana
+                getContentPane().setBackground(new Color(45, 45, 45));
+                
+            } else {
+                // Aplicar tema claro (Nimbus)
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
+                }
+                
+                // Restaurar colores por defecto
+                
+                UIManager.put("Panel.background", null);
+                UIManager.put("Button.background", null);
+                UIManager.put("Button.foreground", null);
+                UIManager.put("MenuBar.background", null);
+                UIManager.put("Menu.background", null);
+                UIManager.put("Menu.foreground", null);
+                UIManager.put("MenuItem.background", null);
+                UIManager.put("MenuItem.foreground", null);
+                UIManager.put("MenuItem.selectionBackground", null);
+                UIManager.put("Frame.background", null);
+                
+                getContentPane().setBackground(null);
+            }
+            
+            // Actualizar la interfaz
+            SwingUtilities.updateComponentTreeUI(this);
+            this.repaint();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al cambiar el tema: " + ex.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -192,31 +269,32 @@ public class VentanaSistema extends javax.swing.JFrame {
         setBounds(0, 0, 576, 324);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void itemGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGestionClientesActionPerformed
+    // Resto de los métodos ActionPerformed existentes...
+    private void itemGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaClientes vc = new VentanaClientes();
         vc.setVisible(true);
-    }//GEN-LAST:event_itemGestionClientesActionPerformed
+    }
 
-    private void itemVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVehiculosActionPerformed
+    private void itemVehiculosActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaVehiculos vv = new VentanaVehiculos();
         vv.setVisible(true);
-    }//GEN-LAST:event_itemVehiculosActionPerformed
+    }
 
-    private void itemSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalidasActionPerformed
+    private void itemSalidasActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaSalidas vs = new VentanaSalidas();
         vs.setVisible(true);
-    }//GEN-LAST:event_itemSalidasActionPerformed
+    }
 
-    private void itemMiniJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMiniJuegoActionPerformed
+    private void itemMiniJuegoActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaMiniJuego vm = new VentanaMiniJuego();
         vm.setVisible(true);
-    }//GEN-LAST:event_itemMiniJuegoActionPerformed
+    }
 
-    private void menuTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTerminarActionPerformed
+    private void menuTerminarActionPerformed(java.awt.event.ActionEvent evt) {
         
-    }//GEN-LAST:event_menuTerminarActionPerformed
+    }
 
-    private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
+    private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {
         int confirmacion = JOptionPane.showConfirmDialog(
             this,
             "¿Estás seguro que querés salir del sistema?",
@@ -228,47 +306,47 @@ public class VentanaSistema extends javax.swing.JFrame {
         if (confirmacion == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
-    }//GEN-LAST:event_itemSalirActionPerformed
+    }
 
-    private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEntradasActionPerformed
+    private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaEntradas ve = new VentanaEntradas();
         ve.setVisible(true);
-    }//GEN-LAST:event_itemEntradasActionPerformed
+    }
 
-    private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosActionPerformed
+    private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaEmpleados ve = new VentanaEmpleados();
         ve.setVisible(true);
-    }//GEN-LAST:event_itemEmpleadosActionPerformed
+    }
 
-    private void itemContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemContratosActionPerformed
+    private void itemContratosActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaContratos vc = new VentanaContratos();
         vc.setVisible(true);
-    }//GEN-LAST:event_itemContratosActionPerformed
+    }
 
-    private void itemServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemServiciosActionPerformed
+    private void itemServiciosActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaServiciosAdicionales vsa = new VentanaServiciosAdicionales();
         vsa.setVisible(true);
-    }//GEN-LAST:event_itemServiciosActionPerformed
+    }
 
-    private void itemReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReportesActionPerformed
+    private void itemReportesActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaReportes vr = new VentanaReportes();
         vr.setVisible(true);
-    }//GEN-LAST:event_itemReportesActionPerformed
+    }
 
-    private void itemRecupDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRecupDatosActionPerformed
+    private void itemRecupDatosActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaRecuperarDatos vrd = new VentanaRecuperarDatos();
         vrd.setVisible(true);
-    }//GEN-LAST:event_itemRecupDatosActionPerformed
+    }
 
-    private void itemGrabDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGrabDatosActionPerformed
+    private void itemGrabDatosActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaGrabarDatos vgd = new VentanaGrabarDatos();
         vgd.setVisible(true);
-    }//GEN-LAST:event_itemGrabDatosActionPerformed
+    }
 
-    private void itemInfoAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemInfoAutoresActionPerformed
+    private void itemInfoAutoresActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaAutores via = new VentanaAutores();
         via.setVisible(true);
-    }//GEN-LAST:event_itemInfoAutoresActionPerformed
+    }
 
     /**
      * @param args the command line arguments
@@ -295,7 +373,6 @@ public class VentanaSistema extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VentanaSistema.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
