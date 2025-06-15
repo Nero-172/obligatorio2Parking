@@ -1,5 +1,6 @@
 package obligatorio2parking;
 
+import dominio.Sistema;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.SwingUtilities;
@@ -14,7 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.MenuElement;
 
 public class VentanaSistema extends javax.swing.JFrame {
-
+    private Sistema sistema;
     // Variable para rastrear el estado del tema
     private boolean temaOscuro = false;
 
@@ -320,8 +321,9 @@ public class VentanaSistema extends javax.swing.JFrame {
 
     // Resto de los métodos ActionPerformed existentes...
     private void itemGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaClientes vc = new VentanaClientes();
-        vc.setVisible(true);
+        
+        VentanaClientes ventana = new VentanaClientes(sistema);
+        ventana.setVisible(true);
     }
 
     private void itemVehiculosActionPerformed(java.awt.event.ActionEvent evt) {

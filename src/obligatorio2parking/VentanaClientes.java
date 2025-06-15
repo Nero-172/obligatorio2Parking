@@ -1,22 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package obligatorio2parking;
 
-/**
- *
- * @author USUARIO
- */
-public class VentanaClientes extends javax.swing.JFrame {
+import dominio.Cliente;
+import dominio.Sistema;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form VentanaClientes
-     */
+public class VentanaClientes extends javax.swing.JFrame {
+    private Sistema sistema;
+    
     public VentanaClientes() {
+        sistema = new Sistema(); // inicializas aquí o con el sistema que necesites
         initComponents();
+        cargarListaClientes();
     }
 
+    public VentanaClientes(Sistema sistema) {
+        this.sistema = sistema;
+        initComponents();
+        cargarListaClientes();
+    }
+    
+    private void cargarListaClientes(){
+        ArrayList<Cliente> lista = sistema.getClientes();
+        String[] datos = new String[lista.size()];
+        
+        for(int i = 0; i < lista.size(); i++){
+            Cliente cli = lista.get(i);
+            datos[i] = cli.getNombre() + " - " + cli.getCedula();
+        }
+        
+        listaClientes.setListData(datos);
+    }
+    private void limpiarCampos() {
+        txtNombre.setText("");
+        txtCedula.setText("");
+        txtDireccion.setText("");
+        txtCelular.setText("");
+        txtAnio.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,6 +92,11 @@ public class VentanaClientes extends javax.swing.JFrame {
         });
 
         txtCelular.setColumns(4);
+        txtCelular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCelularActionPerformed(evt);
+            }
+        });
 
         lblCedula.setText("Cédula:");
 
@@ -82,6 +108,11 @@ public class VentanaClientes extends javax.swing.JFrame {
         });
 
         txtAnio.setColumns(4);
+        txtAnio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAnioActionPerformed(evt);
+            }
+        });
 
         lblAnio.setText("Año:");
 
@@ -90,10 +121,25 @@ public class VentanaClientes extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listaClientes);
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnVaciar.setText("Vaciar");
+        btnVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVaciarActionPerformed(evt);
+            }
+        });
 
         txtAreaClientes.setColumns(20);
         txtAreaClientes.setRows(5);
@@ -102,6 +148,11 @@ public class VentanaClientes extends javax.swing.JFrame {
         lblDetalles.setText("Detalles:");
 
         btnDetallesClientes.setText("Mostrar Detalles");
+        btnDetallesClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetallesClientesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,7 +263,7 @@ public class VentanaClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
@@ -222,6 +273,60 @@ public class VentanaClientes extends javax.swing.JFrame {
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVaciarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        String nombre = txtNombre.getText().trim();
+        String cedula = txtCedula.getText().trim();
+        String direccion = txtDireccion.getText().trim();
+        String celular = txtCelular.getText().trim();
+        String anioStr = txtAnio.getText().trim();
+        
+        if(nombre.equals("") || cedula.equals("") || direccion.equals("") || 
+                celular.equals("") || anioStr.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Por favor completa todos los campos");
+        } else {
+            try{
+                int anio = Integer.parseInt(anioStr);
+                Cliente nuevoCliente = new Cliente(nombre, cedula, direccion,
+                celular, anio);
+                sistema.agregarCliente(nuevoCliente);
+                cargarListaClientes();
+                limpiarCampos();
+            } catch(NumberFormatException e){
+                JOptionPane.showConfirmDialog(this, "El año debe "
+                        + "ser un número válido");
+            } catch(Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error,"
+                        + " ingrese campos válidos", 
+                        JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnDetallesClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDetallesClientesActionPerformed
+
+    private void txtCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCelularActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCelularActionPerformed
+
+    private void txtAnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAnioActionPerformed
 
     /**
      * @param args the command line arguments
