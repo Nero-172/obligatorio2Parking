@@ -19,9 +19,6 @@ public class Obligatorio2Parking {
         }
         
         Sistema sistema = new Sistema();
-        // Cargar datos del archivo
-        sistema = sistema.recuperarDatos();
-
         VentanaSistema vs = new VentanaSistema(sistema); // pasar el sistema con datos cargados
         vs.setVisible(true);
 
