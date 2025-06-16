@@ -34,10 +34,9 @@ public class Sistema implements Serializable{
     }
     
     // Métodos para Cliente
-    public boolean agregarCliente(String unNombre, String unaCedula, String unaDireccion, String unCelular, int unAnioCliente){
+    public boolean agregarCliente(Cliente cliente){
         boolean resultado = false;
-        if (buscarClientePorCedula(unaCedula) == null){
-            Cliente cliente = new Cliente(unNombre, unaCedula, unaDireccion, unCelular, unAnioCliente);
+        if (buscarClientePorCedula(cliente.getCedula()) == null){
             resultado = clientes.add(cliente);
         }
         return resultado;
@@ -366,5 +365,9 @@ public class Sistema implements Serializable{
     }
     public ArrayList<ServicioAdicional> getServiciosAdicionales(){ 
         return serviciosAdicionales;
+    }
+
+    public Sistema recuperarDatos(String datosser) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
