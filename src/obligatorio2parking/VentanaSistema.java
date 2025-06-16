@@ -18,10 +18,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     private Sistema sistema;
     // Variable para rastrear el estado del tema
     private boolean temaOscuro = false;
-
-    /**
-     * Creates new form Interfaz
-     */
+        
     public VentanaSistema() {
         initComponents();
         // Agregar ActionListener al botón
@@ -34,15 +31,14 @@ public class VentanaSistema extends javax.swing.JFrame {
     public VentanaSistema(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
-        sistema = Sistema.recuperarDatos();
+        //Precargar va aqui.
+    }   
+    public void precargarSistema(){
+        int resp = JOptionPane.showConfirmDialog(this, "Desea pre-cargar datos?");
+        if( resp == 0){
+            sistema.recuperarDatos();
+        } 
     }
-
-    // Método para manejar el cambio de tema
-    private void btnClaroOscuroActionPerformed(java.awt.event.ActionEvent evt) {
-        temaOscuro = !temaOscuro;
-        cambiarTema();
-    }
-
     // Método para aplicar el tema
     private void cambiarTema() {
         try {
@@ -176,6 +172,11 @@ public class VentanaSistema extends javax.swing.JFrame {
         setTitle("Obligatorio Prog 2 - Autores: Estudiantes: Jhonatan Adalid (320368) y Lorenzo Aldao ()");
 
         btnClaroOscuro.setText("Claro/Oscuro");
+        btnClaroOscuro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClaroOscuroActionPerformed(evt);
+            }
+        });
 
         menuGestion.setText("Gestión");
 
@@ -324,6 +325,11 @@ public class VentanaSistema extends javax.swing.JFrame {
         setBounds(0, 0, 576, 324);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnClaroOscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClaroOscuroActionPerformed
+        temaOscuro = !temaOscuro;
+        cambiarTema();
+    }//GEN-LAST:event_btnClaroOscuroActionPerformed
+
     // Resto de los métodos ActionPerformed existentes...
     private void itemGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaClientes ventana = new VentanaClientes();
@@ -359,6 +365,10 @@ public class VentanaSistema extends javax.swing.JFrame {
         );
 
         if (confirmacion == JOptionPane.YES_OPTION) {
+            // Un método para antes de la salida, guardar datos en caso que se creasen
+            if(sistema.existeDatos()){ 
+                sistema.grabarDatos();
+            }
             System.exit(0);
         }
     }

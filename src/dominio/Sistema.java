@@ -366,8 +366,14 @@ public class Sistema implements Serializable{
     public ArrayList<ServicioAdicional> getServiciosAdicionales(){ 
         return serviciosAdicionales;
     }
-
-    public Sistema recuperarDatos(String datosser) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public boolean existeDatos() {
+        return clientes.size() > 0 || 
+               vehiculos.size() > 0 || 
+               empleados.size() > 0 || 
+               contratos.size() > 0 || 
+               entradas.size() > 0 || 
+               salidas.size() > 0 || 
+               serviciosAdicionales.size() > 0;
     }
 }
