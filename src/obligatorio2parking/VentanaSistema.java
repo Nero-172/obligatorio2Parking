@@ -31,6 +31,11 @@ public class VentanaSistema extends javax.swing.JFrame {
             }
         });
     }
+    public VentanaSistema(Sistema sistema) {
+        this.sistema = sistema;
+        initComponents();
+        sistema = Sistema.recuperarDatos();
+    }
 
     // Método para manejar el cambio de tema
     private void btnClaroOscuroActionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,8 +326,7 @@ public class VentanaSistema extends javax.swing.JFrame {
 
     // Resto de los métodos ActionPerformed existentes...
     private void itemGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {
-        
-        VentanaClientes ventana = new VentanaClientes(sistema);
+        VentanaClientes ventana = new VentanaClientes();
         ventana.setVisible(true);
     }
 

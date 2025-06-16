@@ -366,4 +366,8 @@ public class Sistema implements Serializable{
     public ArrayList<ServicioAdicional> getServiciosAdicionales(){ 
         return serviciosAdicionales;
     }
+
+    public Sistema recuperarDatos(String datosser) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

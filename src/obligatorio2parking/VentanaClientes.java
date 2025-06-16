@@ -3,21 +3,15 @@ package obligatorio2parking;
 import dominio.Cliente;
 import dominio.Sistema;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import javax.swing.JOptionPane;
 
 public class VentanaClientes extends javax.swing.JFrame {
     private Sistema sistema;
     
     public VentanaClientes() {
-        sistema = new Sistema(); // inicializas aquí o con el sistema que necesites
+        sistema = new Sistema(); 
         initComponents();
-        cargarListaClientes();
-    }
-
-    public VentanaClientes(Sistema sistema) {
-        this.sistema = sistema;
-        initComponents();
-        cargarListaClientes();
     }
     
     private void cargarListaClientes(){
@@ -275,7 +269,8 @@ public class VentanaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCedulaActionPerformed
 
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
-        // TODO add your handling code here:
+        limpiarCampos();
+        listaClientes.clearSelection();
     }//GEN-LAST:event_btnVaciarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -291,14 +286,19 @@ public class VentanaClientes extends javax.swing.JFrame {
                     "Por favor completa todos los campos");
         } else {
             try{
+                //Este if lo generó chatGPT
+                if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                    throw new Exception("El nombre solo debe contener letras y espacios.");
+                }
                 int anio = Integer.parseInt(anioStr);
                 Cliente nuevoCliente = new Cliente(nombre, cedula, direccion,
                 celular, anio);
                 sistema.agregarCliente(nuevoCliente);
+                sistema.grabarDatos();
                 cargarListaClientes();
                 limpiarCampos();
             } catch(NumberFormatException e){
-                JOptionPane.showConfirmDialog(this, "El año debe "
+                JOptionPane.showMessageDialog(this, "El año debe "
                         + "ser un número válido");
             } catch(Exception e){
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error,"
@@ -313,11 +313,50 @@ public class VentanaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        String seleccionado = listaClientes.getSelectedValue();
+        try{
+            if(seleccionado != null){
+                // Separamos todo para buscar la cédula del cliente
+                String[] partes = seleccionado.split(" - ");
+                if(partes.length == 2){
+                    String cedula = partes[1];
+                    boolean eliminado = sistema.eliminarCliente(cedula);
+                    // Eliminamos el cliente por su cédula
+                    if(eliminado){
+                        JOptionPane.showMessageDialog(this, "Cliente eliminado"
+                        + " de cédula: " + cedula);
+                        cargarListaClientes();
+                        limpiarCampos();
+                    }
+                }
+            }
+        }catch(NoSuchElementException e){
+            JOptionPane.showMessageDialog(this,"No se encontró el cliente por "
+                    + " cédula", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnDetallesClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesClientesActionPerformed
-        // TODO add your handling code here:
+        String clienteSelec = listaClientes.getSelectedValue();
+        try{
+            String[] partes = clienteSelec.split(" - ");
+            String cedula = partes[1];
+            
+            Cliente cliente = sistema.buscarClientePorCedula(cedula);
+            
+            StringBuilder detalles = new StringBuilder();
+            detalles.append("Nombre: ").append(cliente.getNombre()).append("\n");
+            detalles.append("Cédula: ").append(cliente.getCedula()).append("\n");
+            detalles.append("Dirección: ").append(cliente.getDireccion()).append("\n");
+            detalles.append("Celular: ").append(cliente.getCelular()).append("\n");
+            detalles.append("Año cliente: ").append(cliente.getAnioCliente()).append("\n");
+            
+            txtAreaClientes.setText(detalles.toString());
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error inesperado",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnDetallesClientesActionPerformed
 
     private void txtCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCelularActionPerformed
