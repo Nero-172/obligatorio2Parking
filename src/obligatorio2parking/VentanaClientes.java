@@ -12,6 +12,7 @@ public class VentanaClientes extends javax.swing.JFrame {
     public VentanaClientes() {
         sistema = new Sistema(); 
         initComponents();
+        txtAreaClientes.setEditable(false);
     }
     
     private void cargarListaClientes(){
@@ -137,6 +138,7 @@ public class VentanaClientes extends javax.swing.JFrame {
 
         txtAreaClientes.setColumns(20);
         txtAreaClientes.setRows(5);
+        txtAreaClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(txtAreaClientes);
 
         lblDetalles.setText("Detalles:");
@@ -271,6 +273,7 @@ public class VentanaClientes extends javax.swing.JFrame {
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
         limpiarCampos();
         listaClientes.clearSelection();
+        txtAreaClientes.setText("");
     }//GEN-LAST:event_btnVaciarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -327,6 +330,7 @@ public class VentanaClientes extends javax.swing.JFrame {
                         + " de cédula: " + cedula);
                         cargarListaClientes();
                         limpiarCampos();
+                        txtAreaClientes.setText("");
                     }
                 }
             }

@@ -4,6 +4,7 @@ public class VentanaContratos extends javax.swing.JFrame {
 
     public VentanaContratos() {
         initComponents();
+        txtAreaContratos.setEditable(false);
     }
 
     /**
@@ -30,7 +31,7 @@ public class VentanaContratos extends javax.swing.JFrame {
         lblDetalles = new javax.swing.JLabel();
         btnMostrarDetalle = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtAreaContratos = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Contratos");
@@ -55,9 +56,9 @@ public class VentanaContratos extends javax.swing.JFrame {
 
         btnMostrarDetalle.setText("Mostrar Detalle");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtAreaContratos.setColumns(20);
+        txtAreaContratos.setRows(5);
+        jScrollPane1.setViewportView(txtAreaContratos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,7 +175,6 @@ public class VentanaContratos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboEmpleados;
     private javax.swing.JComboBox<String> comboVehiculos;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblClientes;
     private javax.swing.JLabel lblContratos;
     private javax.swing.JLabel lblDetalles;
@@ -183,6 +183,7 @@ public class VentanaContratos extends javax.swing.JFrame {
     private javax.swing.JLabel lblVehiculosContratos;
     private javax.swing.JList<String> listaContratos;
     private javax.swing.JScrollPane scrollContratos;
+    private javax.swing.JTextArea txtAreaContratos;
     private javax.swing.JTextField txtValorMensual;
     // End of variables declaration//GEN-END:variables
 }

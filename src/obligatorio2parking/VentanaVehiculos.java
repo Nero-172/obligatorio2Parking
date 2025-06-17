@@ -22,6 +22,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
     public VentanaVehiculos() {
         initComponents();
         inicializarComponentes();
+        txtAreaVehiculo.setEditable(false);
     }
     
     private void inicializarComponentes() {
