@@ -9,11 +9,12 @@ import javax.swing.JOptionPane;
 public class VentanaClientes extends javax.swing.JFrame {
     private Sistema sistema;
     
-    public VentanaClientes() {
-        sistema = new Sistema(); 
+    public VentanaClientes(Sistema sistema) {
+        this.sistema = sistema; 
         initComponents();
+        txtAreaClientes.setEditable(false);
+        cargarListaClientes();
     }
-    
     private void cargarListaClientes(){
         ArrayList<Cliente> lista = sistema.getClientes();
         String[] datos = new String[lista.size()];
@@ -137,6 +138,7 @@ public class VentanaClientes extends javax.swing.JFrame {
 
         txtAreaClientes.setColumns(20);
         txtAreaClientes.setRows(5);
+        txtAreaClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(txtAreaClientes);
 
         lblDetalles.setText("Detalles:");
@@ -271,6 +273,7 @@ public class VentanaClientes extends javax.swing.JFrame {
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
         limpiarCampos();
         listaClientes.clearSelection();
+        txtAreaClientes.setText("");
     }//GEN-LAST:event_btnVaciarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -294,7 +297,6 @@ public class VentanaClientes extends javax.swing.JFrame {
                 Cliente nuevoCliente = new Cliente(nombre, cedula, direccion,
                 celular, anio);
                 sistema.agregarCliente(nuevoCliente);
-                sistema.grabarDatos();
                 cargarListaClientes();
                 limpiarCampos();
             } catch(NumberFormatException e){
@@ -327,6 +329,7 @@ public class VentanaClientes extends javax.swing.JFrame {
                         + " de cédula: " + cedula);
                         cargarListaClientes();
                         limpiarCampos();
+                        txtAreaClientes.setText("");
                     }
                 }
             }
@@ -397,7 +400,8 @@ public class VentanaClientes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaClientes().setVisible(true);
+                Sistema sistema = new Sistema();
+                new VentanaClientes(sistema).setVisible(true);
             }
         });
     }

@@ -60,6 +60,14 @@ public class Contrato implements Serializable{
         this.valorMensual = unValorMensual; 
     }
     
+    public String mostrarDetalle() {
+    return "Contrato N°: " + numeroContrato + "\n" +
+           "Vehículo: " + vehiculo.getMarca() + " " + vehiculo.getModelo() + " - Matrícula: " + vehiculo.getMatricula() + "\n" +
+           "Cliente: " + cliente.getNombre() + " - Cédula: " + cliente.getCedula() + "\n" +
+           "Empleado: " + empleado.getNombre() + "\n" +
+           "Valor Mensual: $" + valorMensual;
+    }
+    
     @Override
     public String toString(){
         return "Contrato " + numeroContrato + " - " + vehiculo.getMatricula() + " - " + cliente.getNombre();

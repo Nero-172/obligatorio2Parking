@@ -19,10 +19,7 @@ public class Obligatorio2Parking {
         }
         
         Sistema sistema = new Sistema();
-        VentanaSistema vs = new VentanaSistema(sistema); // pasar el sistema con datos cargados
+        VentanaSistema vs = new VentanaSistema(sistema); 
         vs.setVisible(true);
-
-        // Cuando cierres la ventana (o después de agregar datos), guarda los datos:
-        // vs.addWindowListener(...) para guardar al cerrar ventana
     }
 }

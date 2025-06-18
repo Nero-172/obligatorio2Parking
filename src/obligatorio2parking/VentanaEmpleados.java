@@ -24,6 +24,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
         initComponents();
         inicializarDatos();
         configurarEventos();
+        txtAreaEmpleados.setEditable(false);
     }
     
     private void inicializarDatos() {
