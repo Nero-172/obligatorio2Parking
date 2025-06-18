@@ -1,14 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package obligatorio2parking;
 
-/**
- *
- * @author USUARIO
- */
+import dominio.Sistema;
+import javax.swing.JOptionPane;
+
 public class VentanaRecuperarDatos extends javax.swing.JFrame {
+
+    private Sistema sistema;
 
     /**
      * Creates new form VentanaRecuperarDatos
@@ -26,26 +23,63 @@ public class VentanaRecuperarDatos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnRecuperar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Recuperación de datos");
+
+        btnRecuperar.setText("Recuperar datos");
+        btnRecuperar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecuperarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addComponent(btnRecuperar)
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(158, Short.MAX_VALUE)
+                .addComponent(btnRecuperar)
+                .addGap(119, 119, 119))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecuperarActionPerformed
+        int opcion = JOptionPane.showConfirmDialog(null, "Desea reemplazar los datos actuales "
+                + "por los datos guardados?", "Confirmar recuperación"
+                ,JOptionPane.YES_NO_OPTION);
+        if(opcion == JOptionPane.YES_OPTION){
+            try{
+                Sistema nuevoSistema = Sistema.recuperarDatos();
+                if(nuevoSistema.existeDatos()){
+                    this.sistema = nuevoSistema;
+                    JOptionPane.showMessageDialog(null, "Datos recuperados exitosamente.");
+                    //AGREGAR NOTIFYOBSERVERS DESPUES DE CODEAR GESTION CONTRATOS.
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo recuperar "
+                            + "ningún dato. Se mantuvo el sistema actual.");
+                }
+            } catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Ocurrió un error al"
+                        + " recuperar datos:\n" + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+                
+        }
+    }//GEN-LAST:event_btnRecuperarActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -79,5 +113,6 @@ public class VentanaRecuperarDatos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRecuperar;
     // End of variables declaration//GEN-END:variables
 }

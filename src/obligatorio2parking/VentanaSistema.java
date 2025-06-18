@@ -404,7 +404,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }
 
     private void itemGrabDatosActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaGrabarDatos vgd = new VentanaGrabarDatos();
+        VentanaGrabarDatos vgd = new VentanaGrabarDatos(sistema);
         vgd.setVisible(true);
     }
 

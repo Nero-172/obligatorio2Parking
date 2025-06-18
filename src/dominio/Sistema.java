@@ -323,6 +323,36 @@ public class Sistema extends Observable implements Serializable {
         return clienteConMas;
     }
     
+    public boolean estaVacio(){
+        boolean vacio = true;
+        
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i) != null) {
+                vacio = false;
+            }
+        }
+
+        for (int i = 0; i < vehiculos.size(); i++) {
+            if (vehiculos.get(i) != null) {
+                vacio = false;
+            }
+        }
+
+        for (int i = 0; i < empleados.size(); i++) {
+            if (empleados.get(i) != null) {
+                vacio = false;
+            }
+        }
+
+        for (int i = 0; i < contratos.size(); i++) {
+            if (contratos.get(i) != null) {
+                vacio = false;
+            }
+        }
+
+        return vacio;
+    }
+    
     // Métodos de serialización
     public boolean grabarDatos(){
         boolean exitoso = false;

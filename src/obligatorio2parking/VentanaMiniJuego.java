@@ -49,13 +49,13 @@ public class VentanaMiniJuego extends JFrame implements KeyListener, ActionListe
     private Font titleFont = new Font("Arial", Font.BOLD, 32);
     
     public VentanaMiniJuego() {
-        initializeGame();
+        initializeGame(); 
     }
     
     private void initializeGame() {
         setTitle("Super Car Dodge - Advanced Edition");
         setSize(400, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         addKeyListener(this);
