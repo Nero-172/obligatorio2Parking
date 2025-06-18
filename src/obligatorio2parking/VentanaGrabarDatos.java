@@ -1,21 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package obligatorio2parking;
 
-/**
- *
- * @author USUARIO
- */
+import javax.swing.JOptionPane;
+import dominio.Sistema;
+
 public class VentanaGrabarDatos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaGrabarDatos
-     */
+    private Sistema sistema;
+    
     public VentanaGrabarDatos() {
         initComponents();
     }
+    
+    public VentanaGrabarDatos(Sistema s) {
+        this.sistema = s;
+        initComponents();
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,26 +25,62 @@ public class VentanaGrabarDatos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGrabar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Grabación de datos");
+
+        btnGrabar.setText("Grabar datos");
+        btnGrabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrabarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(158, Short.MAX_VALUE)
+                .addComponent(btnGrabar)
+                .addGap(119, 119, 119))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
+        int opcionG = JOptionPane.showConfirmDialog(this, "Desea guardar los"
+                + " datos actuales?", "Confirmar grabación",JOptionPane.YES_NO_OPTION);
+        if (sistema.estaVacio()) { // Verifica si no hay datos para guardar
+            JOptionPane.showMessageDialog(this, "No hay datos para guardar.",
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if(opcionG == JOptionPane.YES_OPTION){
+                try{
+                    boolean exitoso = sistema.grabarDatos();
+                    if(exitoso){
+                        JOptionPane.showMessageDialog(this, "Datos guardados correctamente");
+                    } else{
+                        JOptionPane.showMessageDialog(this, "No se pudieron guardar los datos");
+                    }
+                } catch(Exception e){
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar los datos:" +
+                            e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnGrabarActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -79,5 +114,6 @@ public class VentanaGrabarDatos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGrabar;
     // End of variables declaration//GEN-END:variables
 }
