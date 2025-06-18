@@ -10,7 +10,7 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Sistema implements Serializable{
+public class Sistema extends Observable implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private ArrayList<Cliente> clientes;
@@ -38,6 +38,10 @@ public class Sistema implements Serializable{
         boolean resultado = false;
         if (buscarClientePorCedula(cliente.getCedula()) == null){
             resultado = clientes.add(cliente);
+            if(resultado){
+                setChanged();
+                notifyObservers();
+            }
         }
         return resultado;
     }
@@ -52,6 +56,10 @@ public class Sistema implements Serializable{
                 }
             }
             resultado = clientes.remove(cliente);
+            if(resultado){
+                setChanged();
+                notifyObservers();
+            }
         }
         return resultado;
     }
@@ -72,6 +80,10 @@ public class Sistema implements Serializable{
         if (buscarVehiculoPorMatricula(unaMatricula) == null){
             Vehiculo vehiculo = new Vehiculo(unaMatricula, unaMarca, unModelo, unEstado);
             resultado = vehiculos.add(vehiculo);
+            if(resultado){
+                setChanged();
+                notifyObservers();
+            }
         }
         return resultado;
     }
@@ -92,6 +104,10 @@ public class Sistema implements Serializable{
         if (buscarEmpleadoPorCedula(unaCedulaE) == null && buscarEmpleadoPorNumero(unNumeroDeEmpleado) == null){
             Empleado empleado = new Empleado(unNombreE, unaCedulaE, unaDireccionE, unNumeroDeEmpleado);
             resultado = empleados.add(empleado);
+            if(resultado){
+                setChanged();
+                notifyObservers();
+            }
         }
         return resultado;
     }
@@ -120,7 +136,12 @@ public class Sistema implements Serializable{
     public boolean agregarContrato(Vehiculo unVehiculo, Cliente unClienteC, Empleado unEmpleadoC, double unValorMensual){
         Contrato contrato = new Contrato(proximoNumeroContrato, unVehiculo, unClienteC, unEmpleadoC, unValorMensual);
         proximoNumeroContrato++;
-        return contratos.add(contrato);
+        boolean resultado = contratos.add(contrato);
+        if(resultado){
+            setChanged();
+            notifyObservers();
+        }
+        return resultado;
     }
     
     public Contrato buscarContratoPorVehiculo(Vehiculo vehiculoC){
@@ -139,6 +160,10 @@ public class Sistema implements Serializable{
         if (!vehiculoEstaEnParking(vehiculoEntrada)){
             Entrada entrada = new Entrada(vehiculoEntrada, fechaEntrada, horaEntrada, notaEntrada, empleadoDeEntrada);
             resultado = entradas.add(entrada);
+            if(resultado){
+                setChanged();
+                notifyObservers();
+            }
         }
         return resultado;
     }
@@ -169,6 +194,10 @@ public class Sistema implements Serializable{
         if (!tieneSalida(entrada)){
             Salida salida = new Salida(entrada, empleadoSalida, fechaSalida, horaSalida, comentario);
             resultado = salidas.add(salida);
+            if(resultado){
+                setChanged();
+                notifyObservers();
+            }
         }
         return resultado;
     }
@@ -186,7 +215,12 @@ public class Sistema implements Serializable{
     // Métodos para Servicio Adicional
     public boolean agregarServicioAdicional(String tipoServicio, String fechaServicio, String horaServicio, Vehiculo vehiculoServicio, Empleado empleadoServicio, double costoDelServicio){
         ServicioAdicional servicio = new ServicioAdicional(tipoServicio, fechaServicio, horaServicio, vehiculoServicio, empleadoServicio, costoDelServicio);
-        return serviciosAdicionales.add(servicio);
+        boolean resultado = serviciosAdicionales.add(servicio);
+        if(resultado){
+            setChanged();
+            notifyObservers();
+        }
+        return resultado;
     }
     
     // Métodos para Reportes

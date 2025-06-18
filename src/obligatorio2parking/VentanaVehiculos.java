@@ -4,17 +4,15 @@
  */
 package obligatorio2parking;
 
+import dominio.Sistema;
 import dominio.Vehiculo;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author USUARIO
- */
 public class VentanaVehiculos extends javax.swing.JFrame {
     
+    private Sistema sistema;
     // Lista para almacenar los vehículos
     private List<Vehiculo> vehiculos;
     private DefaultListModel<String> modeloLista;
@@ -22,8 +20,15 @@ public class VentanaVehiculos extends javax.swing.JFrame {
     public VentanaVehiculos() {
         initComponents();
         inicializarComponentes();
-        txtAreaVehiculo.setEditable(false);
     }
+    public VentanaVehiculos(Sistema sistema) {
+        this.sistema = sistema;
+        initComponents();
+        inicializarComponentes();
+        this.vehiculos = sistema.getVehiculos();
+        actualizarListaVisual();
+    }
+   
     
     private void inicializarComponentes() {
         // Inicializar la lista de vehículos

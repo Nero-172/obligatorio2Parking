@@ -1,12 +1,115 @@
 package obligatorio2parking;
 
-public class VentanaContratos extends javax.swing.JFrame {
+import dominio.*;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
+public class VentanaContratos extends javax.swing.JFrame implements Observer{
+    private Sistema sistema;
+
+    public VentanaContratos(Sistema sistema) {
+        this.sistema = sistema;
+        this.sistema.addObserver(this);
+        initComponents();
+        cargarDatosIniciales();
+        txtAreaContratos.setEditable(false);
+
+        // Configurar listeners (por ejemplo, botón agregar)
+        btnAgregarContrato.addActionListener(e -> agregarContrato());
+        btnMostrarDetalle.addActionListener(e -> mostrarDetalleContrato());
+    }
+    
     public VentanaContratos() {
         initComponents();
         txtAreaContratos.setEditable(false);
     }
+    
+    private void cargarDatosIniciales() {
+        cargarComboVehiculos();
+        cargarComboClientes();
+        cargarComboEmpleados();
+        cargarListaContratos();
+    }
+    
+    private void cargarComboVehiculos() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Vehiculo v : sistema.getVehiculos()) {
+            model.addElement(v.toString());
+        }
+        comboVehiculos.setModel(model);
+    }
+    
+    private void cargarComboClientes() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Cliente c : sistema.getClientes()) {
+            model.addElement(c.toString());
+        }
+        comboClientes.setModel(model);
+    }
+    
+    private void cargarComboEmpleados() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Empleado emp : sistema.getEmpleados()) {
+            System.out.println(sistema.getEmpleados());
+            model.addElement(emp.toString());
+        }
+        comboEmpleados.setModel(model);
+    }
+    
+    private void cargarListaContratos() {
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for (Contrato cont : sistema.getContratos()) {
+            model.addElement(cont.toString());
+        }
+        listaContratos.setModel(model);
+    }
+    
+    private void agregarContrato() {
+        try {
+            int idxVehiculo = comboVehiculos.getSelectedIndex();
+            int idxCliente = comboClientes.getSelectedIndex();
+            int idxEmpleado = comboEmpleados.getSelectedIndex();
+            double valorMensual = Double.parseDouble(txtValorMensual.getText());
 
+            if (idxVehiculo == -1 || idxCliente == -1 || idxEmpleado == -1) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar vehículo, cliente y empleado");
+                return;
+            }
+
+            Vehiculo vehiculo = sistema.getVehiculos().get(idxVehiculo);
+            Cliente cliente = sistema.getClientes().get(idxCliente);
+            Empleado empleado = sistema.getEmpleados().get(idxEmpleado);
+
+            boolean agregado = sistema.agregarContrato(vehiculo, cliente, empleado, valorMensual);
+            if (agregado) {
+                JOptionPane.showMessageDialog(this, "Contrato agregado correctamente");
+                txtValorMensual.setText("");
+                sistema.notifyObservers(); // Forzar actualización
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo agregar contrato");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor mensual válido");
+        }
+    }
+    
+    private void mostrarDetalleContrato() {
+        int idx = listaContratos.getSelectedIndex();
+        if (idx == -1) {
+            txtAreaContratos.setText("Seleccione un contrato.");
+            return;
+        }
+        Contrato contrato = sistema.getContratos().get(idx);
+        txtAreaContratos.setText(contrato.mostrarDetalle());
+    }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        cargarDatosIniciales();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

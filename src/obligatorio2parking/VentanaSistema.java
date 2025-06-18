@@ -332,7 +332,7 @@ public class VentanaSistema extends javax.swing.JFrame {
 
     // Resto de los métodos ActionPerformed existentes...
     private void itemGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaClientes ventana = new VentanaClientes();
+        VentanaClientes ventana = new VentanaClientes(sistema);
         ventana.setVisible(true);
     }
 

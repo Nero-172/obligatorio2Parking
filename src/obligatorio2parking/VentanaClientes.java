@@ -9,12 +9,12 @@ import javax.swing.JOptionPane;
 public class VentanaClientes extends javax.swing.JFrame {
     private Sistema sistema;
     
-    public VentanaClientes() {
-        sistema = new Sistema(); 
+    public VentanaClientes(Sistema sistema) {
+        this.sistema = sistema; 
         initComponents();
         txtAreaClientes.setEditable(false);
+        cargarListaClientes();
     }
-    
     private void cargarListaClientes(){
         ArrayList<Cliente> lista = sistema.getClientes();
         String[] datos = new String[lista.size()];
@@ -297,7 +297,6 @@ public class VentanaClientes extends javax.swing.JFrame {
                 Cliente nuevoCliente = new Cliente(nombre, cedula, direccion,
                 celular, anio);
                 sistema.agregarCliente(nuevoCliente);
-                sistema.grabarDatos();
                 cargarListaClientes();
                 limpiarCampos();
             } catch(NumberFormatException e){
@@ -401,7 +400,8 @@ public class VentanaClientes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaClientes().setVisible(true);
+                Sistema sistema = new Sistema();
+                new VentanaClientes(sistema).setVisible(true);
             }
         });
     }
