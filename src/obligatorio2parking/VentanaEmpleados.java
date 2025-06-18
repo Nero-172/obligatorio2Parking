@@ -35,37 +35,6 @@ public class VentanaEmpleados extends javax.swing.JFrame {
     }
     
     private void configurarEventos() {
-        // Evento para agregar empleado
-        btnAgregarE.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                agregarEmpleado();
-            }
-        });
-        
-        // Evento para vaciar campos
-        btnVaciarE.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vaciarCampos();
-            }
-        });
-        
-        // Evento para eliminar empleado
-        jButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarEmpleado();
-            }
-        });
-        
-        // Evento para mostrar detalles del empleado
-        btnMostrarEmpleado.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mostrarDetalleEmpleado();
-            }
-        });
         
         // Evento para selección en la lista
         listaEmpleados.addListSelectionListener(e -> {
@@ -75,8 +44,304 @@ public class VentanaEmpleados extends javax.swing.JFrame {
         });
     }
     
-    private void agregarEmpleado() {
-        try {
+    private boolean validarCampos() {
+        if (txtNombreE.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "El nombre es obligatorio.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            txtNombreE.requestFocus();
+            return false;
+        }
+        
+        if (txtCedulaE.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "La cédula es obligatoria.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            txtCedulaE.requestFocus();
+            return false;
+        }
+        
+        if (txtDireccionE.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "La dirección es obligatoria.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            txtDireccionE.requestFocus();
+            return false;
+        }
+        
+        if (txtNumEmpleado.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "El número de empleado es obligatorio.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            txtNumEmpleado.requestFocus();
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private void vaciarCampos() {
+        txtNombreE.setText("");
+        txtCedulaE.setText("");
+        txtDireccionE.setText("");
+        txtNumEmpleado.setText("");
+        txtAreaEmpleados.setText("");
+        txtNombreE.requestFocus();
+    }
+    
+    private void mostrarDetalleEmpleado() {
+        int indiceSeleccionado = listaEmpleados.getSelectedIndex();
+        
+        if (indiceSeleccionado == -1) {
+            txtAreaEmpleados.setText("");
+            return;
+        }
+        
+        Empleado empleadoSeleccionado = empleados.get(indiceSeleccionado);
+        
+        StringBuilder detalles = new StringBuilder();
+        detalles.append("Nombre: ").append(empleadoSeleccionado.getNombre()).append("\n");
+        detalles.append("Cédula: ").append(empleadoSeleccionado.getCedula()).append("\n");
+        detalles.append("Dirección: ").append(empleadoSeleccionado.getDireccion()).append("\n");
+        detalles.append("Número de Empleado: ").append(empleadoSeleccionado.getNumeroEmpleado()).append("\n");
+        
+        txtAreaEmpleados.setText(detalles.toString());
+    }
+    
+    private void actualizarLista() {
+        modeloLista.clear();
+        for (Empleado empleado : empleados) {
+            modeloLista.addElement(empleado.toString());
+        }
+    }
+    
+    // Método público para obtener la lista de empleados (útil para otras ventanas)
+    public List<Empleado> getEmpleados() {
+        return new ArrayList<>(empleados);
+    }
+    
+    // Método público para establecer la lista de empleados (útil para cargar datos)
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = new ArrayList<>(empleados);
+        actualizarLista();
+    }
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        lblNombre = new javax.swing.JLabel();
+        lblCedula = new javax.swing.JLabel();
+        lblDireccion = new javax.swing.JLabel();
+        lblNumEmpleado = new javax.swing.JLabel();
+        txtNombreE = new javax.swing.JTextField();
+        txtCedulaE = new javax.swing.JTextField();
+        txtDireccionE = new javax.swing.JTextField();
+        txtNumEmpleado = new javax.swing.JTextField();
+        btnVaciarE = new javax.swing.JButton();
+        btnAgregarE = new javax.swing.JButton();
+        scrollEmpleados = new javax.swing.JScrollPane();
+        listaEmpleados = new javax.swing.JList<>();
+        lblListaEmpleados = new javax.swing.JLabel();
+        lblDetallesEmpleado = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAreaEmpleados = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Empleados");
+
+        lblNombre.setText("Nombre:");
+
+        lblCedula.setText("Cédula:");
+
+        lblDireccion.setText("Dirección:");
+
+        lblNumEmpleado.setText("Número de Empleado:");
+
+        txtNombreE.setColumns(4);
+        txtNombreE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreEActionPerformed(evt);
+            }
+        });
+
+        txtCedulaE.setColumns(4);
+        txtCedulaE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaEActionPerformed(evt);
+            }
+        });
+
+        txtDireccionE.setColumns(4);
+        txtDireccionE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDireccionEActionPerformed(evt);
+            }
+        });
+
+        txtNumEmpleado.setColumns(4);
+        txtNumEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumEmpleadoActionPerformed(evt);
+            }
+        });
+
+        btnVaciarE.setText("Vaciar");
+        btnVaciarE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVaciarEActionPerformed(evt);
+            }
+        });
+
+        btnAgregarE.setText("Agregar");
+        btnAgregarE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarEActionPerformed(evt);
+            }
+        });
+
+        scrollEmpleados.setViewportView(listaEmpleados);
+
+        lblListaEmpleados.setText("Empleados:");
+
+        lblDetallesEmpleado.setText("Detalles:");
+
+        txtAreaEmpleados.setColumns(20);
+        txtAreaEmpleados.setRows(5);
+        jScrollPane1.setViewportView(txtAreaEmpleados);
+
+        jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCedula)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCedulaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDireccion)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDireccionE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombre)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(lblNumEmpleado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNumEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnVaciarE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarE, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblListaEmpleados))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDetallesEmpleado)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblCedula, lblDireccion, lblNombre});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtCedulaE, txtDireccionE, txtNombreE, txtNumEmpleado});
+
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblListaEmpleados)
+                    .addComponent(lblDetallesEmpleado))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrollEmpleados, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombre)
+                            .addComponent(lblNumEmpleado)
+                            .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNumEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCedula)
+                            .addComponent(txtCedulaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDireccion)
+                            .addComponent(txtDireccionE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(74, 74, 74)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVaciarE)
+                    .addComponent(btnAgregarE)
+                    .addComponent(jButton1))
+                .addGap(27, 27, 27))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblCedula, lblDireccion, lblNombre});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtCedulaE, txtDireccionE, txtNombreE, txtNumEmpleado});
+
+        setBounds(0, 0, 885, 348);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVaciarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarEActionPerformed
+                if (empleados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "La lista ya está vacía", 
+                "Información", 
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        int confirmacion = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de que desea eliminar todos los empleados?", 
+            "Confirmar vaciado", 
+            JOptionPane.YES_NO_OPTION);
+            
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            // Limpiar ambas listas
+            empleados.clear();
+            modeloLista.clear();
+            
+            // Limpiar campos y área de detalles
+            vaciarCampos();
+            txtAreaEmpleados.setText("");
+            
+            JOptionPane.showMessageDialog(this, 
+                "Lista vaciada exitosamente", 
+                "Éxito", 
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnVaciarEActionPerformed
+
+    private void btnAgregarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEActionPerformed
+            try {
             // Validar campos
             if (!validarCampos()) {
                 return;
@@ -130,59 +395,10 @@ public class VentanaEmpleados extends javax.swing.JFrame {
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
         }
-    }
-    
-    private boolean validarCampos() {
-        if (txtNombreE.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "El nombre es obligatorio.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            txtNombreE.requestFocus();
-            return false;
-        }
-        
-        if (txtCedulaE.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "La cédula es obligatoria.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            txtCedulaE.requestFocus();
-            return false;
-        }
-        
-        if (txtDireccionE.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "La dirección es obligatoria.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            txtDireccionE.requestFocus();
-            return false;
-        }
-        
-        if (txtNumEmpleado.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "El número de empleado es obligatorio.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            txtNumEmpleado.requestFocus();
-            return false;
-        }
-        
-        return true;
-    }
-    
-    private void vaciarCampos() {
-        txtNombreE.setText("");
-        txtCedulaE.setText("");
-        txtDireccionE.setText("");
-        txtNumEmpleado.setText("");
-        txtAreaEmpleados.setText("");
-        txtNombreE.requestFocus();
-    }
-    
-    private void eliminarEmpleado() {
-        int indiceSeleccionado = listaEmpleados.getSelectedIndex();
+    }//GEN-LAST:event_btnAgregarEActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+          int indiceSeleccionado = listaEmpleados.getSelectedIndex();
         
         if (indiceSeleccionado == -1) {
             JOptionPane.showMessageDialog(this, 
@@ -207,200 +423,23 @@ public class VentanaEmpleados extends javax.swing.JFrame {
                 "Éxito", 
                 JOptionPane.INFORMATION_MESSAGE);
         }
-    }
-    
-    private void mostrarDetalleEmpleado() {
-        int indiceSeleccionado = listaEmpleados.getSelectedIndex();
-        
-        if (indiceSeleccionado == -1) {
-            txtAreaEmpleados.setText("");
-            return;
-        }
-        
-        Empleado empleadoSeleccionado = empleados.get(indiceSeleccionado);
-        
-        StringBuilder detalles = new StringBuilder();
-        detalles.append("DETALLES DEL EMPLEADO\n");
-        detalles.append("========================\n\n");
-        detalles.append("Nombre: ").append(empleadoSeleccionado.getNombre()).append("\n");
-        detalles.append("Cédula: ").append(empleadoSeleccionado.getCedula()).append("\n");
-        detalles.append("Dirección: ").append(empleadoSeleccionado.getDireccion()).append("\n");
-        detalles.append("Número de Empleado: ").append(empleadoSeleccionado.getNumeroEmpleado()).append("\n");
-        
-        txtAreaEmpleados.setText(detalles.toString());
-    }
-    
-    private void actualizarLista() {
-        modeloLista.clear();
-        for (Empleado empleado : empleados) {
-            modeloLista.addElement(empleado.toString());
-        }
-    }
-    
-    // Método público para obtener la lista de empleados (útil para otras ventanas)
-    public List<Empleado> getEmpleados() {
-        return new ArrayList<>(empleados);
-    }
-    
-    // Método público para establecer la lista de empleados (útil para cargar datos)
-    public void setEmpleados(List<Empleado> empleados) {
-        this.empleados = new ArrayList<>(empleados);
-        actualizarLista();
-    }
-    
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-        lblNombre = new javax.swing.JLabel();
-        lblCedula = new javax.swing.JLabel();
-        lblDireccion = new javax.swing.JLabel();
-        lblNumEmpleado = new javax.swing.JLabel();
-        txtNombreE = new javax.swing.JTextField();
-        txtCedulaE = new javax.swing.JTextField();
-        txtDireccionE = new javax.swing.JTextField();
-        txtNumEmpleado = new javax.swing.JTextField();
-        btnVaciarE = new javax.swing.JButton();
-        btnAgregarE = new javax.swing.JButton();
-        scrollEmpleados = new javax.swing.JScrollPane();
-        listaEmpleados = new javax.swing.JList<>();
-        lblListaEmpleados = new javax.swing.JLabel();
-        lblDetallesEmpleado = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtAreaEmpleados = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        btnMostrarEmpleado = new javax.swing.JButton();
+    private void txtNombreEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreEActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreEActionPerformed
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Empleados");
+    private void txtCedulaEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaEActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCedulaEActionPerformed
 
-        lblNombre.setText("Nombre:");
+    private void txtDireccionEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionEActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDireccionEActionPerformed
 
-        lblCedula.setText("Cédula:");
-
-        lblDireccion.setText("Dirección:");
-
-        lblNumEmpleado.setText("Número de Empleado:");
-
-        txtNombreE.setColumns(4);
-
-        txtCedulaE.setColumns(4);
-
-        txtDireccionE.setColumns(4);
-
-        txtNumEmpleado.setColumns(4);
-
-        btnVaciarE.setText("Vaciar");
-
-        btnAgregarE.setText("Agregar");
-
-        scrollEmpleados.setViewportView(listaEmpleados);
-
-        lblListaEmpleados.setText("Empleados:");
-
-        lblDetallesEmpleado.setText("Detalles:");
-
-        txtAreaEmpleados.setColumns(20);
-        txtAreaEmpleados.setRows(5);
-        jScrollPane1.setViewportView(txtAreaEmpleados);
-
-        jButton1.setText("Eliminar");
-
-        btnMostrarEmpleado.setText("Mostrar Detalle");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCedula)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCedulaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDireccion)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDireccionE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombre)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(lblNumEmpleado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNumEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnVaciarE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAgregarE, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scrollEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblListaEmpleados))
-                        .addGap(37, 37, 37))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnMostrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDetallesEmpleado)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
-        );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblCedula, lblDireccion, lblNombre});
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtCedulaE, txtDireccionE, txtNombreE, txtNumEmpleado});
-
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblListaEmpleados)
-                    .addComponent(lblDetallesEmpleado))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(scrollEmpleados, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNombre)
-                            .addComponent(lblNumEmpleado)
-                            .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNumEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCedula)
-                            .addComponent(txtCedulaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDireccion)
-                            .addComponent(txtDireccionE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(74, 74, 74)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVaciarE)
-                    .addComponent(btnAgregarE)
-                    .addComponent(jButton1)
-                    .addComponent(btnMostrarEmpleado))
-                .addGap(27, 27, 27))
-        );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblCedula, lblDireccion, lblNombre});
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtCedulaE, txtDireccionE, txtNombreE, txtNumEmpleado});
-
-        setBounds(0, 0, 885, 348);
-    }// </editor-fold>//GEN-END:initComponents
+    private void txtNumEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumEmpleadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumEmpleadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -436,7 +475,6 @@ public class VentanaEmpleados extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarE;
-    private javax.swing.JButton btnMostrarEmpleado;
     private javax.swing.JButton btnVaciarE;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
