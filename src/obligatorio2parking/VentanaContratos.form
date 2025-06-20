@@ -29,40 +29,43 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="372" pref="372" max="-2" attributes="0"/>
-              <Component id="lblContratos" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="148" pref="148" max="-2" attributes="0"/>
-              <Component id="lblDetalles" min="-2" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblVehiculosContratos" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboVehiculos" min="-2" pref="125" max="-2" attributes="0"/>
-                  <Component id="lblEmpleado" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboEmpleados" min="-2" pref="125" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="372" pref="372" max="-2" attributes="0"/>
+                      <Component id="lblContratos" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="148" pref="148" max="-2" attributes="0"/>
+                      <Component id="lblDetalles" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblVehiculosContratos" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboVehiculos" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="lblEmpleado" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboEmpleados" min="-2" pref="125" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="45" pref="45" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblClientes" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboClientes" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="lblValorMensual" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtValorMensual" min="-2" pref="85" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="47" pref="47" max="-2" attributes="0"/>
+                      <Component id="scrollContratos" min="-2" pref="185" max="-2" attributes="0"/>
+                      <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="175" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="btnAgregarContrato" min="-2" pref="170" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="btnMostrarDetalle" min="-2" pref="134" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="45" pref="45" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblClientes" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboClientes" min="-2" pref="125" max="-2" attributes="0"/>
-                  <Component id="lblValorMensual" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtValorMensual" min="-2" pref="85" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="47" pref="47" max="-2" attributes="0"/>
-              <Component id="scrollContratos" min="-2" pref="185" max="-2" attributes="0"/>
-              <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="175" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="407" max="-2" attributes="0"/>
-              <Component id="btnMostrarDetalle" min="-2" pref="134" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-              <Component id="btnAgregarContrato" min="-2" pref="170" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -102,14 +105,13 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-              <Component id="btnMostrarDetalle" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnAgregarContrato" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnMostrarDetalle" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace pref="45" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
