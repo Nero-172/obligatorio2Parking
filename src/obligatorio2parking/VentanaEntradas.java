@@ -5,15 +5,18 @@ AUTORES - ESTUDIANTES
 */
 package obligatorio2parking;
 
+import dominio.Sistema;
+
 /**
  *
  * @author MSI
  */
 public class VentanaEntradas extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VentanaEntradas
-     */
+    private Sistema sistema;
+    
+    public VentanaEntradas(Sistema sistema){
+        this.sistema = sistema;
+    }
     public VentanaEntradas() {
         initComponents();
         txtAreaNotas.setEditable(false);
