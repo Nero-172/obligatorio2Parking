@@ -1,3 +1,8 @@
+/*
+AUTORES - ESTUDIANTES
+ JHONATAN ADALID (320368)
+ LORENZO ALDAO (307239)
+*/
 package obligatorio2parking;
 
 import dominio.Sistema;
@@ -384,7 +389,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }
 
     private void itemContratosActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaContratos vc = new VentanaContratos();
+        VentanaContratos vc = new VentanaContratos(sistema);
         vc.setVisible(true);
     }
 

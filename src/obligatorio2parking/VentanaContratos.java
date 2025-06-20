@@ -1,3 +1,8 @@
+/*
+AUTORES - ESTUDIANTES
+ JHONATAN ADALID (320368)
+ LORENZO ALDAO (307239)
+*/
 package obligatorio2parking;
 
 import dominio.*;
@@ -16,10 +21,6 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
         initComponents();
         cargarDatosIniciales();
         txtAreaContratos.setEditable(false);
-
-        // Configurar listeners (por ejemplo, botón agregar)
-        btnAgregarContrato.addActionListener(e -> agregarContrato());
-        btnMostrarDetalle.addActionListener(e -> mostrarDetalleContrato());
     }
     
     public VentanaContratos() {
@@ -67,34 +68,6 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
         listaContratos.setModel(model);
     }
     
-    private void agregarContrato() {
-        try {
-            int idxVehiculo = comboVehiculos.getSelectedIndex();
-            int idxCliente = comboClientes.getSelectedIndex();
-            int idxEmpleado = comboEmpleados.getSelectedIndex();
-            double valorMensual = Double.parseDouble(txtValorMensual.getText());
-
-            if (idxVehiculo == -1 || idxCliente == -1 || idxEmpleado == -1) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar vehículo, cliente y empleado");
-                return;
-            }
-
-            Vehiculo vehiculo = sistema.getVehiculos().get(idxVehiculo);
-            Cliente cliente = sistema.getClientes().get(idxCliente);
-            Empleado empleado = sistema.getEmpleados().get(idxEmpleado);
-
-            boolean agregado = sistema.agregarContrato(vehiculo, cliente, empleado, valorMensual);
-            if (agregado) {
-                JOptionPane.showMessageDialog(this, "Contrato agregado correctamente");
-                txtValorMensual.setText("");
-                sistema.notifyObservers(); // Forzar actualización
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo agregar contrato");
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese un valor mensual válido");
-        }
-    }
     
     private void mostrarDetalleContrato() {
         int idx = listaContratos.getSelectedIndex();
@@ -135,6 +108,7 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
         btnMostrarDetalle = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaContratos = new javax.swing.JTextArea();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Contratos");
@@ -143,6 +117,12 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
 
         lblClientes.setText("Clientes:");
 
+        comboVehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboVehiculosActionPerformed(evt);
+            }
+        });
+
         lblEmpleado.setText("Empleado:");
 
         lblValorMensual.setText("Valor Mensual:");
@@ -150,6 +130,11 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
         txtValorMensual.setColumns(5);
 
         btnAgregarContrato.setText("Agregar");
+        btnAgregarContrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarContratoActionPerformed(evt);
+            }
+        });
 
         scrollContratos.setViewportView(listaContratos);
 
@@ -162,6 +147,13 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
         txtAreaContratos.setColumns(20);
         txtAreaContratos.setRows(5);
         jScrollPane1.setViewportView(txtAreaContratos);
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,10 +182,13 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(btnAgregarContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139)
+                .addGap(407, 407, 407)
                 .addComponent(btnMostrarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(btnAgregarContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btnEliminar))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,15 +221,53 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
                                 .addGap(14, 14, 14)
                                 .addComponent(txtValorMensual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(btnAgregarContrato))
-                    .addComponent(btnMostrarDetalle)))
+                .addComponent(btnMostrarDetalle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarContrato)
+                    .addComponent(btnEliminar))
+                .addGap(26, 26, 26))
         );
 
         setBounds(0, 0, 806, 311);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comboVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVehiculosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboVehiculosActionPerformed
+
+    private void btnAgregarContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarContratoActionPerformed
+        try {
+            int idxVehiculo = comboVehiculos.getSelectedIndex();
+            int idxCliente = comboClientes.getSelectedIndex();
+            int idxEmpleado = comboEmpleados.getSelectedIndex();
+            double valorMensual = Double.parseDouble(txtValorMensual.getText());
+
+            if (idxVehiculo == -1 || idxCliente == -1 || idxEmpleado == -1) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar vehículo, cliente y empleado");
+                return;
+            }
+
+            Vehiculo vehiculo = sistema.getVehiculos().get(idxVehiculo);
+            Cliente cliente = sistema.getClientes().get(idxCliente);
+            Empleado empleado = sistema.getEmpleados().get(idxEmpleado);
+
+            boolean agregado = sistema.agregarContrato(vehiculo, cliente, empleado, valorMensual);
+            if (agregado) {
+                JOptionPane.showMessageDialog(this, "Contrato agregado correctamente");
+                txtValorMensual.setText("");
+                sistema.notifyObservers(); // Forzar actualización
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo agregar contrato");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor mensual válido");
+        }
+    }//GEN-LAST:event_btnAgregarContratoActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,6 +306,7 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarContrato;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnMostrarDetalle;
     private javax.swing.JComboBox<String> comboClientes;
     private javax.swing.JComboBox<String> comboEmpleados;

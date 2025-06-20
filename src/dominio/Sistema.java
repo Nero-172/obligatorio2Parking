@@ -75,12 +75,11 @@ public class Sistema extends Observable implements Serializable {
     }
     
     // Métodos para Vehículo
-    public boolean agregarVehiculo(String unaMatricula, String unaMarca, String unModelo, String unEstado){
+    public boolean agregarVehiculo(Vehiculo vehiculo) {
         boolean resultado = false;
-        if (buscarVehiculoPorMatricula(unaMatricula) == null){
-            Vehiculo vehiculo = new Vehiculo(unaMatricula, unaMarca, unModelo, unEstado);
+        if (vehiculo != null && buscarVehiculoPorMatricula(vehiculo.getMatricula()) == null) {
             resultado = vehiculos.add(vehiculo);
-            if(resultado){
+            if (resultado) {
                 setChanged();
                 notifyObservers();
             }
@@ -99,12 +98,14 @@ public class Sistema extends Observable implements Serializable {
     }
     
     // Métodos para Empleado
-    public boolean agregarEmpleado(String unNombreE, String unaCedulaE, String unaDireccionE, int unNumeroDeEmpleado){
+    public boolean agregarEmpleado(Empleado empleado) {
         boolean resultado = false;
-        if (buscarEmpleadoPorCedula(unaCedulaE) == null && buscarEmpleadoPorNumero(unNumeroDeEmpleado) == null){
-            Empleado empleado = new Empleado(unNombreE, unaCedulaE, unaDireccionE, unNumeroDeEmpleado);
+        if (empleado != null 
+            && buscarEmpleadoPorCedula(empleado.getCedula()) == null 
+            && buscarEmpleadoPorNumero(empleado.getNumeroEmpleado()) == null) {
+
             resultado = empleados.add(empleado);
-            if(resultado){
+            if (resultado) {
                 setChanged();
                 notifyObservers();
             }
