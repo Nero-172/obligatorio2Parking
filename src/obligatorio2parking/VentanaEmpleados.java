@@ -1,7 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+AUTORES - ESTUDIANTES
+ JHONATAN ADALID (320368)
+ LORENZO ALDAO (307239)
+*/
 package obligatorio2parking;
 
 import dominio.Empleado;
@@ -339,7 +340,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
             
             // Crear y agregar el empleado al sistema
             Empleado nuevoEmpleado = new Empleado(nombre, cedula, direccion, numeroEmpleado);
-            sistema.getEmpleados().add(nuevoEmpleado);
+            sistema.agregarEmpleado(nuevoEmpleado);
             
             // Actualizar la lista
             actualizarLista();

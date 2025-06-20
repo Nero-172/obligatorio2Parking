@@ -1,3 +1,8 @@
+/*
+AUTORES - ESTUDIANTES
+ JHONATAN ADALID (320368)
+ LORENZO ALDAO (307239)
+*/
 package obligatorio2parking;
 
 import javax.swing.JOptionPane;
