@@ -304,45 +304,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarVActionPerformed
 
     private void btnVaciarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarVActionPerformed
-         ArrayList<Vehiculo> vehiculos = sistema.getVehiculos();
-        
-        if (vehiculos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "La lista ya está vacía", 
-                "Información", 
-                JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        int confirmacion = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar todos los vehículos?", 
-            "Confirmar vaciado", 
-            JOptionPane.YES_NO_OPTION);
-            
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            try {
-                // Limpiar la lista del sistema
-                vehiculos.clear();
-                
-                // Recargar la lista visual
-                cargarListaVehiculos();
-                
-                // Limpiar campos y área de detalles
-                limpiarCampos();
-                txtAreaVehiculo.setText("");
-                
-                JOptionPane.showMessageDialog(this, 
-                    "Lista vaciada exitosamente", 
-                    "Éxito", 
-                    JOptionPane.INFORMATION_MESSAGE);
-                    
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, 
-                    "Error al vaciar lista: " + ex.getMessage(), 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        limpiarCampos();
     }//GEN-LAST:event_btnVaciarVActionPerformed
 
     private void btnElminarV1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElminarV1ActionPerformed

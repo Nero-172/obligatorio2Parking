@@ -273,35 +273,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVaciarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarEActionPerformed
-       if (sistema.getEmpleados().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "La lista ya está vacía", 
-                "Información", 
-                JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        int confirmacion = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar todos los empleados?", 
-            "Confirmar vaciado", 
-            JOptionPane.YES_NO_OPTION);
-            
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            // Limpiar la lista del sistema
-            sistema.getEmpleados().clear();
-            
-            // Limpiar campos y área de detalles
-            vaciarCampos();
-            txtAreaEmpleados.setText("");
-            
-            // Actualizar la lista visual
-            actualizarLista();
-            
-            JOptionPane.showMessageDialog(this, 
-                "Lista vaciada exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-        }
+       vaciarCampos();
     }//GEN-LAST:event_btnVaciarEActionPerformed
 
     private void btnAgregarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEActionPerformed
