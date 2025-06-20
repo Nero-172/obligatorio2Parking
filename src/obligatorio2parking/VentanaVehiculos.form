@@ -31,14 +31,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="btnVaciarV" min="-2" pref="75" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnAgregarV" min="-2" pref="120" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnElminarV" min="-2" pref="105" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblMatricula" min="-2" pref="54" max="-2" attributes="0"/>
                           <Component id="lblMarca" min="-2" pref="54" max="-2" attributes="0"/>
@@ -65,8 +58,17 @@
                           <Component id="lblDetalles" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="btnVaciarV" min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnAgregarV" min="-2" pref="120" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnElminarV" min="-2" pref="105" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnElminarV1" min="-2" pref="128" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="21" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -110,6 +112,7 @@
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="btnAgregarV" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnElminarV" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnElminarV1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
@@ -225,6 +228,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Detalles de Veh&#xed;culo:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnElminarV1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mostrar detalles"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnElminarV1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

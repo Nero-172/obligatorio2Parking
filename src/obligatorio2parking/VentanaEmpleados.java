@@ -5,6 +5,7 @@
 package obligatorio2parking;
 
 import dominio.Empleado;
+import dominio.Sistema;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,73 +18,25 @@ import java.util.List;
  */
 public class VentanaEmpleados extends javax.swing.JFrame {
     
-    private List<Empleado> empleados;
-    private DefaultListModel<String> modeloLista;
+     private Sistema sistema;
 
-    public VentanaEmpleados() {
+    public VentanaEmpleados(Sistema sistema) {
+        this.sistema = sistema; 
         initComponents();
-        inicializarDatos();
-        configurarEventos();
         txtAreaEmpleados.setEditable(false);
+        cargarListaEmpleados();
     }
-    
-    private void inicializarDatos() {
-        empleados = new ArrayList<>();
-        modeloLista = new DefaultListModel<>();
-        listaEmpleados.setModel(modeloLista);
-        txtAreaEmpleados.setEditable(false);
-    }
-    
-    private void configurarEventos() {
+    private void cargarListaEmpleados(){
+        ArrayList<Empleado> lista = sistema.getEmpleados();
+        String[] datos = new String[lista.size()];
         
-        // Evento para selección en la lista
-        listaEmpleados.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                mostrarDetalleEmpleado();
-            }
-        });
-    }
-    
-    private boolean validarCampos() {
-        if (txtNombreE.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "El nombre es obligatorio.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            txtNombreE.requestFocus();
-            return false;
+        for(int i = 0; i < lista.size(); i++){
+            Empleado emp = lista.get(i);
+            datos[i] = emp.getNombre() + " - " + emp.getCedula();
         }
         
-        if (txtCedulaE.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "La cédula es obligatoria.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            txtCedulaE.requestFocus();
-            return false;
-        }
-        
-        if (txtDireccionE.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "La dirección es obligatoria.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            txtDireccionE.requestFocus();
-            return false;
-        }
-        
-        if (txtNumEmpleado.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "El número de empleado es obligatorio.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            txtNumEmpleado.requestFocus();
-            return false;
-        }
-        
-        return true;
+        listaEmpleados.setListData(datos);
     }
-    
     private void vaciarCampos() {
         txtNombreE.setText("");
         txtCedulaE.setText("");
@@ -93,41 +46,34 @@ public class VentanaEmpleados extends javax.swing.JFrame {
         txtNombreE.requestFocus();
     }
     
-    private void mostrarDetalleEmpleado() {
-        int indiceSeleccionado = listaEmpleados.getSelectedIndex();
-        
-        if (indiceSeleccionado == -1) {
-            txtAreaEmpleados.setText("");
-            return;
+        // Método auxiliar para validar campos
+    private boolean validarCampos() {
+        if (txtNombreE.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtNombreE.requestFocus();
+            return false;
         }
-        
-        Empleado empleadoSeleccionado = empleados.get(indiceSeleccionado);
-        
-        StringBuilder detalles = new StringBuilder();
-        detalles.append("Nombre: ").append(empleadoSeleccionado.getNombre()).append("\n");
-        detalles.append("Cédula: ").append(empleadoSeleccionado.getCedula()).append("\n");
-        detalles.append("Dirección: ").append(empleadoSeleccionado.getDireccion()).append("\n");
-        detalles.append("Número de Empleado: ").append(empleadoSeleccionado.getNumeroEmpleado()).append("\n");
-        
-        txtAreaEmpleados.setText(detalles.toString());
+        if (txtCedulaE.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La cédula es obligatoria.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtCedulaE.requestFocus();
+            return false;
+        }
+        if (txtDireccionE.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La dirección es obligatoria.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtDireccionE.requestFocus();
+            return false;
+        }
+        if (txtNumEmpleado.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El número de empleado es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtNumEmpleado.requestFocus();
+            return false;
+        }
+        return true;
     }
     
+    // Método auxiliar para actualizar la lista
     private void actualizarLista() {
-        modeloLista.clear();
-        for (Empleado empleado : empleados) {
-            modeloLista.addElement(empleado.toString());
-        }
-    }
-    
-    // Método público para obtener la lista de empleados (útil para otras ventanas)
-    public List<Empleado> getEmpleados() {
-        return new ArrayList<>(empleados);
-    }
-    
-    // Método público para establecer la lista de empleados (útil para cargar datos)
-    public void setEmpleados(List<Empleado> empleados) {
-        this.empleados = new ArrayList<>(empleados);
-        actualizarLista();
+        cargarListaEmpleados();
     }
     
     @SuppressWarnings("unchecked")
@@ -151,6 +97,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaEmpleados = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Empleados");
@@ -222,6 +169,13 @@ public class VentanaEmpleados extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Mostrar detalles");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -251,15 +205,21 @@ public class VentanaEmpleados extends javax.swing.JFrame {
                         .addComponent(btnAgregarE, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblListaEmpleados))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDetallesEmpleado)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblListaEmpleados))
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDetallesEmpleado)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblCedula, lblDireccion, lblNombre});
@@ -299,7 +259,8 @@ public class VentanaEmpleados extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVaciarE)
                     .addComponent(btnAgregarE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(27, 27, 27))
         );
 
@@ -311,7 +272,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVaciarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarEActionPerformed
-                if (empleados.isEmpty()) {
+       if (sistema.getEmpleados().isEmpty()) {
             JOptionPane.showMessageDialog(this, 
                 "La lista ya está vacía", 
                 "Información", 
@@ -325,13 +286,15 @@ public class VentanaEmpleados extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION);
             
         if (confirmacion == JOptionPane.YES_OPTION) {
-            // Limpiar ambas listas
-            empleados.clear();
-            modeloLista.clear();
+            // Limpiar la lista del sistema
+            sistema.getEmpleados().clear();
             
             // Limpiar campos y área de detalles
             vaciarCampos();
             txtAreaEmpleados.setText("");
+            
+            // Actualizar la lista visual
+            actualizarLista();
             
             JOptionPane.showMessageDialog(this, 
                 "Lista vaciada exitosamente", 
@@ -353,7 +316,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
             int numeroEmpleado = Integer.parseInt(txtNumEmpleado.getText().trim());
             
             // Verificar si ya existe un empleado con la misma cédula
-            for (Empleado emp : empleados) {
+            for (Empleado emp : sistema.getEmpleados()) {
                 if (emp.getCedula().equals(cedula)) {
                     JOptionPane.showMessageDialog(this, 
                         "Ya existe un empleado con esa cédula.", 
@@ -364,7 +327,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
             }
             
             // Verificar si ya existe un empleado con el mismo número
-            for (Empleado emp : empleados) {
+            for (Empleado emp : sistema.getEmpleados()) {
                 if (emp.getNumeroEmpleado() == numeroEmpleado) {
                     JOptionPane.showMessageDialog(this, 
                         "Ya existe un empleado con ese número.", 
@@ -374,9 +337,9 @@ public class VentanaEmpleados extends javax.swing.JFrame {
                 }
             }
             
-            // Crear y agregar el empleado
+            // Crear y agregar el empleado al sistema
             Empleado nuevoEmpleado = new Empleado(nombre, cedula, direccion, numeroEmpleado);
-            empleados.add(nuevoEmpleado);
+            sistema.getEmpleados().add(nuevoEmpleado);
             
             // Actualizar la lista
             actualizarLista();
@@ -398,7 +361,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarEActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-          int indiceSeleccionado = listaEmpleados.getSelectedIndex();
+     int indiceSeleccionado = listaEmpleados.getSelectedIndex();
         
         if (indiceSeleccionado == -1) {
             JOptionPane.showMessageDialog(this, 
@@ -414,7 +377,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION);
             
         if (confirmacion == JOptionPane.YES_OPTION) {
-            empleados.remove(indiceSeleccionado);
+            sistema.getEmpleados().remove(indiceSeleccionado);
             actualizarLista();
             txtAreaEmpleados.setText("");
             
@@ -440,6 +403,29 @@ public class VentanaEmpleados extends javax.swing.JFrame {
     private void txtNumEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumEmpleadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumEmpleadoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+           // Implementado: Mostrar detalles del empleado seleccionado
+        int indiceSeleccionado = listaEmpleados.getSelectedIndex();
+        
+        if (indiceSeleccionado == -1) {
+            JOptionPane.showMessageDialog(this, 
+                "Debe seleccionar un empleado de la lista para ver sus detalles.", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Empleado empleadoSeleccionado = sistema.getEmpleados().get(indiceSeleccionado);
+        
+        StringBuilder detalles = new StringBuilder();
+        detalles.append("Nombre: ").append(empleadoSeleccionado.getNombre()).append("\n");
+        detalles.append("Cédula: ").append(empleadoSeleccionado.getCedula()).append("\n");
+        detalles.append("Dirección: ").append(empleadoSeleccionado.getDireccion()).append("\n");
+        detalles.append("Número de Empleado: ").append(empleadoSeleccionado.getNumeroEmpleado()).append("\n");
+        
+        txtAreaEmpleados.setText(detalles.toString());
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -467,7 +453,8 @@ public class VentanaEmpleados extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaEmpleados().setVisible(true);
+                Sistema sistema = new Sistema();
+                new VentanaEmpleados(sistema).setVisible(true);
             }
         });
     }
@@ -477,6 +464,7 @@ public class VentanaEmpleados extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarE;
     private javax.swing.JButton btnVaciarE;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblDetallesEmpleado;

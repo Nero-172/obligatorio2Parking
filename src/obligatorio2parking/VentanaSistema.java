@@ -337,7 +337,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }
 
     private void itemVehiculosActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaVehiculos vv = new VentanaVehiculos();
+        VentanaVehiculos vv = new VentanaVehiculos(sistema);
         vv.setVisible(true);
     }
 
@@ -379,7 +379,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }
 
     private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaEmpleados ve = new VentanaEmpleados();
+        VentanaEmpleados ve = new VentanaEmpleados(sistema);
         ve.setVisible(true);
     }
 

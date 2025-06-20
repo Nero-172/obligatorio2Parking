@@ -13,61 +13,23 @@ import java.util.List;
 public class VentanaVehiculos extends javax.swing.JFrame {
     
     private Sistema sistema;
-    // Lista para almacenar los vehículos
-    private List<Vehiculo> vehiculos;
-    private DefaultListModel<String> modeloLista;
 
-    public VentanaVehiculos() {
-        initComponents();
-        inicializarComponentes();
-    }
     public VentanaVehiculos(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
-        inicializarComponentes();
-        this.vehiculos = sistema.getVehiculos();
-        actualizarListaVisual();
-    }
-   
+        cargarListaVehiculos();
+    } 
     
-    private void inicializarComponentes() {
-        // Inicializar la lista de vehículos
-        vehiculos = new ArrayList<>();
+    private void cargarListaVehiculos(){
+        ArrayList<Vehiculo> lista = sistema.getVehiculos();
+        String[] datos = new String[lista.size()];
         
-        // Configurar el modelo de la lista
-        modeloLista = new DefaultListModel<>();
-        listaVehiculos.setModel(modeloLista);
-        
-        // Configurar eventos de los botones
-        configurarEventos();
-        
-        // Configurar el área de texto como solo lectura
-        txtAreaVehiculo.setEditable(false);
-    }
-    
-    private void configurarEventos() {
-        // Evento para selección en la lista
-        listaVehiculos.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                mostrarDetallesSeleccionado();
-            }
-        });
-    }
-    
-    private void mostrarDetallesSeleccionado() {
-        int indiceSeleccionado = listaVehiculos.getSelectedIndex();
-        
-        if (indiceSeleccionado != -1 && indiceSeleccionado < vehiculos.size()) {
-            Vehiculo vehiculoSeleccionado = vehiculos.get(indiceSeleccionado);
-            
-            StringBuilder detalles = new StringBuilder();
-            detalles.append("Matrícula: ").append(vehiculoSeleccionado.getMatricula()).append("\n");
-            detalles.append("Marca: ").append(vehiculoSeleccionado.getMarca()).append("\n");
-            detalles.append("Modelo: ").append(vehiculoSeleccionado.getModelo()).append("\n");
-            detalles.append("Estado: ").append(vehiculoSeleccionado.getEstado()).append("\n");
-            
-            txtAreaVehiculo.setText(detalles.toString());
+        for(int i = 0; i < lista.size(); i++){
+            Vehiculo veh = lista.get(i);
+            datos[i] = veh.getMatricula() + " - " + veh.getMarca();
         }
+        
+        listaVehiculos.setListData(datos);
     }
     
     private void limpiarCampos() {
@@ -75,25 +37,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
         txtMarca.setText("");
         txtModelo.setText("");
         txtEstado.setText("");
-        txtMatricula.requestFocus(); // Poner el foco en el primer campo
-    }
-    
-    // Método para obtener la lista de vehículos (útil para otras clases)
-    public List<Vehiculo> getVehiculos() {
-        return new ArrayList<>(vehiculos);
-    }
-    
-    // Método para establecer vehículos desde otra clase
-    public void setVehiculos(List<Vehiculo> vehiculos) {
-        this.vehiculos = new ArrayList<>(vehiculos);
-        actualizarListaVisual();
-    }
-    
-    private void actualizarListaVisual() {
-        modeloLista.clear();
-        for (Vehiculo v : vehiculos) {
-            modeloLista.addElement(v.toString());
-        }
+        txtMatricula.requestFocus(); 
     }
 
     /**
@@ -122,6 +66,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
         scrollDetallesVehiculos = new javax.swing.JScrollPane();
         txtAreaVehiculo = new javax.swing.JTextArea();
         lblDetalles = new javax.swing.JLabel();
+        btnElminarV1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Vehículos");
@@ -173,6 +118,13 @@ public class VentanaVehiculos extends javax.swing.JFrame {
 
         lblDetalles.setText("Detalles de Vehículo:");
 
+        btnElminarV1.setText("Mostrar detalles");
+        btnElminarV1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElminarV1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,12 +132,6 @@ public class VentanaVehiculos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnVaciarV, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAgregarV, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnElminarV, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,7 +153,15 @@ public class VentanaVehiculos extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(scrollDetallesVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDetalles))))
+                            .addComponent(lblDetalles)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnVaciarV, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarV, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnElminarV, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnElminarV1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -243,7 +197,8 @@ public class VentanaVehiculos extends javax.swing.JFrame {
                     .addComponent(btnVaciarV)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAgregarV)
-                        .addComponent(btnElminarV)))
+                        .addComponent(btnElminarV)
+                        .addComponent(btnElminarV1)))
                 .addGap(33, 33, 33))
         );
 
@@ -251,7 +206,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnElminarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElminarVActionPerformed
-            int indiceSeleccionado = listaVehiculos.getSelectedIndex();
+        int indiceSeleccionado = listaVehiculos.getSelectedIndex();
         
         if (indiceSeleccionado == -1) {
             JOptionPane.showMessageDialog(this, 
@@ -267,24 +222,37 @@ public class VentanaVehiculos extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION);
             
         if (confirmacion == JOptionPane.YES_OPTION) {
-            // Eliminar de la lista de datos
-            vehiculos.remove(indiceSeleccionado);
-            
-            // Eliminar de la lista visual
-            modeloLista.removeElementAt(indiceSeleccionado);
-            
-            // Limpiar el área de detalles
-            txtAreaVehiculo.setText("");
-            
-            JOptionPane.showMessageDialog(this, 
-                "Vehículo eliminado exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
+            try {
+                // Obtener el vehículo a eliminar
+                ArrayList<Vehiculo> vehiculos = sistema.getVehiculos();
+                Vehiculo vehiculoAEliminar = vehiculos.get(indiceSeleccionado);
+                
+                // Eliminar del sistema (asumiendo que existe un método eliminarVehiculo)
+                // Si no existe, eliminar directamente de la lista
+                vehiculos.remove(indiceSeleccionado);
+                
+                // Recargar la lista visual
+                cargarListaVehiculos();
+                
+                // Limpiar el área de detalles
+                txtAreaVehiculo.setText("");
+                
+                JOptionPane.showMessageDialog(this, 
+                    "Vehículo eliminado exitosamente", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                    
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error al eliminar vehículo: " + ex.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnElminarVActionPerformed
 
     private void btnAgregarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVActionPerformed
-        try {
+         try {
             // Validar que todos los campos estén llenos
             String matricula = txtMatricula.getText().trim();
             String marca = txtMarca.getText().trim();
@@ -300,6 +268,7 @@ public class VentanaVehiculos extends javax.swing.JFrame {
             }
             
             // Verificar que la matrícula no exista
+            ArrayList<Vehiculo> vehiculos = sistema.getVehiculos();
             for (Vehiculo v : vehiculos) {
                 if (v.getMatricula().equalsIgnoreCase(matricula)) {
                     JOptionPane.showMessageDialog(this, 
@@ -310,12 +279,12 @@ public class VentanaVehiculos extends javax.swing.JFrame {
                 }
             }
             
-            // Crear y agregar el vehículo
+            // Crear y agregar el vehículo al sistema
             Vehiculo nuevoVehiculo = new Vehiculo(matricula, marca, modelo, estado);
             vehiculos.add(nuevoVehiculo);
             
-            // Actualizar la lista visual
-            modeloLista.addElement(nuevoVehiculo.toString());
+            // Recargar la lista visual
+            cargarListaVehiculos();
             
             // Limpiar los campos
             limpiarCampos();
@@ -334,7 +303,9 @@ public class VentanaVehiculos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarVActionPerformed
 
     private void btnVaciarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarVActionPerformed
-            if (vehiculos.isEmpty()) {
+         ArrayList<Vehiculo> vehiculos = sistema.getVehiculos();
+        
+        if (vehiculos.isEmpty()) {
             JOptionPane.showMessageDialog(this, 
                 "La lista ya está vacía", 
                 "Información", 
@@ -348,20 +319,49 @@ public class VentanaVehiculos extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION);
             
         if (confirmacion == JOptionPane.YES_OPTION) {
-            // Limpiar ambas listas
-            vehiculos.clear();
-            modeloLista.clear();
-            
-            // Limpiar campos y área de detalles
-            limpiarCampos();
-            txtAreaVehiculo.setText("");
-            
-            JOptionPane.showMessageDialog(this, 
-                "Lista vaciada exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
+            try {
+                // Limpiar la lista del sistema
+                vehiculos.clear();
+                
+                // Recargar la lista visual
+                cargarListaVehiculos();
+                
+                // Limpiar campos y área de detalles
+                limpiarCampos();
+                txtAreaVehiculo.setText("");
+                
+                JOptionPane.showMessageDialog(this, 
+                    "Lista vaciada exitosamente", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                    
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error al vaciar lista: " + ex.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnVaciarVActionPerformed
+
+    private void btnElminarV1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElminarV1ActionPerformed
+         int indiceSeleccionado = listaVehiculos.getSelectedIndex();
+        if (indiceSeleccionado >= 0) {
+            ArrayList<Vehiculo> vehiculos = sistema.getVehiculos();
+            if (indiceSeleccionado < vehiculos.size()) {
+                Vehiculo vehiculo = vehiculos.get(indiceSeleccionado);
+                StringBuilder detalles = new StringBuilder();
+                detalles.append("Matrícula: ").append(vehiculo.getMatricula()).append("\n");
+                detalles.append("Marca: ").append(vehiculo.getMarca()).append("\n");
+                detalles.append("Modelo: ").append(vehiculo.getModelo()).append("\n");
+                detalles.append("Estado: ").append(vehiculo.getEstado()).append("\n");
+                
+                txtAreaVehiculo.setText(detalles.toString());
+            }
+        } else {
+            txtAreaVehiculo.setText("");
+        }
+    }//GEN-LAST:event_btnElminarV1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,7 +389,8 @@ public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaVehiculos().setVisible(true);
+                Sistema sistema = new Sistema();
+                 new VentanaClientes(sistema).setVisible(true);
             }
         });
     }
@@ -397,6 +398,7 @@ public static void main(String args[]) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarV;
     private javax.swing.JButton btnElminarV;
+    private javax.swing.JButton btnElminarV1;
     private javax.swing.JButton btnVaciarV;
     private javax.swing.JLabel lblDetalles;
     private javax.swing.JLabel lblEstado;
