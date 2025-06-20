@@ -1,18 +1,21 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+AUTORES - ESTUDIANTES
+ JHONATAN ADALID (320368)
+ LORENZO ALDAO (307239)
+*/
 package obligatorio2parking;
 
+import dominio.Sistema;
 /**
  *
  * @author MSI
  */
 public class VentanaSalidas extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VentanaEntradas
-     */
+    private Sistema sistema;
+    
+    public VentanaSalidas(Sistema sistema){
+        this.sistema = sistema;
+    }
     public VentanaSalidas() {
         initComponents();
         txtAreaComentario.setEditable(false);

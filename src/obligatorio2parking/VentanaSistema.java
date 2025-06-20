@@ -347,7 +347,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }
 
     private void itemSalidasActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaSalidas vs = new VentanaSalidas();
+        VentanaSalidas vs = new VentanaSalidas(sistema);
         vs.setVisible(true);
     }
 
@@ -379,7 +379,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }
 
     private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaEntradas ve = new VentanaEntradas();
+        VentanaEntradas ve = new VentanaEntradas(sistema);
         ve.setVisible(true);
     }
 
@@ -394,7 +394,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }
 
     private void itemServiciosActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaServiciosAdicionales vsa = new VentanaServiciosAdicionales();
+        VentanaServiciosAdicionales vsa = new VentanaServiciosAdicionales(sistema);
         vsa.setVisible(true);
     }
 

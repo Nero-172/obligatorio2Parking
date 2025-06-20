@@ -1,18 +1,23 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+AUTORES - ESTUDIANTES
+ JHONATAN ADALID (320368)
+ LORENZO ALDAO (307239)
+*/
 package obligatorio2parking;
+
+import dominio.Sistema;
 
 /**
  *
  * @author MSI
  */
 public class VentanaServiciosAdicionales extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VentanaEntradas
-     */
+    private Sistema sistema;
+    
+    public VentanaServiciosAdicionales(Sistema sistema){
+        this.sistema = sistema;
+        
+    }
     public VentanaServiciosAdicionales() {
         initComponents();
     }
@@ -58,7 +63,7 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Entradas");
+        setTitle("Servicios Adicionales");
         getContentPane().setLayout(null);
 
         lblServiciosRealizados.setText("Servicios realizados");
