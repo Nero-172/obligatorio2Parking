@@ -20,9 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     private Sistema sistema;
-    
-
-    
+        
     public VentanaEntradas(Sistema sistema){
         this.sistema = sistema;
         this.sistema.addObserver(this);
