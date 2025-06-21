@@ -34,11 +34,11 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         cargarComboEmpleados();
     }
     
-     private void cargarComboVehiculos() {
-        DefaultComboBoxModel<Vehiculo> model = new DefaultComboBoxModel<>();
+    private void cargarComboVehiculos() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Vehiculo v : sistema.getVehiculos()) {
             if (!sistema.vehiculoEstaEnParking(v)) {
-                model.addElement(v);
+                model.addElement(v.toString()); 
             }
         }
         comboVehiculos.setModel(model);
