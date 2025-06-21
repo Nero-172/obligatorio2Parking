@@ -37,7 +37,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     }
     
 
-    /*private void cargarComboVehiculos() {
+    private void cargarComboVehiculos() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Vehiculo v : sistema.getVehiculos()) {
             if (!sistema.vehiculoEstaEnParking(v)) {
@@ -45,7 +45,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
             }
         }
         comboVehiculos.setModel(model);
-    }*/
+    }
      
     private void cargarComboEmpleados() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
@@ -54,16 +54,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
             model.addElement(emp.toString());
         }
         comboEmpleados.setModel(model);
-    }
-    
-    private void cargarComboVehiculos() {
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (Vehiculo v : sistema.getVehiculos()) {
-            if (!sistema.vehiculoEstaEnParking(v)) {
-                model.addElement(v.getMatricula());
-            }
-        }
-        comboVehiculos.setModel(model);
     }
     
     
