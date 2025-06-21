@@ -174,7 +174,7 @@ public class VentanaSistema extends javax.swing.JFrame {
         itemSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Obligatorio Prog 2 - Autores: Estudiantes: Jhonatan Adalid (320368) y Lorenzo Aldao ()");
+        setTitle("Obligatorio Prog 2 - Autores: Estudiantes: Jhonatan Adalid (320368) y Lorenzo Aldao (307239)");
 
         btnClaroOscuro.setText("Claro/Oscuro");
         btnClaroOscuro.addActionListener(new java.awt.event.ActionListener() {
