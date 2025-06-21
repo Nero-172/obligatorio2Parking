@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
 public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     private Sistema sistema;
     
+
+    
     public VentanaEntradas(Sistema sistema){
         this.sistema = sistema;
         this.sistema.addObserver(this);
@@ -34,16 +36,16 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         cargarComboEmpleados();
     }
     
-     private void cargarComboVehiculos() {
-        DefaultComboBoxModel<Vehiculo> model = new DefaultComboBoxModel<>();
+    private void cargarComboVehiculos() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Vehiculo v : sistema.getVehiculos()) {
             if (!sistema.vehiculoEstaEnParking(v)) {
-                model.addElement(v);
+                model.addElement(v.getMatricula());
             }
         }
         comboVehiculos.setModel(model);
     }
-     
+    
     private void cargarComboEmpleados() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Empleado emp : sistema.getEmpleados()) {
@@ -97,7 +99,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         setTitle("Entradas");
         getContentPane().setLayout(null);
 
-        comboVehiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboVehiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboVehiculosActionPerformed(evt);
@@ -114,7 +115,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
 
         lblNotas.setText("Notas");
 
-        comboEmpleados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboEmpleadosActionPerformed(evt);
@@ -190,8 +190,12 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        Vehiculo vehiculoSeleccionado = (Vehiculo) comboVehiculos.getSelectedItem();
-        Empleado empleadoSeleccionado = (Empleado) comboEmpleados.getSelectedItem();
+        String matriculaSeleccionada = (String) comboVehiculos.getSelectedItem();
+        Vehiculo vehiculoSeleccionado = sistema.buscarVehiculoPorMatricula(matriculaSeleccionada);
+
+        String cedulaSeleccionada = (String) comboEmpleados.getSelectedItem();
+        Empleado empleadoSeleccionado = sistema.buscarEmpleadoPorCedula(cedulaSeleccionada);
+        
         Date fechaHora = (Date) spinFechaHora.getValue();
         String nota = txtAreaNotas.getText().trim();
 
@@ -207,23 +211,30 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
 
         String fecha = fechaHoraLocal.format(formatterFecha);
         String hora = fechaHoraLocal.format(formatterHora);
-
+        
+        Contrato contrato = sistema.buscarContratoPorVehiculo(vehiculoSeleccionado);
+        if (contrato != null) {
+            lblContrato.setText("Contrato: Sí");
+        } else {
+            lblContrato.setText("Contrato: No");
+        }
         // Agregar la entrada
         boolean registrada = sistema.agregarEntrada(vehiculoSeleccionado, fecha, hora, nota, empleadoSeleccionado);
         if (registrada) {
             JOptionPane.showMessageDialog(this, "Entrada registrada exitosamente.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
             txtAreaNotas.setText(""); // Limpiar nota
             spinFechaHora.setValue(new Date()); // Resetear fecha/hora a ahora
+            cargarComboVehiculos();
         } else {
             JOptionPane.showMessageDialog(this, "El vehículo ya está dentro del parking.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void comboVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVehiculosActionPerformed
-         Vehiculo vehiculoSeleccionado = (Vehiculo) comboVehiculos.getSelectedItem();
-        if (vehiculoSeleccionado != null) {
-            Contrato contrato = sistema.buscarContratoPorVehiculo(vehiculoSeleccionado);
-            if (contrato != null) {
+        String matricula = (String) comboVehiculos.getSelectedItem();
+        if (matricula != null) {
+            Vehiculo v = sistema.buscarVehiculoPorMatricula(matricula);
+            if (v != null && sistema.buscarContratoPorVehiculo(v) != null) {
                 lblContrato.setText("Contrato: SÍ");
             } else {
                 lblContrato.setText("Contrato: NO");
