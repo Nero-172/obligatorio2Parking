@@ -20,6 +20,7 @@ public class VentanaEntradas extends javax.swing.JFrame {
         initComponents();
         txtAreaNotas.setEditable(false);
         cargarDatosIniciales();
+        configurarSpinners();
     }
     
     private void cargarDatosIniciales() {
@@ -43,6 +44,13 @@ public class VentanaEntradas extends javax.swing.JFrame {
         }
         comboEmpleados.setModel(model);
     }
+    
+    private void configurarSpinners() {
+        // Configurar spinner de fecha/hora
+        spinFechaHora.setModel(new javax.swing.SpinnerDateModel());
+        spinFechaHora.setEditor(new javax.swing.JSpinner.DateEditor(spinFechaHora, "dd/MM/yyyy HH:mm"));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

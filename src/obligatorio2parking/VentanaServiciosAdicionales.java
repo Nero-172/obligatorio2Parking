@@ -20,6 +20,7 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         initComponents();
         cargarDatosIniciales(); 
         configurarSpinners();
+        cargarComboTiposServicio();
     }
     
     private void cargarDatosIniciales() {
@@ -49,6 +50,17 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         // Configurar spinner de fecha/hora
         spinFechaHora.setModel(new javax.swing.SpinnerDateModel());
         spinFechaHora.setEditor(new javax.swing.JSpinner.DateEditor(spinFechaHora, "dd/MM/yyyy HH:mm"));
+    }
+    
+    private void cargarComboTiposServicio() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        // Agregar tipos de servicio comunes
+        model.addElement("Lavado");
+        model.addElement("Cambio de rueda");
+        model.addElement("Limpieza de tapizado");
+        model.addElement("Cambio de luces");
+        model.addElement("Otro");
+        comboTipoS.setModel(model);
     }
     
     /**

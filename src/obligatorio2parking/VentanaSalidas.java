@@ -18,6 +18,7 @@ public class VentanaSalidas extends javax.swing.JFrame {
         this.sistema = sistema;
         initComponents();
         cargarDatosIniciales();
+        configurarSpinners();
     }
     
     private void cargarDatosIniciales() {
@@ -31,6 +32,12 @@ public class VentanaSalidas extends javax.swing.JFrame {
             model.addElement(emp.toString());
         }
         comboEmpleadosS.setModel(model);
+    }
+    
+    private void configurarSpinners() {
+        // Configurar spinner de fecha/hora
+        spinFechaHoraS.setModel(new javax.swing.SpinnerDateModel());
+        spinFechaHoraS.setEditor(new javax.swing.JSpinner.DateEditor(spinFechaHoraS, "dd/MM/yyyy HH:mm"));
     }
 
     /**
