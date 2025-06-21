@@ -6,19 +6,25 @@ AUTORES - ESTUDIANTES
 package obligatorio2parking;
 
 import dominio.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author MSI
  */
-public class VentanaEntradas extends javax.swing.JFrame {
+public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     private Sistema sistema;
     
     public VentanaEntradas(Sistema sistema){
         this.sistema = sistema;
+        this.sistema.addObserver(this);
         initComponents();
-        txtAreaNotas.setEditable(false);
         cargarDatosIniciales();
         configurarSpinners();
     }
@@ -29,9 +35,11 @@ public class VentanaEntradas extends javax.swing.JFrame {
     }
     
      private void cargarComboVehiculos() {
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<Vehiculo> model = new DefaultComboBoxModel<>();
         for (Vehiculo v : sistema.getVehiculos()) {
-            model.addElement(v.toString());
+            if (!sistema.vehiculoEstaEnParking(v)) {
+                model.addElement(v);
+            }
         }
         comboVehiculos.setModel(model);
     }
@@ -144,7 +152,7 @@ public class VentanaEntradas extends javax.swing.JFrame {
                     .addComponent(lblContrato)
                     .addComponent(comboEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,20 +190,57 @@ public class VentanaEntradas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // TODO add your handling code here:
+        Vehiculo vehiculoSeleccionado = (Vehiculo) comboVehiculos.getSelectedItem();
+        Empleado empleadoSeleccionado = (Empleado) comboEmpleados.getSelectedItem();
+        Date fechaHora = (Date) spinFechaHora.getValue();
+        String nota = txtAreaNotas.getText().trim();
+
+        if (vehiculoSeleccionado == null || empleadoSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo y un empleado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Formateo fecha y hora
+        DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime fechaHoraLocal = LocalDateTime.ofInstant(fechaHora.toInstant(), java.time.ZoneId.systemDefault());
+
+        String fecha = fechaHoraLocal.format(formatterFecha);
+        String hora = fechaHoraLocal.format(formatterHora);
+
+        // Agregar la entrada
+        boolean registrada = sistema.agregarEntrada(vehiculoSeleccionado, fecha, hora, nota, empleadoSeleccionado);
+        if (registrada) {
+            JOptionPane.showMessageDialog(this, "Entrada registrada exitosamente.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+            txtAreaNotas.setText(""); // Limpiar nota
+            spinFechaHora.setValue(new Date()); // Resetear fecha/hora a ahora
+        } else {
+            JOptionPane.showMessageDialog(this, "El vehículo ya está dentro del parking.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void comboVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVehiculosActionPerformed
-        // TODO add your handling code here:
+         Vehiculo vehiculoSeleccionado = (Vehiculo) comboVehiculos.getSelectedItem();
+        if (vehiculoSeleccionado != null) {
+            Contrato contrato = sistema.buscarContratoPorVehiculo(vehiculoSeleccionado);
+            if (contrato != null) {
+                lblContrato.setText("Contrato: SÍ");
+            } else {
+                lblContrato.setText("Contrato: NO");
+            }
+        } else {
+            lblContrato.setText("Contrato:");
+        }
     }//GEN-LAST:event_comboVehiculosActionPerformed
 
     private void comboEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmpleadosActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_comboEmpleadosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    @Override
+    public void update(Observable o, Object arg) {
+        cargarDatosIniciales();
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
