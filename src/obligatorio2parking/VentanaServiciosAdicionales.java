@@ -25,7 +25,10 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
     
     private void cargarDatosIniciales() {
         cargarComboVehiculos();
-        cargarComboEmpleados();
+    cargarComboEmpleados();
+    cargarListaServicios();
+    configurarTabla();
+    cargarDatosTabla();
     }
     
     
@@ -46,12 +49,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         comboEmpleado.setModel(model);
     }
     
-    private void configurarSpinners() {
-        // Configurar spinner de fecha/hora
-        spinFechaHora.setModel(new javax.swing.SpinnerDateModel());
-        spinFechaHora.setEditor(new javax.swing.JSpinner.DateEditor(spinFechaHora, "dd/MM/yyyy HH:mm"));
-    }
-    
     private void cargarComboTiposServicio() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         // Agregar tipos de servicio comunes
@@ -61,6 +58,122 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         model.addElement("Cambio de luces");
         model.addElement("Otro");
         comboTipoS.setModel(model);
+    }
+    
+    private void cargarListaServicios() {
+        javax.swing.DefaultListModel<String> model = new javax.swing.DefaultListModel<>();
+
+        if (sistema.getServiciosAdicionales() != null && !sistema.getServiciosAdicionales().isEmpty()) {
+            for (ServicioAdicional servicio : sistema.getServiciosAdicionales()) {
+                String item = servicio.getTipoServicio() + " - " + 
+                             servicio.getVehiculo().getMatricula();
+                model.addElement(item);
+            }
+        } else {
+            model.addElement("No hay servicios registrados");
+        }
+
+        listaServicios.setModel(model);
+    }
+
+    private void configurarTabla() {
+        // Configurar columnas de la tabla
+        String[] columnas = {"Tipo Servicio", "Fecha", "Hora", "Vehículo", "Empleado", "Costo"};
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacer la tabla no editable
+            }
+        };
+        tableDatos.setModel(model);
+
+        // Ajustar ancho de columnas
+        tableDatos.getColumnModel().getColumn(0).setPreferredWidth(100); // Tipo Servicio
+        tableDatos.getColumnModel().getColumn(1).setPreferredWidth(80);  // Fecha
+        tableDatos.getColumnModel().getColumn(2).setPreferredWidth(60);  // Hora
+        tableDatos.getColumnModel().getColumn(3).setPreferredWidth(80);  // Vehículo
+        tableDatos.getColumnModel().getColumn(4).setPreferredWidth(100); // Empleado
+        tableDatos.getColumnModel().getColumn(5).setPreferredWidth(70);  // Costo
+    }
+
+    private void cargarDatosTabla() {
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tableDatos.getModel();
+        model.setRowCount(0); // Limpiar tabla
+
+        if (sistema.getServiciosAdicionales() != null && !sistema.getServiciosAdicionales().isEmpty()) {
+            for (ServicioAdicional servicio : sistema.getServiciosAdicionales()) {
+                Object[] fila = {
+                    servicio.getTipoServicio(),
+                    servicio.getFecha(),
+                    servicio.getHora(),
+                    servicio.getVehiculo().getMatricula(),    
+                };
+                model.addRow(fila);
+            }
+        }
+    }
+
+    private boolean validarDatos() {
+        if (comboTipoS.getSelectedIndex() < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Seleccione un tipo de servicio", 
+                "Validación", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        if (comboVehiculo.getSelectedIndex() <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Seleccione un vehículo válido", 
+                "Validación", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        if (comboEmpleado.getSelectedIndex() <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Seleccione un empleado válido", 
+                "Validación", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        double costo = (Double) spinCostoS.getValue();
+        if (costo <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "El costo debe ser mayor a 0", 
+                "Validación", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void limpiarFormulario() {
+        comboTipoS.setSelectedIndex(0);
+        comboVehiculo.setSelectedIndex(0);
+        comboEmpleado.setSelectedIndex(0);
+        spinFechaHora.setValue(new java.util.Date());
+        spinCostoS.setValue(0.0);
+    }
+
+    // Método para refrescar los datos cuando sea necesario
+    public void refrescarDatos() {
+        cargarComboVehiculos();
+        cargarComboEmpleados();
+        cargarListaServicios();
+        cargarDatosTabla();
+    }
+
+    // Configurar spinner de costo en el constructor
+    private void configurarSpinners() {
+        // Configurar spinner de fecha/hora
+        spinFechaHora.setModel(new javax.swing.SpinnerDateModel());
+        spinFechaHora.setEditor(new javax.swing.JSpinner.DateEditor(spinFechaHora, "dd/MM/yyyy HH:mm"));
+
+        // Configurar spinner de costo
+        spinCostoS.setModel(new javax.swing.SpinnerNumberModel(0.0, 0.0, 999999.0, 1.0));
     }
     
     /**
@@ -264,7 +377,58 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
     }//GEN-LAST:event_comboEmpleadoActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        if (validarDatos()) {
+            try {
+                // Obtener datos del formulario
+                String tipoServicio = (String) comboTipoS.getSelectedItem();
+
+                // Obtener fecha y hora
+                java.util.Date fechaHora = (java.util.Date) spinFechaHora.getValue();
+                java.text.SimpleDateFormat formatoFecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                java.text.SimpleDateFormat formatoHora = new java.text.SimpleDateFormat("HH:mm");
+                String fecha = formatoFecha.format(fechaHora);
+                String hora = formatoHora.format(fechaHora);
+
+                // Obtener vehículo y empleado seleccionados
+                int indexVehiculo = comboVehiculo.getSelectedIndex() - 1; // -1 por el placeholder
+                int indexEmpleado = comboEmpleado.getSelectedIndex() - 1;
+
+                Vehiculo vehiculoSeleccionado = sistema.getVehiculos().get(indexVehiculo);
+                Empleado empleadoSeleccionado = sistema.getEmpleados().get(indexEmpleado);
+
+                // Obtener costo
+                double costo = (Double) spinCostoS.getValue();
+
+                // Agregar servicio al sistema
+                boolean exitoso = sistema.agregarServicioAdicional(tipoServicio, fecha, hora, 
+                                                                 vehiculoSeleccionado, empleadoSeleccionado, costo);
+
+                if (exitoso) {
+                    javax.swing.JOptionPane.showMessageDialog(this, 
+                        "Servicio registrado exitosamente", 
+                        "Éxito", 
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+                    // Actualizar lista y tabla
+                    cargarListaServicios();
+                    cargarDatosTabla();
+
+                    // Limpiar formulario
+                    limpiarFormulario();
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, 
+                        "Error al registrar el servicio", 
+                        "Error", 
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Error: " + e.getMessage(), 
+                    "Error", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
