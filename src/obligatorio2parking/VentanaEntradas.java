@@ -36,6 +36,15 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         cargarComboEmpleados();
     }
     
+    private void cargarComboEmpleados() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Empleado emp : sistema.getEmpleados()) {
+            System.out.println(sistema.getEmpleados());
+            model.addElement(emp.toString());
+        }
+        comboEmpleados.setModel(model);
+    }
+    
     private void cargarComboVehiculos() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Vehiculo v : sistema.getVehiculos()) {
@@ -46,14 +55,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         comboVehiculos.setModel(model);
     }
     
-    private void cargarComboEmpleados() {
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (Empleado emp : sistema.getEmpleados()) {
-            System.out.println(sistema.getEmpleados());
-            model.addElement(emp.toString());
-        }
-        comboEmpleados.setModel(model);
-    }
     
     private void configurarSpinners() {
         // Configurar spinner de fecha/hora
