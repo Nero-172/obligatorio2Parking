@@ -38,9 +38,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     private void cargarComboVehiculos() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Vehiculo v : sistema.getVehiculos()) {
-            if (!sistema.vehiculoEstaEnParking(v)) {
-                model.addElement(v.toString()); 
-            }
+            model.addElement(v.toString());
         }
         comboVehiculos.setModel(model);
     }
@@ -53,12 +51,25 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         }
         comboEmpleados.setModel(model);
     }
-    
+   
     
     private void configurarSpinners() {
         // Configurar spinner de fecha/hora
         spinFechaHora.setModel(new javax.swing.SpinnerDateModel());
         spinFechaHora.setEditor(new javax.swing.JSpinner.DateEditor(spinFechaHora, "dd/MM/yyyy HH:mm"));
+        spinFechaHora.setValue(new Date());
+    }
+    
+    private void limpiarFormulario() {
+        txtAreaNotas.setText("");
+        spinFechaHora.setValue(new Date());
+        if (comboVehiculos.getItemCount() > 0) {
+            comboVehiculos.setSelectedIndex(0);
+        }
+        if (comboEmpleados.getItemCount() > 0) {
+            comboEmpleados.setSelectedIndex(0);
+        }
+        lblContrato.setText("Contrato:");
     }
     
     /**
@@ -190,58 +201,12 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        String matriculaSeleccionada = (String) comboVehiculos.getSelectedItem();
-        Vehiculo vehiculoSeleccionado = sistema.buscarVehiculoPorMatricula(matriculaSeleccionada);
 
-        String cedulaSeleccionada = (String) comboEmpleados.getSelectedItem();
-        Empleado empleadoSeleccionado = sistema.buscarEmpleadoPorCedula(cedulaSeleccionada);
-        
-        Date fechaHora = (Date) spinFechaHora.getValue();
-        String nota = txtAreaNotas.getText().trim();
-
-        if (vehiculoSeleccionado == null || empleadoSeleccionado == null) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo y un empleado.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Formateo fecha y hora
-        DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
-        LocalDateTime fechaHoraLocal = LocalDateTime.ofInstant(fechaHora.toInstant(), java.time.ZoneId.systemDefault());
-
-        String fecha = fechaHoraLocal.format(formatterFecha);
-        String hora = fechaHoraLocal.format(formatterHora);
-        
-        Contrato contrato = sistema.buscarContratoPorVehiculo(vehiculoSeleccionado);
-        if (contrato != null) {
-            lblContrato.setText("Contrato: Sí");
-        } else {
-            lblContrato.setText("Contrato: No");
-        }
-        // Agregar la entrada
-        boolean registrada = sistema.agregarEntrada(vehiculoSeleccionado, fecha, hora, nota, empleadoSeleccionado);
-        if (registrada) {
-            JOptionPane.showMessageDialog(this, "Entrada registrada exitosamente.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-            txtAreaNotas.setText(""); // Limpiar nota
-            spinFechaHora.setValue(new Date()); // Resetear fecha/hora a ahora
-            cargarComboVehiculos();
-        } else {
-            JOptionPane.showMessageDialog(this, "El vehículo ya está dentro del parking.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }//GEN-LAST:event_btnConfirmarActionPerformed
+                                          
 
     private void comboVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVehiculosActionPerformed
-        String matricula = (String) comboVehiculos.getSelectedItem();
-        if (matricula != null) {
-            Vehiculo v = sistema.buscarVehiculoPorMatricula(matricula);
-            if (v != null && sistema.buscarContratoPorVehiculo(v) != null) {
-                lblContrato.setText("Contrato: SÍ");
-            } else {
-                lblContrato.setText("Contrato: NO");
-            }
-        } else {
-            lblContrato.setText("Contrato:");
-        }
+        
     }//GEN-LAST:event_comboVehiculosActionPerformed
 
     private void comboEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmpleadosActionPerformed
