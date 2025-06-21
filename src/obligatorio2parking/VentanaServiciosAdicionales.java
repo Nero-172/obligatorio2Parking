@@ -5,7 +5,8 @@ AUTORES - ESTUDIANTES
 */
 package obligatorio2parking;
 
-import dominio.Sistema;
+import dominio.*;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -16,12 +17,40 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
     
     public VentanaServiciosAdicionales(Sistema sistema){
         this.sistema = sistema;
-        
-    }
-    public VentanaServiciosAdicionales() {
         initComponents();
+        cargarDatosIniciales(); 
+        configurarSpinners();
     }
-
+    
+    private void cargarDatosIniciales() {
+        cargarComboVehiculos();
+        cargarComboEmpleados();
+    }
+    
+    
+    private void cargarComboVehiculos() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Vehiculo v : sistema.getVehiculos()) {
+            model.addElement(v.toString());
+        }
+        comboVehiculo.setModel(model);
+    }
+    
+    private void cargarComboEmpleados() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Empleado emp : sistema.getEmpleados()) {
+            System.out.println(sistema.getEmpleados());
+            model.addElement(emp.toString());
+        }
+        comboEmpleado.setModel(model);
+    }
+    
+    private void configurarSpinners() {
+        // Configurar spinner de fecha/hora
+        spinFechaHora.setModel(new javax.swing.SpinnerDateModel());
+        spinFechaHora.setEditor(new javax.swing.JSpinner.DateEditor(spinFechaHora, "dd/MM/yyyy HH:mm"));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -259,7 +288,8 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaServiciosAdicionales().setVisible(true);
+                Sistema sistema = new Sistema();
+                new VentanaServiciosAdicionales(sistema).setVisible(true);
             }
         });
     }

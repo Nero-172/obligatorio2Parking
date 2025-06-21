@@ -5,7 +5,8 @@ AUTORES - ESTUDIANTES
 */
 package obligatorio2parking;
 
-import dominio.Sistema;
+import dominio.*;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -16,12 +17,32 @@ public class VentanaEntradas extends javax.swing.JFrame {
     
     public VentanaEntradas(Sistema sistema){
         this.sistema = sistema;
-    }
-    public VentanaEntradas() {
         initComponents();
         txtAreaNotas.setEditable(false);
+        cargarDatosIniciales();
     }
-
+    
+    private void cargarDatosIniciales() {
+        cargarComboVehiculos();
+        cargarComboEmpleados();
+    }
+    
+     private void cargarComboVehiculos() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Vehiculo v : sistema.getVehiculos()) {
+            model.addElement(v.toString());
+        }
+        comboVehiculos.setModel(model);
+    }
+     
+    private void cargarComboEmpleados() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Empleado emp : sistema.getEmpleados()) {
+            System.out.println(sistema.getEmpleados());
+            model.addElement(emp.toString());
+        }
+        comboEmpleados.setModel(model);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,6 +82,11 @@ public class VentanaEntradas extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         comboVehiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboVehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboVehiculosActionPerformed(evt);
+            }
+        });
 
         lblVehiculo.setText("Vehiculo");
 
@@ -73,6 +99,11 @@ public class VentanaEntradas extends javax.swing.JFrame {
         lblNotas.setText("Notas");
 
         comboEmpleados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboEmpleadosActionPerformed(evt);
+            }
+        });
 
         lblEmpleado.setText("Empleado ");
 
@@ -137,7 +168,7 @@ public class VentanaEntradas extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(0, 0, 470, 300);
+        jPanel2.setBounds(0, 0, 480, 300);
 
         setBounds(0, 0, 490, 308);
     }// </editor-fold>//GEN-END:initComponents
@@ -145,6 +176,14 @@ public class VentanaEntradas extends javax.swing.JFrame {
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void comboVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVehiculosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboVehiculosActionPerformed
+
+    private void comboEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmpleadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboEmpleadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,7 +215,8 @@ public class VentanaEntradas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaEntradas().setVisible(true);
+                Sistema sistema = new Sistema();
+                new VentanaEntradas(sistema).setVisible(true);
             }
         });
     }

@@ -5,7 +5,8 @@ AUTORES - ESTUDIANTES
 */
 package obligatorio2parking;
 
-import dominio.Sistema;
+import dominio.*;
+import javax.swing.DefaultComboBoxModel;
 /**
  *
  * @author MSI
@@ -15,10 +16,21 @@ public class VentanaSalidas extends javax.swing.JFrame {
     
     public VentanaSalidas(Sistema sistema){
         this.sistema = sistema;
-    }
-    public VentanaSalidas() {
         initComponents();
-        txtAreaComentario.setEditable(false);
+        cargarDatosIniciales();
+    }
+    
+    private void cargarDatosIniciales() {
+        cargarComboEmpleados();
+    }
+    
+    private void cargarComboEmpleados() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Empleado emp : sistema.getEmpleados()) {
+            System.out.println(sistema.getEmpleados());
+            model.addElement(emp.toString());
+        }
+        comboEmpleadosS.setModel(model);
     }
 
     /**
@@ -179,7 +191,8 @@ public class VentanaSalidas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaSalidas().setVisible(true);
+                 Sistema sistema = new Sistema();
+                 new VentanaSalidas(sistema).setVisible(true);
             }
         });
     }
