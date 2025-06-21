@@ -143,6 +143,11 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
         lblDetalles.setText("Detalles:");
 
         btnMostrarDetalle.setText("Mostrar Detalle");
+        btnMostrarDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarDetalleActionPerformed(evt);
+            }
+        });
 
         txtAreaContratos.setColumns(20);
         txtAreaContratos.setRows(5);
@@ -269,6 +274,10 @@ public class VentanaContratos extends javax.swing.JFrame implements Observer{
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnMostrarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarDetalleActionPerformed
+        mostrarDetalleContrato();
+    }//GEN-LAST:event_btnMostrarDetalleActionPerformed
 
     /**
      * @param args the command line arguments
