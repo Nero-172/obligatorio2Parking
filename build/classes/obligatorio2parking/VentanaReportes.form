@@ -172,16 +172,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ordenar fecha ascendente/descendente"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOrdenarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnFiltrar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Filtro por tipo de movimiento  "/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFiltrarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnExportar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exportar "/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExportarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

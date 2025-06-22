@@ -23,6 +23,7 @@ public class VentanaSalidas extends javax.swing.JFrame {
     
     private void cargarDatosIniciales() {
         cargarComboEmpleados();
+        cargarComboEntradas();
     }
     
     private void cargarComboEmpleados() {
@@ -34,10 +35,103 @@ public class VentanaSalidas extends javax.swing.JFrame {
         comboEmpleadosS.setModel(model);
     }
     
+    private void cargarComboEntradas() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+        // Verificar si hay entradas disponibles
+        if (sistema.getEntradasSinSalida() != null && !sistema.getEntradasSinSalida().isEmpty()) {
+            for (Entrada ent : sistema.getEntradasSinSalida()) {
+                model.addElement(ent.toString());
+            }
+        } else {
+            model.addElement("No hay entradas disponibles");
+        }
+
+        comboEntradasS.setModel(model);
+    }
+    
     private void configurarSpinners() {
         // Configurar spinner de fecha/hora
         spinFechaHoraS.setModel(new javax.swing.SpinnerDateModel());
         spinFechaHoraS.setEditor(new javax.swing.JSpinner.DateEditor(spinFechaHoraS, "dd/MM/yyyy HH:mm"));
+    }
+    
+    private String calcularTiempoEnParking(Entrada entrada, java.util.Date fechaHoraSalida) {
+    try {
+        // Combinar fecha y hora de entrada
+        String fechaHoraEntradaStr = entrada.getFecha() + " " + entrada.getHora();
+        java.text.SimpleDateFormat formato = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+        java.util.Date fechaHoraEntrada = formato.parse(fechaHoraEntradaStr);
+        
+        // Calcular diferencia en milisegundos
+        long diferenciaMs = fechaHoraSalida.getTime() - fechaHoraEntrada.getTime();
+        
+        // Convertir a días, horas y minutos
+        long dias = diferenciaMs / (24 * 60 * 60 * 1000);
+        long horas = (diferenciaMs % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
+        long minutos = (diferenciaMs % (60 * 60 * 1000)) / (60 * 1000);
+        
+        // Formatear resultado
+        StringBuilder tiempo = new StringBuilder();
+        if (dias > 0) {
+            tiempo.append(dias).append(" día").append(dias > 1 ? "s" : "").append(", ");
+        }
+        if (horas > 0) {
+            tiempo.append(horas).append(" hora").append(horas > 1 ? "s" : "").append(", ");
+        }
+        tiempo.append(minutos).append(" minuto").append(minutos != 1 ? "s" : "");
+        
+        return tiempo.toString();
+        
+    } catch (Exception e) {
+        return "Error al calcular tiempo";
+    }
+}
+
+    private void actualizarInformacion(Entrada entrada, String tiempo) {
+        // Mostrar información del contrato si existe
+        Contrato contrato = sistema.buscarContratoPorVehiculo(entrada.getVehiculo());
+        if (contrato != null) {
+            lblContrato.setText("Contrato: #" + contrato.getNumeroContrato() + 
+                               " - $" + contrato.getValorMensual());
+        } else {
+            lblContrato.setText("Contrato: Sin contrato");
+        }
+
+        // Mostrar tiempo calculado
+        lblTiempo.setText("Tiempo: " + tiempo);
+    }
+
+    private void limpiarFormulario() {
+        if (comboEntradasS.getModel().getSize() > 0) {
+            comboEntradasS.setSelectedIndex(0);
+        }
+        if (comboEmpleadosS.getModel().getSize() > 0) {
+            comboEmpleadosS.setSelectedIndex(0);
+        }
+        txtAreaComentario.setText("");
+        spinFechaHoraS.setValue(new java.util.Date());
+        lblContrato.setText("Contrato: ");
+        lblTiempo.setText("Tiempo: ");
+    }
+
+    // Método para actualizar información cuando se selecciona una entrada
+    private void comboEntradasSActionPerformed(java.awt.event.ActionEvent evt) {
+        if (comboEntradasS.getSelectedIndex() >= 0 && 
+            sistema.getEntradasSinSalida() != null && 
+            comboEntradasS.getSelectedIndex() < sistema.getEntradasSinSalida().size()) {
+
+            Entrada entradaSeleccionada = sistema.getEntradasSinSalida().get(comboEntradasS.getSelectedIndex());
+
+            // Mostrar información del contrato
+            Contrato contrato = sistema.buscarContratoPorVehiculo(entradaSeleccionada.getVehiculo());
+            if (contrato != null) {
+                lblContrato.setText("Contrato: #" + contrato.getNumeroContrato() + 
+                                   " - $" + contrato.getValorMensual());
+            } else {
+                lblContrato.setText("Contrato: Sin contrato");
+            }
+        }
     }
 
     /**
@@ -164,7 +258,62 @@ public class VentanaSalidas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // TODO add your handling code here:
+          if (comboEntradasS.getSelectedIndex() >= 0 && comboEmpleadosS.getSelectedIndex() >= 0) {
+          try {
+              // Obtener la entrada seleccionada
+              Entrada entradaSeleccionada = sistema.getEntradasSinSalida().get(comboEntradasS.getSelectedIndex());
+
+              // Obtener el empleado seleccionado
+              Empleado empleadoSeleccionado = sistema.getEmpleados().get(comboEmpleadosS.getSelectedIndex());
+
+              // Obtener fecha y hora de salida del spinner
+              java.util.Date fechaHoraSalida = (java.util.Date) spinFechaHoraS.getValue();
+              java.text.SimpleDateFormat formatoFecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
+              java.text.SimpleDateFormat formatoHora = new java.text.SimpleDateFormat("HH:mm");
+
+              String fechaSalida = formatoFecha.format(fechaHoraSalida);
+              String horaSalida = formatoHora.format(fechaHoraSalida);
+
+              // Calcular tiempo en parking
+              String tiempoEnParking = calcularTiempoEnParking(entradaSeleccionada, fechaHoraSalida);
+
+              // Obtener comentario
+              String comentario = txtAreaComentario.getText().trim();
+
+              // Agregar la salida al sistema
+              boolean exitoso = sistema.agregarSalida(entradaSeleccionada, empleadoSeleccionado, 
+                                                    fechaSalida, horaSalida, comentario);
+
+              if (exitoso) {
+                  // Mostrar información de la salida
+                  String mensaje = "Salida registrada exitosamente\n" +
+                                 "Vehículo: " + entradaSeleccionada.getVehiculo().getMatricula() + "\n" +
+                                 "Tiempo en parking: " + tiempoEnParking;
+
+                  javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Éxito", 
+                                                          javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+                  // Actualizar labels con información
+                  actualizarInformacion(entradaSeleccionada, tiempoEnParking);
+
+                  // Refrescar combo de entradas
+                  cargarComboEntradas();
+
+                  // Limpiar formulario
+                  limpiarFormulario();
+              } else {
+                  javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar la salida", 
+                                                          "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+              }
+
+          } catch (Exception e) {
+              javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), 
+                                                      "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+          }
+      } else {
+          javax.swing.JOptionPane.showMessageDialog(this, "Seleccione entrada y empleado", 
+                                                  "Validación", javax.swing.JOptionPane.WARNING_MESSAGE);
+      }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**

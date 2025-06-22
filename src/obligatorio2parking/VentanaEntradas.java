@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     private Sistema sistema;
-        
+    
     public VentanaEntradas(Sistema sistema){
         this.sistema = sistema;
         this.sistema.addObserver(this);
@@ -34,7 +34,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         cargarComboEmpleados();
     }
     
-
     private void cargarComboVehiculos() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Vehiculo v : sistema.getVehiculos()) {
@@ -51,7 +50,19 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         }
         comboEmpleados.setModel(model);
     }
-   
+    
+    private Vehiculo obtenerVehiculoPorIndice(int index) {
+    int contador = 0;
+    for (Vehiculo v : sistema.getVehiculos()) {
+        if (!sistema.vehiculoEstaEnParking(v)) {
+            if (contador == index) {
+                return v;
+            }
+            contador++;
+        }
+    }
+    return null;
+    }
     
     private void configurarSpinners() {
         // Configurar spinner de fecha/hora
@@ -110,6 +121,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
         setTitle("Entradas");
         getContentPane().setLayout(null);
 
+        comboVehiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboVehiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboVehiculosActionPerformed(evt);
@@ -126,6 +138,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
 
         lblNotas.setText("Notas");
 
+        comboEmpleados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboEmpleadosActionPerformed(evt);
@@ -201,12 +214,58 @@ public class VentanaEntradas extends javax.swing.JFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+         // Obtener los índices seleccionados
+            int vehiculoIndex = comboVehiculos.getSelectedIndex();
+            int empleadoIndex = comboEmpleados.getSelectedIndex();
 
+            if (vehiculoIndex == -1 || empleadoIndex == -1) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo y un empleado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener los objetos reales usando los índices
+            Vehiculo vehiculoSeleccionado = obtenerVehiculoPorIndice(vehiculoIndex);
+            Empleado empleadoSeleccionado = sistema.getEmpleados().get(empleadoIndex);
+
+            Date fechaHora = (Date) spinFechaHora.getValue();
+            String nota = txtAreaNotas.getText().trim();
+
+            if (vehiculoSeleccionado == null || empleadoSeleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Error al obtener vehículo o empleado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Formateo fecha y hora
+            DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+            LocalDateTime fechaHoraLocal = LocalDateTime.ofInstant(fechaHora.toInstant(), java.time.ZoneId.systemDefault());
+
+            String fecha = fechaHoraLocal.format(formatterFecha);
+            String hora = fechaHoraLocal.format(formatterHora);
+
+            // Agregar la entrada
+            boolean registrada = sistema.agregarEntrada(vehiculoSeleccionado, fecha, hora, nota, empleadoSeleccionado);
+            if (registrada) {
+                JOptionPane.showMessageDialog(this, "Entrada registrada exitosamente.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                txtAreaNotas.setText(""); // Limpiar nota
+                spinFechaHora.setValue(new Date()); // Resetear fecha/hora a ahora
+            } else {
+                JOptionPane.showMessageDialog(this, "El vehículo ya está dentro del parking.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
     }//GEN-LAST:event_btnConfirmarActionPerformed
-                                          
 
     private void comboVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVehiculosActionPerformed
-        
+            Vehiculo vehiculoSeleccionado = (Vehiculo) comboVehiculos.getSelectedItem();
+        if (vehiculoSeleccionado != null) {
+            Contrato contrato = sistema.buscarContratoPorVehiculo(vehiculoSeleccionado);
+            if (contrato != null) {
+                lblContrato.setText("Contrato: SÍ - Cliente: " + contrato.getCliente().getNombre());
+            } else {
+                lblContrato.setText("Contrato: NO");
+            }
+        } else {
+            lblContrato.setText("Contrato:");
+        }
     }//GEN-LAST:event_comboVehiculosActionPerformed
 
     private void comboEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmpleadosActionPerformed
