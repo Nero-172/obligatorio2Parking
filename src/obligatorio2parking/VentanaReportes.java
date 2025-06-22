@@ -5,242 +5,37 @@ AUTORES - ESTUDIANTES
 */
 package obligatorio2parking;
 
-import dominio.*;
 import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author USUARIO
+ */
 public class VentanaReportes extends javax.swing.JFrame {
-    
-    private Sistema sistema;
-    
-    public VentanaReportes(Sistema sistema) {
-        this.sistema = sistema;
+
+    /**
+     * Creates new form VentanaReportes
+     */
+    public VentanaReportes() {
         initComponents();
-        configurarComponentes();
-        cargarVehiculos();
-    }
-    
-    private void configurarComponentes() {
         txtAreaServicios.setEditable(false);
         txtAreaEmpleadosMovimientos.setEditable(false);
         txtAreaClientesContratos.setEditable(false);
         txtAreaEstadia.setEditable(false);
-        
-        // Configurar tabla
-        String[] columnas = {"Tipo", "Fecha", "Hora", "Vehículo", "Empleado", "Detalles"};
-        DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        tablaVehiculosMovimientos.setModel(modelo);
-    }
-    
-    private void cargarVehiculos() {
-        comboVehiculoReportes.removeAllItems();
-        comboVehiculoReportes.addItem("Seleccione un vehículo");
-        
-        for (Vehiculo vehiculo : sistema.getVehiculos()) {
-            comboVehiculoReportes.addItem(vehiculo.getMatricula() + " - " + vehiculo.getMarca() + " " + vehiculo.getModelo());
-        }
-    }
-    
-    private void cargarHistorialVehiculo() {
-        if (comboVehiculoReportes.getSelectedIndex() <= 0) {
-            limpiarTabla();
-            return;
-        }
-        
-        String seleccion = (String) comboVehiculoReportes.getSelectedItem();
-        String matricula = seleccion.split(" - ")[0];
-        Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matricula);
-        
-        if (vehiculo != null) {
-            actualizarTabla("Todos", true);
-        }
-    }
-    
-    private void actualizarTabla(String filtro, boolean ordenAscendente) {
-        if (comboVehiculoReportes.getSelectedIndex() <= 0) {
-            return;
-        }
-        
-        String seleccion = (String) comboVehiculoReportes.getSelectedItem();
-        String matricula = seleccion.split(" - ")[0];
-        Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matricula);
-        
-        if (vehiculo == null) {
-            return;
-        }
-        
-        // Obtener historial directamente del sistema
-        ArrayList<Object> historial = sistema.getHistorialVehiculo(vehiculo);
-        
-        // Aplicar filtro
-        ArrayList<Object> historialFiltrado = new ArrayList<>();
-        for (Object movimiento : historial) {
-            if (filtro.equals("Todos") || 
-                (filtro.equals("Entradas") && movimiento instanceof Entrada) ||
-                (filtro.equals("Salidas") && movimiento instanceof Salida) ||
-                (filtro.equals("Servicios") && movimiento instanceof ServicioAdicional)) {
-                historialFiltrado.add(movimiento);
-            }
-        }
-        
-        // Aplicar ordenamiento
-        Collections.sort(historialFiltrado, new Comparator<Object>() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                String fecha1 = "", hora1 = "", fecha2 = "", hora2 = "";
-                
-                if (o1 instanceof Entrada) {
-                    Entrada e = (Entrada) o1;
-                    fecha1 = e.getFecha();
-                    hora1 = e.getHora();
-                } else if (o1 instanceof Salida) {
-                    Salida s = (Salida) o1;
-                    fecha1 = s.getFecha();
-                    hora1 = s.getHora();
-                } else if (o1 instanceof ServicioAdicional) {
-                    ServicioAdicional sa = (ServicioAdicional) o1;
-                    fecha1 = sa.getFecha();
-                    hora1 = sa.getHora();
-                }
-                
-                if (o2 instanceof Entrada) {
-                    Entrada e = (Entrada) o2;
-                    fecha2 = e.getFecha();
-                    hora2 = e.getHora();
-                } else if (o2 instanceof Salida) {
-                    Salida s = (Salida) o2;
-                    fecha2 = s.getFecha();
-                    hora2 = s.getHora();
-                } else if (o2 instanceof ServicioAdicional) {
-                    ServicioAdicional sa = (ServicioAdicional) o2;
-                    fecha2 = sa.getFecha();
-                    hora2 = sa.getHora();
-                }
-                
-                // Comparar fecha y hora
-                String fechaHora1 = fecha1 + " " + hora1;
-                String fechaHora2 = fecha2 + " " + hora2;
-                
-                int resultado = fechaHora1.compareTo(fechaHora2);
-                return ordenAscendente ? resultado : -resultado;
-            }
-        });
-        
-        // Actualizar tabla
-        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculosMovimientos.getModel();
-        modelo.setRowCount(0);
-        
-        for (Object movimiento : historialFiltrado) {
-            Object[] fila = new Object[6];
-            
-            if (movimiento instanceof Entrada) {
-                Entrada entrada = (Entrada) movimiento;
-                fila[0] = "ENTRADA";
-                fila[1] = entrada.getFecha();
-                fila[2] = entrada.getHora();
-                fila[3] = entrada.getVehiculo().getMatricula();
-                fila[4] = entrada.getEmpleado().getNombre();
-                fila[5] = entrada.getNotas();
-            } else if (movimiento instanceof Salida) {
-                Salida salida = (Salida) movimiento;
-                fila[0] = "SALIDA";
-                fila[1] = salida.getFecha();
-                fila[2] = salida.getHora();
-                fila[3] = salida.getEntrada().getVehiculo().getMatricula();
-                fila[4] = salida.getEmpleado().getNombre();
-                fila[5] = salida.getComentario();
-            } else if (movimiento instanceof ServicioAdicional) {
-                ServicioAdicional servicio = (ServicioAdicional) movimiento;
-                fila[0] = "SERVICIO";
-                fila[1] = servicio.getFecha();
-                fila[2] = servicio.getHora();
-                fila[3] = servicio.getVehiculo().getMatricula();
-                fila[4] = servicio.getEmpleado().getNombre();
-                fila[5] = servicio.getTipoServicio() + " - $" + servicio.getCosto();
-            }
-            
-            modelo.addRow(fila);
-        }
-    }
-    
-    private void limpiarTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculosMovimientos.getModel();
-        modelo.setRowCount(0);
-    }
-    
-    private void exportarHistorial() {
-        if (comboVehiculoReportes.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo primero.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        String seleccion = (String) comboVehiculoReportes.getSelectedItem();
-        String matricula = seleccion.split(" - ")[0];
-        Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matricula);
-        
-        if (vehiculo == null) {
-            return;
-        }
-        
-        // Obtener datos actuales de la tabla
-        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculosMovimientos.getModel();
-        
-        if (modelo.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No hay datos para exportar.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        String nombreArchivo = matricula + ".txt";
-        
-        try (FileWriter writer = new FileWriter(nombreArchivo)) {
-            writer.write("HISTORIAL DE MOVIMIENTOS - VEHÍCULO: " + matricula + "\n");
-            writer.write("Generado el: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + "\n");
-            writer.write("=" + "=".repeat(80) + "\n\n");
-            
-            for (int i = 0; i < modelo.getRowCount(); i++) {
-                String tipo = (String) modelo.getValueAt(i, 0);
-                String fecha = (String) modelo.getValueAt(i, 1);
-                String hora = (String) modelo.getValueAt(i, 2);
-                String empleado = (String) modelo.getValueAt(i, 4);
-                String detalles = (String) modelo.getValueAt(i, 5);
-                
-                writer.write(String.format("%s - %s %s - Empleado: %s - %s\n",
-                    tipo, fecha, hora, empleado, detalles));
-            }
-            
-            JOptionPane.showMessageDialog(this, "Historial exportado exitosamente a: " + nombreArchivo, 
-                "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
-                
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error al exportar el archivo: " + e.getMessage(), 
-                "Error de Exportación", JOptionPane.ERROR_MESSAGE);
-        }
     }
     
     private class MovListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            JButton cual = ((JButton) e.getSource());
-            JOptionPane.showMessageDialog(null, "Info del botón: " + cual.getText());
-        }
+            public void actionPerformed(ActionEvent e) {
+                JButton cual = ((JButton) e.getSource());
+                // Mostrar JOptionPane con información de movimientos para esa celda
+                JOptionPane.showMessageDialog(null, "Info del botón: " + cual.getText());
+            }
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -305,25 +100,10 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaVehiculosMovimientos);
 
         btnOrdenar.setText("Ordenar fecha ascendente/descendente");
-        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOrdenarActionPerformed(evt);
-            }
-        });
 
         btnFiltrar.setText("Filtro por tipo de movimiento  ");
-        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFiltrarActionPerformed(evt);
-            }
-        });
 
         btnExportar.setText("Exportar ");
-        btnExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout frameHistorialLayout = new javax.swing.GroupLayout(frameHistorial.getContentPane());
         frameHistorial.getContentPane().setLayout(frameHistorialLayout);
@@ -491,7 +271,6 @@ public class VentanaReportes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGrillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrillaActionPerformed
-        panelMovimientos.removeAll();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
                 JButton nuevo = new JButton(" ");
@@ -503,55 +282,11 @@ public class VentanaReportes extends javax.swing.JFrame {
                 panelMovimientos.add(nuevo);
             }
         }
-        panelMovimientos.revalidate();
-        panelMovimientos.repaint();
     }//GEN-LAST:event_btnGrillaActionPerformed
 
     private void comboVehiculoReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVehiculoReportesActionPerformed
-         cargarHistorialVehiculo();
+        // TODO add your handling code here:
     }//GEN-LAST:event_comboVehiculoReportesActionPerformed
-
-    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
-        if (comboVehiculoReportes.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo primero.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        String[] opciones = {"Todos", "Entradas", "Salidas", "Servicios"};
-        String seleccion = (String) JOptionPane.showInputDialog(
-            this,
-            "Seleccione el tipo de movimiento a mostrar:",
-            "Filtrar Movimientos",
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            opciones,
-            "Todos"
-        );
-        
-        if (seleccion != null) {
-            // Determinar orden actual basado en el texto del botón
-            boolean ordenAscendente = btnOrdenar.getText().contains("descendente");
-            actualizarTabla(seleccion, ordenAscendente);
-        }
-    }//GEN-LAST:event_btnFiltrarActionPerformed
-
-    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-         exportarHistorial();
-    }//GEN-LAST:event_btnExportarActionPerformed
-
-    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
-        if (comboVehiculoReportes.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo primero.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        // Alternar orden
-        boolean ordenAscendente = btnOrdenar.getText().contains("descendente");
-        btnOrdenar.setText(ordenAscendente ? "Ordenar fecha ascendente" : "Ordenar fecha descendente");
-        
-        // Actualizar tabla con el nuevo orden
-        actualizarTabla("Todos", !ordenAscendente);
-    }//GEN-LAST:event_btnOrdenarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -583,8 +318,7 @@ public class VentanaReportes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                 Sistema sistema = new Sistema();
-                 new VentanaReportes(sistema).setVisible(true);
+                new VentanaReportes().setVisible(true);
             }
         });
         
