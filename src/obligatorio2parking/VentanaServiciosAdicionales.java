@@ -25,28 +25,38 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
     
     private void cargarDatosIniciales() {
         cargarComboVehiculos();
-    cargarComboEmpleados();
-    cargarListaServicios();
-    configurarTabla();
-    cargarDatosTabla();
+        cargarComboEmpleados();
+        cargarListaServicios();
+        configurarTabla();
+        cargarDatosTabla();
     }
     
-    
+    // CORREGIDO: Agregar placeholder
     private void cargarComboVehiculos() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (Vehiculo v : sistema.getVehiculos()) {
-            model.addElement(v.toString());
+        model.addElement("-- Seleccione un vehículo --"); // Placeholder
+        
+        if (sistema.getVehiculos() != null && !sistema.getVehiculos().isEmpty()) {
+            for (Vehiculo v : sistema.getVehiculos()) {
+                model.addElement(v.toString());
+            }
         }
         comboVehiculo.setModel(model);
+        System.out.println("Vehículos cargados: " + sistema.getVehiculos().size());
     }
     
+    // CORREGIDO: Agregar placeholder
     private void cargarComboEmpleados() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (Empleado emp : sistema.getEmpleados()) {
-            System.out.println(sistema.getEmpleados());
-            model.addElement(emp.toString());
+        model.addElement("-- Seleccione un empleado --"); // Placeholder
+        
+        if (sistema.getEmpleados() != null && !sistema.getEmpleados().isEmpty()) {
+            for (Empleado emp : sistema.getEmpleados()) {
+                model.addElement(emp.toString());
+            }
         }
         comboEmpleado.setModel(model);
+        System.out.println("Empleados cargados: " + sistema.getEmpleados().size());
     }
     
     private void cargarComboTiposServicio() {
@@ -66,7 +76,8 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         if (sistema.getServiciosAdicionales() != null && !sistema.getServiciosAdicionales().isEmpty()) {
             for (ServicioAdicional servicio : sistema.getServiciosAdicionales()) {
                 String item = servicio.getTipoServicio() + " - " + 
-                             servicio.getVehiculo().getMatricula();
+                             servicio.getVehiculo().getMatricula() + " - " +
+                             servicio.getFecha();
                 model.addElement(item);
             }
         } else {
@@ -96,6 +107,7 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         tableDatos.getColumnModel().getColumn(5).setPreferredWidth(70);  // Costo
     }
 
+    // CORREGIDO: Agregar todas las columnas
     private void cargarDatosTabla() {
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tableDatos.getModel();
         model.setRowCount(0); // Limpiar tabla
@@ -106,14 +118,34 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
                     servicio.getTipoServicio(),
                     servicio.getFecha(),
                     servicio.getHora(),
-                    servicio.getVehiculo().getMatricula(),    
+                    servicio.getVehiculo().getMatricula(),
+                    servicio.getEmpleado().getNombre(), // CORREGIDO: Agregar empleado
+                    String.format("%.2f", servicio.getCosto()) // CORREGIDO: Agregar costo formateado
                 };
                 model.addRow(fila);
             }
         }
     }
 
+    // CORREGIDO: Validación mejorada
     private boolean validarDatos() {
+        // Verificar que existan datos en el sistema
+        if (sistema.getVehiculos() == null || sistema.getVehiculos().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "No hay vehículos registrados en el sistema.\nPrimero debe registrar vehículos.", 
+                "Validación", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        if (sistema.getEmpleados() == null || sistema.getEmpleados().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "No hay empleados registrados en el sistema.\nPrimero debe registrar empleados.", 
+                "Validación", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
         if (comboTipoS.getSelectedIndex() < 0) {
             javax.swing.JOptionPane.showMessageDialog(this, 
                 "Seleccione un tipo de servicio", 
@@ -175,7 +207,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         // Configurar spinner de costo
         spinCostoS.setModel(new javax.swing.SpinnerNumberModel(0.0, 0.0, 999999.0, 1.0));
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
