@@ -399,7 +399,7 @@ public class VentanaSistema extends javax.swing.JFrame {
     }
 
     private void itemReportesActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaReportes vr = new VentanaReportes();
+        VentanaReportes vr = new VentanaReportes(sistema);
         vr.setVisible(true);
     }
 
