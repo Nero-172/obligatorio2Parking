@@ -28,22 +28,32 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         cargarComboEmpleados();
     }
     
-    
+    // CORREGIDO: Agregar placeholder
     private void cargarComboVehiculos() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (Vehiculo v : sistema.getVehiculos()) {
-            model.addElement(v.toString());
+        model.addElement("-- Seleccione un vehículo --"); // Placeholder
+        
+        if (sistema.getVehiculos() != null && !sistema.getVehiculos().isEmpty()) {
+            for (Vehiculo v : sistema.getVehiculos()) {
+                model.addElement(v.toString());
+            }
         }
         comboVehiculo.setModel(model);
+        System.out.println("Vehículos cargados: " + sistema.getVehiculos().size());
     }
     
+    // CORREGIDO: Agregar placeholder
     private void cargarComboEmpleados() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (Empleado emp : sistema.getEmpleados()) {
-            System.out.println(sistema.getEmpleados());
-            model.addElement(emp.toString());
+        model.addElement("-- Seleccione un empleado --"); // Placeholder
+        
+        if (sistema.getEmpleados() != null && !sistema.getEmpleados().isEmpty()) {
+            for (Empleado emp : sistema.getEmpleados()) {
+                model.addElement(emp.toString());
+            }
         }
         comboEmpleado.setModel(model);
+        System.out.println("Empleados cargados: " + sistema.getEmpleados().size());
     }
     
     private void configurarSpinners() {
@@ -63,6 +73,7 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         comboTipoS.setModel(model);
     }
     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
